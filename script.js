@@ -259,12 +259,14 @@ saveButton.addEventListener('click', () => {
         exportDate: new Date().toISOString()
     };
 
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    // const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application' });
     const url = URL.createObjectURL(blob);
 
     const link = document.createElement('a');
     link.href = url;
-    link.download = `diabetes_data_${new Date().toISOString().split('T')[0]}.diab`;
+    // link.download = `diabetes_data_${new Date().toISOString().split('T')[0]}.diab`;
+    link.download = `Data.diab`;
     link.click();
 
     URL.revokeObjectURL(url);
