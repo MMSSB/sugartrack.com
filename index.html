@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+      <link rel="shortcut icon" href="images/stlogo1.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-card">
+            <div class="logo">G</div>
+            <h1>Welcome to SugarTrack</h1>
+            <p>Please enter your name to get started</p>
+            <form id="nameForm">
+                <input type="text" id="userName" placeholder="Enter your name" required>
+                <button type="submit">Get Started</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="app-container" id="appContainer" style="display: none;">
+        <nav class="top-nav">
+            <div class="nav-content">
+                <div class="nav-left">
+                    <div class="logo">ST</div>
+                    <span>SugarTrack</span>
+                </div>
+                <div class="nav-right">
+                    <span id="currentDateTime"></span>
+                    <span id="readingsCount">0 Readings</span>
+                    <!-- <button class="theme-toggle" id="themeToggle">🌙</button> -->
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <div class="content-card">
+                <h2>SugarTracker</h2>
+                <p class="subtitle">Track your glucose readings over time</p>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Date & Time</label>
+                        <div class="date-time-inputs">
+                            <input type="date" id="date">
+                            <input type="time" id="time">
+                            
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Glucose Reading (mg/dL)</label>
+                        <div class="reading-input">
+                            <input type="number" id="glucose" placeholder="Enter glucose value">
+                            <button id="addReading">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions-row">
+                    <button id="resetButton" class="reset-button">
+                        <span class="icon">↺</span> Reset
+                    </button>
+                    <div class="export-buttons">
+                        <button id="importButton">
+                            <span class="icon">📂</span> Import
+                            <!-- Add this near the end of the body, before the script tags -->
+<input type="file" id="fileInput" accept=".diab" style="display: none;">
+                        </button>
+                        <button id="saveButton">
+                            <span class="icon">💾</span> Save
+                        </button>
+                        <button id="exportImage">
+                            <span class="icon">📷</span> Image
+                        </button>
+                        <button id="exportPDF">
+                            <span class="icon">📄</span> PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Recent Readings</h2>
+                <div class="readings-list" id="readingsList"></div>
+            </div>
+
+            <div class="content-card">
+                <h2>Glucose Trends</h2>
+                <p class="subtitle" id="trendsMessage">Add at least two readings to see your trends</p>
+                <div id="trendsChart"></div>
+            </div>
+        </main>
+
+        <!-- Hidden export template -->
+        <div id="exportContent" class="export-template">
+            <h1 id="exportTitle"></h1>
+            <table id="exportTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Glucose (mg/dL)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+
+    </script>
+</body>
+</html>
