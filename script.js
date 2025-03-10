@@ -19,13 +19,14 @@ const exportPDFButton = document.getElementById('exportPDF');
 const exportContent = document.getElementById('exportContent');
 const exportTitle = document.getElementById('exportTitle');
 const trendsMessage = document.getElementById('trendsMessage');
-
+const saveButton = document.getElementById('saveButton');
+const importButton = document.getElementById('importButton');
+const fileInput = document.getElementById('fileInput');
 
 // Set default date and time
 const now = new Date();
 dateInput.value = now.toISOString().split('T')[0];
 timeInput.value = now.toTimeString().slice(0, 5);
-
 
 // Function to update the current date and time
 function updateDateTime() {
@@ -37,14 +38,15 @@ function updateDateTime() {
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit' // Add seconds for live updates
+        second: '2-digit'
     };
     currentDateTime.textContent = now.toLocaleDateString('en-US', options);
 }
 
 // Update the date and time immediately and every second
-updateDateTime(); // Initial call
-setInterval(updateDateTime, 1000); // Update every second
+updateDateTime();
+setInterval(updateDateTime, 1000);
+
 // Check for existing user
 const savedName = localStorage.getItem('userName');
 if (savedName) {
@@ -78,7 +80,7 @@ addReadingButton.addEventListener('click', () => {
         localStorage.setItem('glucoseReadings', JSON.stringify(readings));
         updateReadingsList();
         glucoseInput.value = '';
-        
+
         // Update trends message
         if (readings.length >= 2) {
             trendsMessage.textContent = 'Tracking your glucose trends over time';
@@ -125,14 +127,12 @@ function updateReadingsList() {
     // Add event listeners for the "three dots" menu
     document.querySelectorAll('.menu-button').forEach(button => {
         button.addEventListener('click', (e) => {
-            // Close any other open dropdowns
             document.querySelectorAll('.reading-actions').forEach(actions => {
                 if (actions !== e.target.closest('.reading-actions')) {
                     actions.classList.remove('active');
                 }
             });
 
-            // Toggle the current dropdown
             const actions = e.target.closest('.reading-actions');
             actions.classList.toggle('active');
         });
@@ -156,7 +156,6 @@ function updateReadingsList() {
             timeInput.value = reading.time;
             glucoseInput.value = reading.glucose;
 
-            // Remove the reading from the list after editing
             readings.splice(index, 1);
             localStorage.setItem('glucoseReadings', JSON.stringify(readings));
             updateReadingsList();
@@ -170,7 +169,6 @@ function updateReadingsList() {
             localStorage.setItem('glucoseReadings', JSON.stringify(readings));
             updateReadingsList();
 
-            // Update trends message
             if (readings.length < 2) {
                 trendsMessage.textContent = 'Add at least two readings to see your trends';
             }
@@ -192,10 +190,10 @@ resetButton.addEventListener('click', () => {
 function prepareExportContent() {
     const userName = localStorage.getItem('userName');
     exportTitle.textContent = `Diabetes Tracker Data - ${userName}`;
-    
+
     const table = exportContent.querySelector('table tbody');
     table.innerHTML = '';
-    
+
     readings.forEach(reading => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -218,7 +216,7 @@ exportImageButton.addEventListener('click', async () => {
     element.style.display = 'block';
     const canvas = await html2canvas(element);
     element.style.display = 'none';
-    
+
     const image = canvas.toDataURL('image/png');
     const link = document.createElement('a');
     link.href = image;
@@ -232,7 +230,7 @@ exportPDFButton.addEventListener('click', async () => {
     element.style.display = 'block';
     const canvas = await html2canvas(element);
     element.style.display = 'none';
-    
+
     const imgData = canvas.toDataURL('image/png');
     const pdf = new jsPDF({
         orientation: 'portrait',
@@ -240,58 +238,25 @@ exportPDFButton.addEventListener('click', async () => {
         format: 'a4'
     });
 
-    // Set text color to black
-    pdf.setTextColor(0, 0, 0); // RGB for black
+    pdf.setTextColor(0, 0, 0);
 
     const imgProps = pdf.getImageProperties(imgData);
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-    
+
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
     pdf.save(`glucose-readings-${new Date().toISOString().split('T')[0]}.pdf`);
 });
-// Theme toggle
-const themeToggle = document.getElementById('themeToggle');
-
-// Function to set the theme
-function setTheme(isDark) {
-    if (isDark) {
-        document.body.classList.add('dark-theme');
-        themeToggle.textContent = '☀️';
-    } else {
-        document.body.classList.remove('dark-theme');
-        themeToggle.textContent = '🌙';
-    }
-}
-
-// Check for saved theme in localStorage
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-    setTheme(true); // Apply dark theme
-} else {
-    setTheme(false); // Apply light theme
-}
-
-// Toggle theme on button click
-themeToggle.addEventListener('click', () => {
-    const isDark = document.body.classList.toggle('dark-theme');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light'); // Save preference
-    setTheme(isDark); // Update UI
-});
-
-
 
 // Save user data as a .diab file
-const saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', () => {
     const userName = localStorage.getItem('userName');
     const glucoseReadings = JSON.parse(localStorage.getItem('glucoseReadings') || '[]');
 
-    // Include date and time in the exported data
     const data = {
         userName,
         glucoseReadings,
-        exportDate: new Date().toISOString() // Add export timestamp
+        exportDate: new Date().toISOString()
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -306,10 +271,6 @@ saveButton.addEventListener('click', () => {
 });
 
 // Import button functionality
-const importButton = document.getElementById('importButton');
-const fileInput = document.getElementById('fileInput');
-
-// Trigger file input when Import button is clicked
 importButton.addEventListener('click', () => {
     fileInput.click();
 });
@@ -323,18 +284,13 @@ fileInput.addEventListener('change', (e) => {
             try {
                 const data = JSON.parse(event.target.result);
 
-                // Validate the imported data
                 if (data.userName && Array.isArray(data.glucoseReadings)) {
-                    // Save the imported data to localStorage
                     localStorage.setItem('userName', data.userName);
                     localStorage.setItem('glucoseReadings', JSON.stringify(data.glucoseReadings));
 
-                    // Update the UI live
-                    document.getElementById('welcomeUserName').textContent = data.userName;
                     readings = data.glucoseReadings;
                     updateReadingsList();
 
-                    // Update trends message
                     if (readings.length >= 2) {
                         trendsMessage.textContent = 'Tracking your glucose trends over time';
                     } else {
@@ -350,58 +306,3 @@ fileInput.addEventListener('change', (e) => {
         console.error('Invalid file format. Please upload a valid .diab file.');
     }
 });
-
-// Load saved data on page load
-window.addEventListener('load', () => {
-    const savedName = localStorage.getItem('userName');
-    const savedReadings = JSON.parse(localStorage.getItem('glucoseReadings') || '[]');
-
-    if (savedName) {
-        document.getElementById('welcomeUserName').textContent = savedName;
-        readings = savedReadings;
-        updateReadingsList();
-    }
-});
-
-// Function to convert 24-hour time to 12-hour time
-function formatTime12Hour(time) {
-    const [hours, minutes] = time.split(':');
-    let period = 'AM';
-    let hours12 = parseInt(hours, 10);
-
-    if (hours12 >= 12) {
-        period = 'PM';
-        if (hours12 > 12) {
-            hours12 -= 12;
-        }
-    } else if (hours12 === 0) {
-        hours12 = 12; // Midnight (12 AM)
-    }
-
-    return `${hours12}:${minutes} ${period}`;
-}
-
-// Prepare export content
-function prepareExportContent() {
-    const userName = localStorage.getItem('userName');
-    exportTitle.textContent = `Diabetes Tracker Data - ${userName}`;
-    
-    const table = exportContent.querySelector('table tbody');
-    table.innerHTML = '';
-    
-    readings.forEach(reading => {
-        const row = document.createElement('tr');
-        const formattedTime = formatTime12Hour(reading.time); // Convert time to 12-hour format
-        row.innerHTML = `
-            <td>${reading.date}</td>
-            <td>${formattedTime}</td> <!-- Use 12-hour format -->
-            <td>${reading.glucose}</td>
-        `;
-        table.appendChild(row);
-    });
-
-    exportContent.style.display = 'block';
-    const result = { element: exportContent };
-    exportContent.style.display = 'none';
-    return result;
-}
