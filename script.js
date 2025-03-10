@@ -196,9 +196,10 @@ function prepareExportContent() {
 
     readings.forEach(reading => {
         const row = document.createElement('tr');
+        const formattedTime = formatTime12Hour(reading.time); // Convert time to 12-hour format
         row.innerHTML = `
             <td>${reading.date}</td>
-            <td>${reading.time}</td>
+            <td>${formattedTime}</td> <!-- Use 12-hour format -->
             <td>${reading.glucose}</td>
         `;
         table.appendChild(row);
@@ -209,7 +210,6 @@ function prepareExportContent() {
     exportContent.style.display = 'none';
     return result;
 }
-
 // Export as Image
 exportImageButton.addEventListener('click', async () => {
     const { element } = prepareExportContent();
@@ -306,3 +306,21 @@ fileInput.addEventListener('change', (e) => {
         console.error('Invalid file format. Please upload a valid .diab file.');
     }
 });
+
+// Helper function to convert 24-hour time to 12-hour time with AM/PM
+function formatTime12Hour(time) {
+    const [hours, minutes] = time.split(':');
+    let period = 'AM';
+    let hours12 = parseInt(hours, 10);
+
+    if (hours12 >= 12) {
+        period = 'PM';
+        if (hours12 > 12) {
+            hours12 -= 12;
+        }
+    } else if (hours12 === 0) {
+        hours12 = 12; // Midnight (12 AM)
+    }
+
+    return `${hours12}:${minutes} ${period}`;
+}
