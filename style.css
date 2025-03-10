@@ -21,7 +21,9 @@ body {
     background-color: var(--background);
     color: var(--text);
     line-height: 1.5;
+    font-size: 16px; /* Base font size for better scaling */
 }
+
 /* Dark Theme */
 body.dark-theme {
     --text: #f3f4f6;
@@ -71,11 +73,12 @@ body.dark-theme {
     align-items: center;
     justify-content: center;
     background-color: var(--background);
+    padding: 1rem; /* Add padding for mobile */
 }
 
 .welcome-card {
     background: var(--card-bg);
-    padding: 2rem;
+    padding: 1.5rem; /* Reduce padding for mobile */
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -151,6 +154,7 @@ body.dark-theme {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 1rem; /* Add padding for mobile */
 }
 
 .nav-left {
@@ -183,7 +187,7 @@ body.dark-theme {
 main {
     max-width: 1200px;
     margin: 2rem auto;
-    padding: 0 1rem;
+    padding: 0 1rem; /* Add padding for mobile */
     display: grid;
     gap: 1.5rem;
 }
@@ -266,6 +270,8 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+    gap: 1rem; /* Add gap for mobile */
 }
 
 .export-buttons {
@@ -350,56 +356,51 @@ button:hover {
     font-weight: 600;
 }
 
+/* Mobile-specific adjustments */
 @media (max-width: 768px) {
-    .input-row {
-        grid-template-columns: 1fr;
+    body {
+        font-size: 14px; /* Smaller font size for mobile */
     }
 
-    .actions-row {
-        flex-direction: column;
+    .welcome-card {
+        padding: 1rem; /* Reduce padding for mobile */
+    }
+
+    .nav-content {
+        flex-direction: column; /* Stack nav items vertically */
         gap: 1rem;
     }
 
+    .input-row {
+        grid-template-columns: 1fr; /* Single column for inputs */
+    }
+
+    .actions-row {
+        flex-direction: column; /* Stack buttons vertically */
+    }
+
     .export-buttons {
-        width: 100%;
+        width: 100%; /* Full width for export buttons */
         justify-content: stretch;
     }
 
     .export-buttons button {
-        flex: 1;
+        flex: 1; /* Equal width for buttons */
+    }
+
+    .reading-item {
+        flex-direction: column; /* Stack reading items vertically */
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .reading-actions {
+        width: 100%; /* Full width for actions */
+        justify-content: flex-end; /* Align actions to the right */
     }
 }
-.reading-actions {
-    display: flex;
-    gap: 0.5rem;
-}
 
-.edit-button, .delete-button {
-    padding: 0.25rem 0.5rem;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    font-size: 0.875rem;
-}
-
-.edit-button {
-    background-color: var(--primary);
-    color: white;
-}
-
-.delete-button {
-    background-color: var(--danger);
-    color: white;
-}
-
-.edit-button:hover {
-    background-color: var(--primary-light);
-}
-
-.delete-button:hover {
-    background-color: #dc2626;
-}
-
+/* Dropdown menu for mobile */
 .reading-actions {
     position: relative;
     display: flex;
@@ -415,7 +416,6 @@ button:hover {
     padding: 0.25rem;
     display: flex;
     align-items: center;
-    width: 3rem;
     justify-content: center;
 }
 
