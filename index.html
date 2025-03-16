@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-      <link rel="shortcut icon" href="images/stlogo1.png" type="image/x-icon">
+    <link rel="shortcut icon" href="images/stlogo1.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SugarTrack</title>
     <link rel="stylesheet" href="style.css">
@@ -30,9 +30,9 @@
                     <span>SugarTrack</span>
                 </div>
                 <div class="nav-right">
+                    <span>Welcome, <span id="userWelcomeName"></span></span>
                     <span id="currentDateTime"></span>
                     <span id="readingsCount">0 Readings</span>
-                    <!-- <button class="theme-toggle" id="themeToggle">🌙</button> -->
                 </div>
             </div>
         </nav>
@@ -48,15 +48,18 @@
                         <div class="date-time-inputs">
                             <input type="date" id="date">
                             <input type="time" id="time">
-                            
                         </div>
                     </div>
                     <div class="input-group">
                         <label>Glucose Reading (mg/dL)</label>
                         <div class="reading-input">
-                            <input type="number" id="glucose" placeholder="Enter glucose value">
+                            <input type="number" max="-" id="glucose" placeholder="Enter glucose value">
                             <button id="addReading">Add</button>
                         </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Comment (Optional)</label>
+                        <input class="comment" type="text" id="comment" placeholder="Add a comment or note">
                     </div>
                 </div>
 
@@ -67,9 +70,9 @@
                     <div class="export-buttons">
                         <button id="importButton">
                             <span class="icon">📂</span> Import
-                            <!-- Add this near the end of the body, before the script tags -->
-<input type="file" id="fileInput" accept=".diab" style="display: none;">
                         </button>
+                        <!-- Hidden file input -->
+                        <input type="file" id="fileInput" accept=".diab" style="display: none;">
                         <button id="saveButton">
                             <span class="icon">💾</span> Save
                         </button>
@@ -104,6 +107,7 @@
                         <th>Date</th>
                         <th>Time</th>
                         <th>Glucose (mg/dL)</th>
+                        <th>Comment</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -112,8 +116,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-
-    </script>
 </body>
 </html>

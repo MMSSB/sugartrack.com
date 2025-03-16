@@ -526,3 +526,13 @@ button:hover {
 .reading-actions.active .dropdown-menu {
     display: block;
 }
+
+
+
+.input-group,.comment {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}

@@ -11,6 +11,7 @@ const readingsCount = document.getElementById('readingsCount');
 const dateInput = document.getElementById('date');
 const timeInput = document.getElementById('time');
 const glucoseInput = document.getElementById('glucose');
+const commentInput = document.getElementById('comment');
 const addReadingButton = document.getElementById('addReading');
 const readingsList = document.getElementById('readingsList');
 const resetButton = document.getElementById('resetButton');
@@ -22,6 +23,7 @@ const trendsMessage = document.getElementById('trendsMessage');
 const saveButton = document.getElementById('saveButton');
 const importButton = document.getElementById('importButton');
 const fileInput = document.getElementById('fileInput');
+const userWelcomeName = document.getElementById('userWelcomeName');
 
 // Set default date and time
 const now = new Date();
@@ -52,6 +54,7 @@ const savedName = localStorage.getItem('userName');
 if (savedName) {
     welcomeScreen.style.display = 'none';
     appContainer.style.display = 'block';
+    userWelcomeName.textContent = savedName;
 }
 
 // Handle name submission
@@ -62,6 +65,7 @@ nameForm.addEventListener('submit', (e) => {
         localStorage.setItem('userName', name);
         welcomeScreen.style.display = 'none';
         appContainer.style.display = 'block';
+        userWelcomeName.textContent = name;
     }
 });
 
@@ -74,12 +78,14 @@ addReadingButton.addEventListener('click', () => {
     const date = dateInput.value;
     const time = timeInput.value;
     const glucose = parseFloat(glucoseInput.value);
+    const comment = commentInput.value.trim();
 
     if (date && time && glucose) {
-        readings.push({ date, time, glucose });
+        readings.push({ date, time, glucose, comment });
         localStorage.setItem('glucoseReadings', JSON.stringify(readings));
         updateReadingsList();
         glucoseInput.value = '';
+        commentInput.value = '';
 
         // Update trends message
         if (readings.length >= 2) {
@@ -113,6 +119,7 @@ function updateReadingsList() {
         readingItem.innerHTML = `
             <div class="reading-value">${reading.glucose} mg/dL</div>
             <div class="reading-date">${formattedDate}</div>
+            ${reading.comment ? `<div class="reading-comment">${reading.comment}</div>` : ''}
             <div class="reading-actions">
                 <button class="menu-button">⋮</button>
                 <div class="dropdown-menu">
@@ -155,6 +162,7 @@ function updateReadingsList() {
             dateInput.value = reading.date;
             timeInput.value = reading.time;
             glucoseInput.value = reading.glucose;
+            commentInput.value = reading.comment || '';
 
             readings.splice(index, 1);
             localStorage.setItem('glucoseReadings', JSON.stringify(readings));
@@ -199,8 +207,9 @@ function prepareExportContent() {
         const formattedTime = formatTime12Hour(reading.time); // Convert time to 12-hour format
         row.innerHTML = `
             <td>${reading.date}</td>
-            <td>${formattedTime}</td> <!-- Use 12-hour format -->
+            <td>${formattedTime}</td>
             <td>${reading.glucose}</td>
+            <td>${reading.comment || ''}</td>
         `;
         table.appendChild(row);
     });
@@ -210,6 +219,7 @@ function prepareExportContent() {
     exportContent.style.display = 'none';
     return result;
 }
+
 // Export as Image
 exportImageButton.addEventListener('click', async () => {
     const { element } = prepareExportContent();
@@ -259,13 +269,11 @@ saveButton.addEventListener('click', () => {
         exportDate: new Date().toISOString()
     };
 
-    // const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application' });
     const url = URL.createObjectURL(blob);
 
     const link = document.createElement('a');
     link.href = url;
-    // link.download = `diabetes_data_${new Date().toISOString().split('T')[0]}.diab`;
     link.download = `Data.diab`;
     link.click();
 
@@ -274,19 +282,24 @@ saveButton.addEventListener('click', () => {
 
 // Import button functionality
 importButton.addEventListener('click', () => {
-    fileInput.click();
+    console.log('Import button clicked'); // Debugging line
+    fileInput.click(); // Trigger the file input
 });
 
 // Handle file upload
 fileInput.addEventListener('change', (e) => {
+    console.log('File selected'); // Debugging line
     const file = e.target.files[0];
     if (file && file.name.endsWith('.diab')) {
         const reader = new FileReader();
         reader.onload = (event) => {
+            console.log('File read successfully'); // Debugging line
             try {
                 const data = JSON.parse(event.target.result);
+                console.log('Parsed data:', data); // Debugging line
 
                 if (data.userName && Array.isArray(data.glucoseReadings)) {
+                    console.log('Data is valid'); // Debugging line
                     localStorage.setItem('userName', data.userName);
                     localStorage.setItem('glucoseReadings', JSON.stringify(data.glucoseReadings));
 
@@ -298,14 +311,19 @@ fileInput.addEventListener('change', (e) => {
                     } else {
                         trendsMessage.textContent = 'Add at least two readings to see your trends';
                     }
+                } else {
+                    console.error('Invalid data format in the file.');
+                    alert('Invalid data format in the file.');
                 }
             } catch (error) {
                 console.error('Error parsing the file:', error);
+                alert('Error parsing the file. Please ensure the file is valid.');
             }
         };
         reader.readAsText(file);
     } else {
         console.error('Invalid file format. Please upload a valid .diab file.');
+        alert('Invalid file format. Please upload a valid .diab file.');
     }
 });
 
