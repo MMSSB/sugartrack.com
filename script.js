@@ -235,26 +235,97 @@ exportImageButton.addEventListener('click', async () => {
 });
 
 // Export as PDF
+// exportPDFButton.addEventListener('click', async () => {
+//     const { element } = prepareExportContent();
+//     element.style.display = 'block';
+//     const canvas = await html2canvas(element);
+//     element.style.display = 'none';
+
+//     const imgData = canvas.toDataURL('image/png');
+//     const pdf = new jsPDF({
+//         orientation: 'portrait',
+//         unit: 'mm',
+//         format: 'a4'
+//     });
+
+//     pdf.setTextColor(0, 0, 0);
+
+//     const imgProps = pdf.getImageProperties(imgData);
+//     const pdfWidth = pdf.internal.pageSize.getWidth();
+//     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+//     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+//     pdf.save(`glucose-readings-${new Date().toISOString().split('T')[0]}.pdf`);
+// });
+
+
+// Export as PDF
 exportPDFButton.addEventListener('click', async () => {
     const { element } = prepareExportContent();
     element.style.display = 'block';
+
+    // Convert the export content to a canvas
     const canvas = await html2canvas(element);
     element.style.display = 'none';
 
+    // Convert the canvas to an image
     const imgData = canvas.toDataURL('image/png');
+
+    // Initialize jsPDF with A4 dimensions
     const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
         format: 'a4'
     });
 
-    pdf.setTextColor(0, 0, 0);
+    // Get A4 dimensions in millimeters
+    const pageWidth = pdf.internal.pageSize.getWidth(); // 210mm
+    const pageHeight = pdf.internal.pageSize.getHeight(); // 297mm
 
+    // Get image properties
     const imgProps = pdf.getImageProperties(imgData);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    const imgWidth = imgProps.width;
+    const imgHeight = imgProps.height;
 
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    // Calculate the scaling factor to fit the image within the A4 width
+    const scaleFactor = pageWidth / imgWidth;
+    const scaledImgHeight = imgHeight * scaleFactor;
+
+    // Check if the content fits on a single page
+    if (scaledImgHeight <= pageHeight) {
+        // Add the image to a single page
+        pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, scaledImgHeight);
+    } else {
+        // Handle multi-page export
+        let currentHeight = 0;
+        let remainingHeight = scaledImgHeight;
+
+        while (remainingHeight > 0) {
+            // Calculate the height of the portion to add to the current page
+            const portionHeight = Math.min(pageHeight, remainingHeight);
+
+            // Add the image portion to the current page
+            pdf.addImage(
+                imgData,
+                'PNG',
+                0,
+                -currentHeight, // Offset to capture the correct portion of the image
+                pageWidth,
+                scaledImgHeight
+            );
+
+            // Update the remaining height and current height
+            remainingHeight -= pageHeight;
+            currentHeight += pageHeight;
+
+            // Add a new page if there's more content to display
+            if (remainingHeight > 0) {
+                pdf.addPage();
+            }
+        }
+    }
+
+    // Save the PDF
     pdf.save(`glucose-readings-${new Date().toISOString().split('T')[0]}.pdf`);
 });
 
