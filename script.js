@@ -260,16 +260,11 @@ exportImageButton.addEventListener('click', async () => {
 
 
 // Export as PDF
-exportPDFButton.addEventListener('click', async () => {
+exportPDFButton.addEventListener('click', () => {
+    // Prepare export content
     const { element } = prepareExportContent();
-    element.style.display = 'block';
-
-    // Convert the export content to a canvas
-    const canvas = await html2canvas(element);
-    element.style.display = 'none';
-
-    // Convert the canvas to an image
-    const imgData = canvas.toDataURL('image/png');
+    const userName = localStorage.getItem('userName');
+    const readings = JSON.parse(localStorage.getItem('glucoseReadings') || '[]');
 
     // Initialize jsPDF with A4 dimensions
     const pdf = new jsPDF({
@@ -278,52 +273,54 @@ exportPDFButton.addEventListener('click', async () => {
         format: 'a4'
     });
 
-    // Get A4 dimensions in millimeters
+    // Set font styles
+    pdf.setFont('helvetica');
+    pdf.setFontSize(12);
+
+    // Define A4 dimensions in millimeters
     const pageWidth = pdf.internal.pageSize.getWidth(); // 210mm
     const pageHeight = pdf.internal.pageSize.getHeight(); // 297mm
 
-    // Get image properties
-    const imgProps = pdf.getImageProperties(imgData);
-    const imgWidth = imgProps.width;
-    const imgHeight = imgProps.height;
+    // Add title
+    pdf.text(`Diabetes Tracker Data - ${userName}`, 10, 10);
 
-    // Calculate the scaling factor to fit the image within the A4 width
-    const scaleFactor = pageWidth / imgWidth;
-    const scaledImgHeight = imgHeight * scaleFactor;
+    // Table headers
+    const headers = ['Date', 'Time', 'Glucose (mg/dL)', 'Comment'];
+    const columnWidths = [50, 30, 40, 60]; // Adjust widths as needed
+    const headerHeight = 10;
 
-    // Check if the content fits on a single page
-    if (scaledImgHeight <= pageHeight) {
-        // Add the image to a single page
-        pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, scaledImgHeight);
-    } else {
-        // Handle multi-page export
-        let currentHeight = 0;
-        let remainingHeight = scaledImgHeight;
+    // Start position for the table
+    let yPosition = 20;
 
-        while (remainingHeight > 0) {
-            // Calculate the height of the portion to add to the current page
-            const portionHeight = Math.min(pageHeight, remainingHeight);
+    // Draw table headers
+    headers.forEach((header, index) => {
+        pdf.text(header, 10 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+    });
+    yPosition += headerHeight;
 
-            // Add the image portion to the current page
-            pdf.addImage(
-                imgData,
-                'PNG',
-                0,
-                -currentHeight, // Offset to capture the correct portion of the image
-                pageWidth,
-                scaledImgHeight
-            );
+    // Add table rows
+    readings.forEach((reading, rowIndex) => {
+        const formattedTime = formatTime12Hour(reading.time); // Convert time to 12-hour format
+        const rowData = [reading.date, formattedTime, reading.glucose.toString(), reading.comment || ''];
 
-            // Update the remaining height and current height
-            remainingHeight -= pageHeight;
-            currentHeight += pageHeight;
+        // Check if there's enough space for the next row
+        if (yPosition + headerHeight > pageHeight) {
+            pdf.addPage(); // Add a new page
+            yPosition = 20; // Reset position for the new page
 
-            // Add a new page if there's more content to display
-            if (remainingHeight > 0) {
-                pdf.addPage();
-            }
+            // Redraw table headers on the new page
+            headers.forEach((header, index) => {
+                pdf.text(header, 10 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+            });
+            yPosition += headerHeight;
         }
-    }
+
+        // Draw table row
+        rowData.forEach((cell, colIndex) => {
+            pdf.text(cell, 10 + columnWidths.slice(0, colIndex).reduce((a, b) => a + b, 0), yPosition);
+        });
+        yPosition += headerHeight;
+    });
 
     // Save the PDF
     pdf.save(`glucose-readings-${new Date().toISOString().split('T')[0]}.pdf`);
