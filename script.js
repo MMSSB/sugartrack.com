@@ -260,6 +260,74 @@ exportImageButton.addEventListener('click', async () => {
 
 
 // Export as PDF
+// exportPDFButton.addEventListener('click', () => {
+//     // Prepare export content
+//     const { element } = prepareExportContent();
+//     const userName = localStorage.getItem('userName');
+//     const readings = JSON.parse(localStorage.getItem('glucoseReadings') || '[]');
+
+//     // Initialize jsPDF with A4 dimensions
+//     const pdf = new jsPDF({
+//         orientation: 'portrait',
+//         unit: 'mm',
+//         format: 'a4'
+//     });
+
+//     // Set font styles
+//     pdf.setFont('helvetica');
+//     pdf.setFontSize(12);
+
+//     // Define A4 dimensions in millimeters
+//     const pageWidth = pdf.internal.pageSize.getWidth(); // 210mm
+//     const pageHeight = pdf.internal.pageSize.getHeight(); // 297mm
+
+//     // Add title
+//     pdf.text(`Diabetes Tracker Data - ${userName}`, 10, 10);
+
+//     // Table headers
+//     const headers = ['Date', 'Time', 'Glucose (mg/dL)', 'Comment'];
+//     const columnWidths = [50, 30, 40, 60]; // Adjust widths as needed
+//     const headerHeight = 10;
+
+//     // Start position for the table
+//     let yPosition = 20;
+
+//     // Draw table headers
+//     headers.forEach((header, index) => {
+//         pdf.text(header, 10 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+//     });
+//     yPosition += headerHeight;
+
+//     // Add table rows
+//     readings.forEach((reading, rowIndex) => {
+//         const formattedTime = formatTime12Hour(reading.time); // Convert time to 12-hour format
+//         const rowData = [reading.date, formattedTime, reading.glucose.toString(), reading.comment || ''];
+
+//         // Check if there's enough space for the next row
+//         if (yPosition + headerHeight > pageHeight) {
+//             pdf.addPage(); // Add a new page
+//             yPosition = 20; // Reset position for the new page
+
+//             // Redraw table headers on the new page
+//             headers.forEach((header, index) => {
+//                 pdf.text(header, 10 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+//             });
+//             yPosition += headerHeight;
+//         }
+
+//         // Draw table row
+//         rowData.forEach((cell, colIndex) => {
+//             pdf.text(cell, 10 + columnWidths.slice(0, colIndex).reduce((a, b) => a + b, 0), yPosition);
+//         });
+//         yPosition += headerHeight;
+//     });
+
+//     // Save the PDF
+//     pdf.save(`glucose-readings-${new Date().toISOString().split('T')[0]}.pdf`);
+// });
+
+
+// Export as PDF
 exportPDFButton.addEventListener('click', () => {
     // Prepare export content
     const { element } = prepareExportContent();
@@ -273,16 +341,42 @@ exportPDFButton.addEventListener('click', () => {
         format: 'a4'
     });
 
+// Define logo, website name, and link (easy to change)
+const logoPath = '/images/stlogo.png';
+const qrPath = '/images/sugarqr.png'; // Replace with the path to your QR image
+const websiteName = 'SugarTrack.com'; // Website name
+const websiteLinkText = 'https://mmssb.github.io/sugartrack.com '; // Display text for the link
+const websiteURL = 'https://mmssb.github.io/sugartrack.com'; // Actual website URL
+
+
     // Set font styles
     pdf.setFont('helvetica');
-    pdf.setFontSize(12);
+    pdf.setFontSize(14);
 
     // Define A4 dimensions in millimeters
     const pageWidth = pdf.internal.pageSize.getWidth(); // 210mm
     const pageHeight = pdf.internal.pageSize.getHeight(); // 297mm
 
+// Add logo and website name at the top
+pdf.addImage(logoPath, 'PNG', 180, 1, 30, 25); // Logo (x, y, width, height)
+pdf.addImage(qrPath, 'PNG', 160, 5, 20, 20); // QR Code (x, y, width, height)
+
+
+// Add website name
+pdf.setFontSize(25);
+pdf.text(websiteName, 5, 20); // Website name (x, y)
+
+// Add clickable link
+
+pdf.setFontSize(14); // Smaller font size for the link
+pdf.text('Link:', 5, 27);
+pdf.setTextColor(0, 0, 255); // Blue color for the link
+pdf.textWithLink(websiteLinkText, 18, 27, { url: websiteURL ,}); // Add clickable link
+pdf.setTextColor(0, 0, 0); // Reset text color to black
+
     // Add title
-    pdf.text(`Diabetes Tracker Data - ${userName}`, 10, 10);
+    pdf.setFontSize(14);
+    pdf.text(`Diabetes Tracker Data - ${userName}`, 10, 35);
 
     // Table headers
     const headers = ['Date', 'Time', 'Glucose (mg/dL)', 'Comment'];
@@ -290,7 +384,7 @@ exportPDFButton.addEventListener('click', () => {
     const headerHeight = 10;
 
     // Start position for the table
-    let yPosition = 20;
+    let yPosition = 45;
 
     // Draw table headers
     headers.forEach((header, index) => {
@@ -306,11 +400,28 @@ exportPDFButton.addEventListener('click', () => {
         // Check if there's enough space for the next row
         if (yPosition + headerHeight > pageHeight) {
             pdf.addPage(); // Add a new page
-            yPosition = 20; // Reset position for the new page
+            yPosition = 45; // Reset position for the new page
+            pdf.text(`Diabetes Tracker Data`, 10, 35);
+            
+    // Add logo and website name at the top
+    pdf.addImage(logoPath, 'PNG', 180, 1, 30, 25); // Logo (x, y, width, height)
+    pdf.addImage(qrPath, 'PNG', 160, 5, 20, 20); // QR Code (x, y, width, height)
+    // pdf.setFontSize(25);
+    pdf.setFontSize(25);
+    pdf.text(websiteName, 5, 20); // Website name (x, y)
+    pdf.setFont('bold')
+    // Add clickable link
 
+pdf.setFontSize(14); // Smaller font size for the link
+pdf.text('Link: ', 5, 27);
+pdf.setTextColor(0, 0, 255); // Blue color for the link
+pdf.textWithLink(websiteLinkText, 18, 27, { url: websiteURL ,}); // Add clickable link
+pdf.setTextColor(0, 0, 0); // Reset text color to black
+        
             // Redraw table headers on the new page
             headers.forEach((header, index) => {
                 pdf.text(header, 10 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+
             });
             yPosition += headerHeight;
         }
