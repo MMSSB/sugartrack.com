@@ -234,7 +234,29 @@ exportImageButton.addEventListener('click', async () => {
     link.click();
 });
 
+// Export as PDF
+// exportPDFButton.addEventListener('click', async () => {
+//     const { element } = prepareExportContent();
+//     element.style.display = 'block';
+//     const canvas = await html2canvas(element);
+//     element.style.display = 'none';
 
+//     const imgData = canvas.toDataURL('image/png');
+//     const pdf = new jsPDF({
+//         orientation: 'portrait',
+//         unit: 'mm',
+//         format: 'a4'
+//     });
+
+//     pdf.setTextColor(0, 0, 0);
+
+//     const imgProps = pdf.getImageProperties(imgData);
+//     const pdfWidth = pdf.internal.pageSize.getWidth();
+//     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+//     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+//     pdf.save(`glucose-readings-${new Date().toISOString().split('T')[0]}.pdf`);
+// });
 
 
 // Export as PDF
@@ -251,42 +273,16 @@ exportPDFButton.addEventListener('click', () => {
         format: 'a4'
     });
 
-// Define logo, website name, and link (easy to change)
-const logoPath = './images/stlogo.png';
-const qrPath = './images/sugarqr.png';
-const websiteName = 'SugarTrack.com'; // Website name
-const websiteLinkText = 'https://mmssb.github.io/sugartrack.com '; // Display text for the link
-const websiteURL = 'https://mmssb.github.io/sugartrack.com'; // Actual website URL
-
-
     // Set font styles
     pdf.setFont('helvetica');
-    pdf.setFontSize(14);
+    pdf.setFontSize(12);
 
     // Define A4 dimensions in millimeters
     const pageWidth = pdf.internal.pageSize.getWidth(); // 210mm
     const pageHeight = pdf.internal.pageSize.getHeight(); // 297mm
 
-// Add logo and website name at the top
-pdf.addImage(logoPath, 'PNG', 180, 1, 30, 25);
-pdf.addImage(qrPath, 'PNG', 160, 5, 20, 20);
-
-
-// Add website name
-pdf.setFontSize(25);
-pdf.text(websiteName, 5, 20); // Website name (x, y)
-
-// Add clickable link
-
-pdf.setFontSize(14); // Smaller font size for the link
-pdf.text('Link:', 5, 27);
-pdf.setTextColor(0, 0, 255); // Blue color for the link
-pdf.textWithLink(websiteLinkText, 18, 27, { url: websiteURL ,}); // Add clickable link
-pdf.setTextColor(0, 0, 0); // Reset text color to black
-
     // Add title
-    pdf.setFontSize(14);
-    pdf.text(`Diabetes Tracker Data - ${userName}`, 10, 35);
+    pdf.text(`Diabetes Tracker Data - ${userName}`, 10, 10);
 
     // Table headers
     const headers = ['Date', 'Time', 'Glucose (mg/dL)', 'Comment'];
@@ -294,7 +290,7 @@ pdf.setTextColor(0, 0, 0); // Reset text color to black
     const headerHeight = 10;
 
     // Start position for the table
-    let yPosition = 45;
+    let yPosition = 20;
 
     // Draw table headers
     headers.forEach((header, index) => {
@@ -310,28 +306,11 @@ pdf.setTextColor(0, 0, 0); // Reset text color to black
         // Check if there's enough space for the next row
         if (yPosition + headerHeight > pageHeight) {
             pdf.addPage(); // Add a new page
-            yPosition = 45; // Reset position for the new page
-            pdf.text(`Diabetes Tracker Data`, 10, 35);
-            
-    // Add logo and website name at the top
-    pdf.addImage(logoPath, 'PNG', 180, 1, 30, 25); // Logo (x, y, width, height)
-    pdf.addImage(qrPath, 'PNG', 160, 5, 20, 20); // QR Code (x, y, width, height)
-    // pdf.setFontSize(25);
-    pdf.setFontSize(25);
-    pdf.text(websiteName, 5, 20); // Website name (x, y)
-    pdf.setFont('bold')
-    // Add clickable link
+            yPosition = 20; // Reset position for the new page
 
-pdf.setFontSize(14); // Smaller font size for the link
-pdf.text('Link: ', 5, 27);
-pdf.setTextColor(0, 0, 255); // Blue color for the link
-pdf.textWithLink(websiteLinkText, 18, 27, { url: websiteURL ,}); // Add clickable link
-pdf.setTextColor(0, 0, 0); // Reset text color to black
-        
             // Redraw table headers on the new page
             headers.forEach((header, index) => {
                 pdf.text(header, 10 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
-
             });
             yPosition += headerHeight;
         }
