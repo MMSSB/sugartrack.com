@@ -10,12 +10,25 @@
     --success: #10b981;
 }
 
+
+a {
+    text-decoration: none;
+    color: inherit;
+  }
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+    font-size: 14px;
+  font-size: large;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background-color: var(--background);
@@ -535,4 +548,15 @@ button:hover {
     border: 1px solid var(--border);
     border-radius: 0.5rem;
     font-size: 1rem;
+}
+
+
+/* Settings Page */
+select {
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    background: var(--card-bg);
+    color: var(--text);
 }

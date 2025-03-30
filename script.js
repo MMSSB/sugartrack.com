@@ -220,19 +220,101 @@ function prepareExportContent() {
     return result;
 }
 
-// Export as Image
-exportImageButton.addEventListener('click', async () => {
-    const { element } = prepareExportContent();
-    element.style.display = 'block';
-    const canvas = await html2canvas(element);
-    element.style.display = 'none';
+// Customizable variables for export image
+const EXPORT_IMAGE_CONFIG = {
+    width: 800,              // Canvas width in pixels
+    heightPerRow: 30,        // Height per data row in pixels
+    // logoPath: 'images/sugar.ico', // Path to your logo image (replace with your logo file)
+    logoWidth: 50,           // Logo width in pixels
+    logoHeight: 50,          // Logo height in pixels
+    websiteName: '', // Website name
+    websiteUrl: '', // Website URL
+    fontSizeTitle: 24,       // Font size for title
+    fontSizeText: 16,        // Font size for data
+    margin: 30,              // Margin around content
+    textColor: '#000000',    // Text color (hex)
+    backgroundColor: '#FFFFFF' // Background color (hex)
+};
 
+exportImageButton.addEventListener('click', async () => {
+    const userName = localStorage.getItem('userName');
+    const sortedReadings = readings.slice().reverse(); // Match original behavior (latest first)
+    const { width, heightPerRow, logoPath, logoWidth, logoHeight, websiteName, websiteUrl, fontSizeTitle, fontSizeText, margin, textColor, backgroundColor } = EXPORT_IMAGE_CONFIG;
+
+    // Calculate canvas height based on data rows
+    const height = margin * 2 + logoHeight + heightPerRow * (sortedReadings.length + 3); // Logo, title, headers, data rows
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+
+    // Fill background
+    ctx.fillStyle = backgroundColor;
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw logo
+    // const logo = new Image();
+    // logo.src = logoPath;
+    // await new Promise(resolve => {
+    //     logo.onload = resolve;
+    //     logo.onerror = () => {
+    //         console.error('Logo failed to load. Skipping logo.');
+    //         resolve();
+    //     };
+    // });
+    // ctx.drawImage(logo, margin, margin, logoWidth, logoHeight);
+
+    // Draw title
+    ctx.fillStyle = textColor;
+    ctx.font = `${fontSizeTitle}px Arial`;
+    ctx.fillText(`Diabetes Tracker Data - ${userName}`, margin + logoWidth + 10, margin + logoHeight / 2 + fontSizeTitle / 2);
+
+    // Draw website name and URL
+    ctx.font = `${fontSizeText}px Arial`;
+    ctx.fillText(websiteName, margin + logoWidth + 10, margin + logoHeight + fontSizeText);
+    ctx.fillText(websiteUrl, margin + logoWidth + 10, margin + logoHeight + fontSizeText * 2);
+
+    // Draw table headers
+    const headers = ['Date', 'Time', 'Glucose ', 'Comment'];
+    const columnWidths = [150, 100, 100, width - 400]; // Adjust these widths as needed
+    let yPosition = margin + logoHeight + heightPerRow;
+    ctx.font = `${fontSizeText}px Arial`;
+    headers.forEach((header, index) => {
+        ctx.fillText(header, margin + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+    });
+    yPosition += heightPerRow;
+
+    // Draw table data
+    sortedReadings.forEach(reading => {
+        const formattedTime = formatTime12Hour(reading.time);
+        const rowData = [reading.date, formattedTime, `${reading.glucose} mg/dL`,  reading.comment || ''];
+        rowData.forEach((cell, index) => {
+            ctx.fillText(cell, margin + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+        });
+        yPosition += heightPerRow;
+    });
+
+    // Export canvas as image
     const image = canvas.toDataURL('image/png');
     const link = document.createElement('a');
     link.href = image;
     link.download = `glucose-readings-${new Date().toISOString().split('T')[0]}.png`;
     link.click();
 });
+
+// // Export as Image
+// exportImageButton.addEventListener('click', async () => {
+//     const { element } = prepareExportContent();
+//     element.style.display = 'block';
+//     const canvas = await html2canvas(element);
+//     element.style.display = 'none';
+
+//     const image = canvas.toDataURL('image/png');
+//     const link = document.createElement('a');
+//     link.href = image;
+//     link.download = `glucose-readings-${new Date().toISOString().split('T')[0]}.png`;
+//     link.click();
+// });
 
 // Export as PDF
 // exportPDFButton.addEventListener('click', async () => {
@@ -272,6 +354,21 @@ exportPDFButton.addEventListener('click', () => {
         unit: 'mm',
         format: 'a4'
     });
+    const websiteName = 'SugarTrack.com'; // Website name
+    const websiteLinkText = 'Visit our website'; // Display text for the link
+    const weblink = 'https://mmssb.github.io/sugartrack.com';
+    const websiteURL = 'https://mmssb.github.io/sugartrack.com'; // Actual website URL
+    pdf.setFontSize(25);
+    pdf.text(websiteName, 5, 20);
+    pdf.setFontSize(10);
+    pdf.text(weblink, 5, 25);
+    pdf.setFontSize(10);
+    pdf.setTextColor(0, 0, 255);
+
+    pdf.textWithLink(websiteLinkText, 5, 30, { url: websiteURL });
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFontSize(14);
+
 
     // Set font styles
     pdf.setFont('helvetica');
@@ -282,7 +379,7 @@ exportPDFButton.addEventListener('click', () => {
     const pageHeight = pdf.internal.pageSize.getHeight(); // 297mm
 
     // Add title
-    pdf.text(`Diabetes Tracker Data - ${userName}`, 10, 10);
+    pdf.text(`Diabetes Tracker Data - ${userName}`, 10, 35);
 
     // Table headers
     const headers = ['Date', 'Time', 'Glucose (mg/dL)', 'Comment'];
@@ -290,7 +387,7 @@ exportPDFButton.addEventListener('click', () => {
     const headerHeight = 10;
 
     // Start position for the table
-    let yPosition = 20;
+    let yPosition = 45;
 
     // Draw table headers
     headers.forEach((header, index) => {
@@ -412,3 +509,38 @@ function formatTime12Hour(time) {
 
     return `${hours12}:${minutes} ${period}`;
 }
+
+// Theme switching functionality (add to any .js file)
+document.addEventListener('DOMContentLoaded', () => {
+    // Function to apply the theme
+    function applyTheme(theme) {
+        if (theme === 'system') {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.body.classList.toggle('dark-theme', prefersDark);
+        } else {
+            document.body.classList.toggle('dark-theme', theme === 'dark');
+        }
+    }
+
+    // Load saved theme or default to 'system'
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    applyTheme(savedTheme);
+
+    // If a theme select element exists on the page, set it up
+    const themeSelect = document.getElementById('themeSelect');
+    if (themeSelect) {
+        themeSelect.value = savedTheme;
+        themeSelect.addEventListener('change', () => {
+            const selectedTheme = themeSelect.value;
+            localStorage.setItem('theme', selectedTheme);
+            applyTheme(selectedTheme);
+        });
+    }
+
+    // Listen for system theme changes (for 'system' setting)
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (localStorage.getItem('theme') === 'system' || !localStorage.getItem('theme')) {
+            applyTheme('system');
+        }
+    });
+});
