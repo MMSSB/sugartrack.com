@@ -2227,10 +2227,10 @@ select {
     transition: all 0.5s ease;
     /* border: 1px solid #e0e0e0; */
     border: 1px solid var(--text);
-    animation: slideIn 1s forwards 2s; /* Animation will start after 2 seconds */
+    animation: slideinside 1s forwards 2s; /* Animation will start after 2 seconds */
   }
   
-  @keyframes slideIn {
+  @keyframes slideinside {
     to {
       right: 20px;
     }
