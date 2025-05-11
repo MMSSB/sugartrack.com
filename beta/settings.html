@@ -1,0 +1,116 @@
+<!-- settings.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="images/sugar.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+    <div class="welcome-screen" id="welcomeScreen" style="display: none;">
+        <div class="welcome-card">
+            <div class="logo">ST</div>
+            <h1>Welcome to SugarTrack</h1>
+            <p>Please enter your name to get started</p>
+            <form id="nameForm">
+                <input type="text" id="userName" placeholder="Enter your name" required>
+                <button type="submit">Get Started</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="app-container" id="appContainer">
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger-btn mobile-only">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+               <a href="index.html"><div class="logo2">ST</div></a>
+                 <a href="index.html"><span class="app-name">SugarTrack Beta</span></a>
+                <button class="close-btn mobile-only">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <hr>
+            <div class="sidebar-menu">
+                <a href="index.html" class="menu-item">
+                    <i class="fas fa-home"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+
+                <!-- <div class="menu-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="menu-text">Trends</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span class="menu-text">History</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-book"></i>
+                    <span class="menu-text">Guide</span>
+                </div> -->
+            </div>
+
+            <div class="sidebar-footer">
+                <!-- Optional footer content -->
+                <a href="settings.html" class="menu-item active">
+                    <i class="fas fa-cog"></i>
+                    <span class="menu-text">Settings</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <nav class="top-nav">
+                <div class="nav-content">
+                    <div class="nav-left">
+                        <button class="toggle-collapse desktop-only">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="logo mobile-only">ST</div>
+     <a href="settings.html"><span>Hey, <span id="userWelcomeName"></span></span>   </a>                 
+                    </div>
+                    <div class="nav-right">
+                        <!-- <span id="currentDateTime"></span>
+                        <span id="readingsCount">0 Readings</span> -->
+                    </div>
+                </div>
+            </nav>
+
+            <main>
+                <div class="content-card">
+                    <h2>Settings</h2>
+                    <div class="input-group">
+                        <label for="themeSelect">Theme</label>
+                        <select id="themeSelect">
+                            <option value="system">System Default</option>
+                            <option value="light">Light Mode</option>
+                            <option value="dark">Dark Mode</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="input-group">
+                        <label for="newName">Change Name</label>
+                        <div class="reading-input">
+                            <input type="text" id="newName" placeholder="Enter new name">
+                            <button id="changeNameButton">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="./settings.js"></script>
+</body>
+</html>
