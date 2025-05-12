@@ -1,9 +1,20 @@
-// settings.js
-const userWelcomeName = document.getElementById('userWelcomeName');
-const currentDateTime = document.getElementById('currentDateTime');
-const themeSelect = document.getElementById('themeSelect');
-const newNameInput = document.getElementById('newName');
-const changeNameButton = document.getElementById('changeNameButton');
+// settings.js - Fixed Version
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const userWelcomeName = document.getElementById('userWelcomeName');
+    const currentDateTime = document.getElementById('currentDateTime');
+    const themeSelect = document.getElementById('themeSelect');
+    const newNameInput = document.getElementById('newName');
+    const changeNameButton = document.getElementById('changeNameButton');
+    const userFullNameDisplay = document.getElementById('userFullNameDisplay');
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const appContainer = document.getElementById('appContainer');
+
+    // Safely check if elements exist before using them
+    if (!userWelcomeName || !userFullNameDisplay || !newNameInput || !changeNameButton) {
+        console.error('Critical elements not found!');
+        return;
+    }
 
 // Update date and time
 function updateDateTime() {
@@ -11,26 +22,72 @@ function updateDateTime() {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
     currentDateTime.textContent = now.toLocaleDateString('en-US', options);
 }
-// updateDateTime();
-// setInterval(updateDateTime, 1000);
+    // Load saved name
+    const savedName = localStorage.getItem('userName');
+    if (savedName) {
+        if (welcomeScreen) welcomeScreen.style.display = 'none';
+        if (appContainer) appContainer.style.display = 'block';
+        
+        const firstName = savedName.split(' ')[0];
+        userWelcomeName.textContent = firstName;
+        userFullNameDisplay.textContent = savedName; // Show full name
+        newNameInput.value = savedName;
+    }
+        // Change name handler
+    changeNameButton.addEventListener('click', function() {
+        const newName = newNameInput.value.trim();
+        if (newName) {
+            localStorage.setItem('userName', newName);
+            const firstName = newName.split(' ')[0];
+            userWelcomeName.textContent = firstName;
+            userFullNameDisplay.textContent = newName;
+            alert('Name updated successfully!');
+        }
+    });
 
-// Load saved name
+    // Rest of your existing code (theme handling, sidebar functionality, etc.)
+    // ... [keep all your existing theme and sidebar code] ...
+});
+// In the name loading section
 // const savedName = localStorage.getItem('userName');
 // if (savedName) {
-//     userWelcomeName.textContent = savedName;
+//     welcomeScreen.style.display = 'none';
+//     appContainer.style.display = 'block';
+//     const firstName = localStorage.getItem('userFirstName') || savedName.split(' ')[0];
+//     userWelcomeName.textContent = firstName;
+//     userNameDisplay.textContent = firstName; // This will update the display in content card
+//         // userFullName.textContent = savedName;   // Show full name in content card
 //     newNameInput.value = savedName;
 // }
-const savedName = localStorage.getItem('userName');
-if (savedName) {
-    welcomeScreen.style.display = 'none';
-    appContainer.style.display = 'block';
-    const firstName = localStorage.getItem('userFirstName') || savedName.split(' ')[0];
-    userWelcomeName.textContent = firstName;
-}
-// Load saved theme
-const savedTheme = localStorage.getItem('theme') || 'system';
-themeSelect.value = savedTheme;
-applyTheme(savedTheme);
+
+
+
+// In the name change handler
+// changeNameButton.addEventListener('click', () => {
+//     const newName = newNameInput.value.trim();
+//     if (newName) {
+//         localStorage.setItem('userName', newName);
+//         localStorage.setItem('userFirstName', );
+//         localStorage.setItem('userFirstName', newName.split(' ')[0]);
+//         const firstName = newName.split(' ')[0];
+//         userWelcomeName.textContent = firstName;
+//         userNameDisplay.textContent = firstName; // Update content card display
+//         alert('Name updated successfully!');
+//     }
+// });
+
+// In the name change handler
+// changeNameButton.addEventListener('click', () => {
+//     const newName = newNameInput.value.trim();
+//     if (newName) {
+//         localStorage.setItem('userName', newName);
+//         localStorage.setItem('userFirstName', newName.split(' ')[0]);
+//         const firstName = newName.split(' ')[0];
+//         userWelcomeName.textContent = firstName; // Update first name in navigation
+//         userFullName.textContent = newName;     // Update full name in content card
+//         alert('Name updated successfully!');
+//     }
+// });
 
 // Apply theme
 function applyTheme(theme) {
@@ -42,6 +99,11 @@ function applyTheme(theme) {
     }
 }
 
+// Load saved theme
+const savedTheme = localStorage.getItem('theme') || 'system';
+themeSelect.value = savedTheme;
+applyTheme(savedTheme);
+
 // Theme selection
 themeSelect.addEventListener('change', () => {
     const theme = themeSelect.value;
@@ -50,21 +112,14 @@ themeSelect.addEventListener('change', () => {
 });
 
 // Change name
-// changeNameButton.addEventListener('click', () => {
-//     const newName = newNameInput.value.trim();
-//     if (newName) {
-//         localStorage.setItem('userName', newName);
-//         userWelcomeName.textContent = newName;
-//         alert('Name updated successfully!');
-//     }
-// });
-// In the settings.js file, update the name change handler:
 changeNameButton.addEventListener('click', () => {
     const newName = newNameInput.value.trim();
     if (newName) {
         localStorage.setItem('userName', newName);
         localStorage.setItem('userFirstName', newName.split(' ')[0]); // Store first name
-        userWelcomeName.textContent = newName.split(' ')[0]; // Show only first name
+        const firstName = newName.split(' ')[0];
+        userWelcomeName.textContent = firstName; // Update welcome name
+        userNameDisplay.textContent = firstName; // Update display under input
         alert('Name updated successfully!');
     }
 });
@@ -75,8 +130,6 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
         applyTheme('system');
     }
 });
-
-
 
 // Sidebar functionality remains unchanged
 document.addEventListener('DOMContentLoaded', () => {
@@ -144,5 +197,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
-

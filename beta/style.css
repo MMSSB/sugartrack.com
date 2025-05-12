@@ -1522,7 +1522,8 @@ button {
 }
 
 button:hover {
-    background: var(--background);
+    /* background: var(--background); */
+    
 }
 
 .reset-button {
@@ -1870,6 +1871,9 @@ select {
 .dark-theme .toggle-collapse:hover,
 .dark-theme .hamburger-btn:hover {
     background: var(--background);
+    border-radius: .5rem;
+
+    
     
 }
 /* Hide/show elements based on device */
@@ -2026,6 +2030,10 @@ select {
     .nav-left .mobile-logo {
         display: none;
     }
+        #currentDateTime {
+        display: inline-block !important;  /* Show date/time */
+        margin-right: 1rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -2055,8 +2063,10 @@ select {
         align-items: center;
     }
 
-    #currentDateTime {
-        display: none !important;  /* Hide date/time on mobile */
+        #currentDateTime {
+        display: flex !important;  /* Show date/time */
+        margin-right: 1rem;
+        box-sizing: border-box;
     }
 
     #readingsCount {
@@ -2102,7 +2112,8 @@ select {
     }
 
     #currentDateTime, #readingsCount {
-        font-size: 0.8rem;
+        /* font-size: 0.8rem; */
+        font-size:4vw;
     }
 }
 
@@ -2208,8 +2219,6 @@ select {
     }
 }
 
-
-
 /* overlay */
 
 #mms-overlay {
@@ -2217,7 +2226,9 @@ select {
     bottom: 20px;
     right: -200px; /* Start off-screen */
     /* background-color: rgba(255, 255, 255, 0.9); */
-    background-color: var(--backgrounds);
+    /* background-color: var(--background); */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 8px 15px 8px 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

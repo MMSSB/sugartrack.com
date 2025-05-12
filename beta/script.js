@@ -46,8 +46,8 @@ function updateDateTime() {
 }
 
 // Update the date and time immediately and every second
-// updateDateTime();
-// setInterval(updateDateTime, 1000);
+updateDateTime();
+setInterval(updateDateTime, 1000);
 
 // Check for existing user
 // const savedName = localStorage.getItem('userName');
