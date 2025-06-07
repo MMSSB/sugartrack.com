@@ -251,7 +251,7 @@
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
     <div class="auth-container">
         <div class="branding-panel">
             <div class="logo">ST</div>
@@ -280,7 +280,7 @@
     </div>
 
     <div id="mms-overlay">
-        <a href="https://mms-x.vercel.app/" target="_blank">
+        <a href="https://mmssb.github.io/" target="_blank">
             <img src="https://mmssb.github.io/assets/images/mmslogo.PNG" alt="MMS Logo" class="mms-logo">
             Made by MMS
         </a>
@@ -289,7 +289,22 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="firebase-config.js"></script>
-    <script src="auth.js"></script>
+    <!-- <script src="firebase-config.js"></script> -->
+    <script  src="auth.js"></script>
+    <script  src="security.js"></script>
+    <script src="securityFlase.js"></script>
+    <!-- <script>
+            // Load script after some condition is met
+function loadScript() {
+  const script = document.createElement('script');
+  script.src = '/firebase-configs.js';
+  document.body.appendChild(script);
+}
+
+// Call this after authentication or other checks
+if (authenticated) {
+  loadScript();
+}
+    </script> -->
 </body>
 </html>
