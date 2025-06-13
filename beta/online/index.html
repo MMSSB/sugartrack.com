@@ -85,8 +85,19 @@
                     <h2>Glucose Readings</h2>
                         <span id="currentDateTime"></span>
                         <h2 id="readingsCount">0 Readings</h2>  
-                        <div id="trendsChart"></div>
+                        <!-- <div id="trendsChart"></div> -->
                 </div>
+                <!-- <div class="content-card">
+    <h2>AI Glucose Suggestions</h2>
+    <p class="subtitle" id="trendsMessage">Add at least two readings for suggestions</p>
+    <div id="trendsChart"></div>
+</div> -->
+
+<div class="content-card">
+  <h2>AI Glucose Insights</h2>
+  <div id="trendsChart"></div>
+</div>
+
      
                 <div class="content-card">
                     <h2>SugarTracker</h2>
@@ -140,11 +151,11 @@
                     <div class="readings-list" id="readingsList"></div>
                 </div>
 
-                <div class="content-card">
+                <!-- <div class="content-card">
                     <h2>Glucose Trends</h2>
                     <p class="subtitle" id="trendsMessage">Add at least two readings to see your trends</p>
                     <div id="trendsChart"></div>
-                </div>
+                </div> -->
             </main>
         </div>
 
@@ -172,6 +183,10 @@
   </div>
     <script src="./script.js"></script>
         <script src="security.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="suggest.js"></script>
+
+
 
 </body>
 </html>

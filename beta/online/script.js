@@ -216,6 +216,8 @@ function updateReadingsList() {
     console.log('Updating readings list with', readings.length, 'readings');
     readingsList.innerHTML = '';
     readingsCount.textContent = `${readings.length} Readings`;
+    updateSuggestions(readings);
+
 
     if (readings.length === 0) {
         console.log('No readings found');
