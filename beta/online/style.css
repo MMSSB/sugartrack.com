@@ -237,15 +237,28 @@ button,
     }
 }
 
-.main-content {
+/* .main-content {
     flex: 1;
     margin-left: var(--sidebar-width);
     transition: margin-left 0.3s ease;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+} */
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - var(--sidebar-width)); /* Add this line */
 }
 
+.main-content.expanded {
+    margin-left: var(--sidebar-collapsed-width);
+    width: calc(100% - var(--sidebar-collapsed-width)); /* Add this line */
+}
 /* Sidebar Styles */
 .sidebar-header {
     padding: 1rem;
@@ -567,9 +580,8 @@ input:checked + .slider:before {
     font-size: 1.25rem;
     width: 40px;
     height: 40px;
-     border-radius: 50%;
-/*         border-radius: .5rem;
-    display: none; */
+    border-radius: 50%;
+    display: none;
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -599,7 +611,7 @@ main {
 }
 
 /* Modern card design */
-.content-card {
+/* .content-card {
     background: var(--card-bg);
     padding: 1.75rem;
     border-radius: 1.25rem;
@@ -609,8 +621,20 @@ main {
     align-items: stretch;
     border: 1px solid rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+} */
+.content-card {
+    background: var(--card-bg);
+    padding: 1.75rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%; /* Add this line */
+    max-width: 100%; /* Add this line */
+    box-sizing: border-box; /* Add this line */
 }
-
 .content-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
@@ -1177,7 +1201,7 @@ input:focus, select:focus, .comment:focus {
 
 .dark-theme .dropdown-menu button:hover {
     background: rgba(255, 255, 255, 0.05);
-}
+
     z-index: 1001; /* Higher than other items when active */
 }
 
