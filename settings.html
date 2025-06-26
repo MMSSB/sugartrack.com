@@ -19,8 +19,10 @@
                     <a href="index.html"> <div class="logo">ST</div></a>
                     <a href="index.html"><span>SugarTrack</span></a>
                     <a href="index.html"><i class="fa-solid fa-home"></i></a>
-                    <a href="beta/index.html"><i class="fa-solid fa-bolt"></i></a>
-                    <a href="beta/online/login.html"><i class="fa-solid fa-plug"></i></a>
+                    <a href="beta/index.html"><i class="fa-solid fa-bolt" title="Beta V2"></i></a>
+                    <a href="beta/online/login.html"><i class="fa-solid fa-plug" title="Online V3"></i></a>
+                    <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
+
 
 
                 </div>
@@ -58,6 +60,29 @@
             </div>
         </main>
     </div>
+            <!-- Overlay & Share Menu -->
+  <div id="shareOverlay" class="overlay hidden">
+    <div class="share-menu">
+      <span id="closeBtn" class="close-btn">x</span>
+      <h3>Share this page</h3>
+
+      <!-- Link Bar -->
+      <div class="link-bar">
+        <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com" />
+        <button id="copyBtn">Copy</button>
+      </div>
+
+      <!-- Social Buttons -->
+      <div class="social-buttons">
+        <a href="#" onclick="shareTo('whatsapp')" class="social-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" onclick="shareTo('facebook')" class="social-icon facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" onclick="shareTo('twitter')" class="social-icon twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" onclick="shareTo('bluesky')" class="social-icon bluesky"><i class="fa-brands fa-bluesky"></i></a>
+        <a href="#" onclick="shareTo('email')" class="social-icon email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="#" onclick="shareTo('gmail')" class="social-icon gmail"><i class="fa-brands fa-google-plus-g"></i></a>
+      </div>
+    </div>
+  </div>
 <div id="mms-overlay">
     <a href="https://mmssb.github.io/" target="_blank" rel="noopener noreferrer">
       <img src="https://mmssb.github.io/assets/images/mmslogo.PNG" alt="MMS Logo" class="mms-logo">
@@ -65,5 +90,6 @@
     </a>
   </div>
     <script src="./settings.js"></script>
+    <script src="share.js"></script>
 </body>
 </html>
