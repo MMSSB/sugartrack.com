@@ -68,7 +68,9 @@
                             <i class="fas fa-chevron-left"></i>
                         </button>
                     <a href="index.html"><div class="logo mobile-only">ST</div></a>
-     <a href="settings.html"><span>Hey, <span id="userWelcomeName"></span></span>   </a>                 
+     <a href="settings.html"><span>Hey, <span id="userWelcomeName"></span></span>   </a>      
+                               <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
+           
                     </div>
                     <div class="nav-right">
                         <!-- <span id="currentDateTime"></span>
@@ -155,11 +157,11 @@
                     <div class="content-card">
                         <h2>About</h2>
                         
-                    <h3>This Website is made By <a href="https://mmssb.github.io"><span style="color: #3b82f6;">MMS</span></h3></a>
+                    <h3>This Website is made By <a href="https://mmssb.github.io" target="_blank" ><span style="color: #3b82f6;">MMS</span></a></h3>
                     <h4>this Website is made for storing gulocose data of user </h4>
                 </div>
                 <div class="content-card">
-                    <h3>Version: <span style="color: #3b82f6; cursor: pointer;">STV3.0</span></h3>
+                    <h3>Version: <span style="color: #3b82f6;">STV3.0</span></h3>
                 </div>
             </main>
         </div>
@@ -170,7 +172,29 @@
       <span>Made by MMS</span>
     </a>
   </div>
+          <!-- Overlay & Share Menu -->
+  <div id="shareOverlay" class="overlay hidden">
+    <div class="share-menu">
+      <span id="closeBtn" class="close-btn">x</span>
+      <h3>Share this page</h3>
 
+      <!-- Link Bar -->
+      <div class="link-bar">
+        <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com/beta/online/index" />
+        <button id="copyBtn">Copy</button>
+      </div>
+
+      <!-- Social Buttons -->
+      <div class="social-buttons">
+        <a href="#" onclick="shareTo('whatsapp')" class="social-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" onclick="shareTo('facebook')" class="social-icon facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" onclick="shareTo('twitter')" class="social-icon twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" onclick="shareTo('bluesky')" class="social-icon bluesky"><i class="fa-brands fa-bluesky"></i></a>
+        <a href="#" onclick="shareTo('email')" class="social-icon email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="#" onclick="shareTo('gmail')" class="social-icon gmail"><i class="fa-brands fa-google-plus-g"></i></a>
+      </div>
+    </div>
+  </div>
 
   <!-- Add these right before the closing </head> tag -->
 <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
@@ -179,6 +203,7 @@
     <script src="securityFlase.js"></script>
     <script src="./settings.js"></script>
         <script src="security.js"></script>
+                <script src="share.js"></script>
 
 </body>
 </html>
