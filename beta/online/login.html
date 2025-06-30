@@ -6,6 +6,8 @@
     <title>Login - SugarTrack</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <style>
         body {
             background: var(--background);
@@ -268,6 +270,9 @@
                 <div class="input-group">
                     <label for="loginPassword">Password</label>
                     <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                      <i class="fa-solid fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i>
+                      <i class="fa-solid fa-eye" id="tPassword" style="margin-left: -30px; cursor: pointer;"></i>
+
                 </div>
                 <p id="loginError" class="error-message"></p>
                 <button type="submit">Sign In</button>
@@ -306,5 +311,32 @@ if (authenticated) {
   loadScript();
 }
     </script> -->
+
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#password');
+  
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+});
+const tPassword = document.querySelector('#tPassword');
+  const passwords = document.querySelector('#loginPassword');
+  
+
+  tPassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = passwords.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwords.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+});
+
+    </script>
 </body>
 </html>
