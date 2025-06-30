@@ -41,7 +41,7 @@
             <div class="sidebar-header">
                 
                <a href="index.html"><div class="logo2">ST</div></a>
-                 <a href="index.html"><span class="app-name">SugarTrack V2</span></a>
+                 <a href="index.html"><span class="app-name">SugarTrack Beta</span></a>
                 
                 <button class="close-btn mobile-only">
                     <i class="fas fa-times"></i>
@@ -90,7 +90,9 @@
     <i class="fas fa-chevron-left"></i>
 </button> -->
                     <a href="index.html"><div class="logo mobile-only">ST</div></a>
-     <a href="settings.html"><span>Hey, <span id="userWelcomeName"></span></span></a>                  
+     <a href="settings.html"><span>Hey, <span id="userWelcomeName"></span></span></a> 
+            <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
+                 
     </div>
                     <div class="nav-right">
                         
@@ -192,6 +194,29 @@
       <span>Made by MMS</span>
     </a>
   </div>
+        <!-- Overlay & Share Menu -->
+  <div id="shareOverlay" class="overlay hidden">
+    <div class="share-menu">
+      <span id="closeBtn" class="close-btn">x</span>
+      <h3>Share this page</h3>
+
+      <!-- Link Bar -->
+      <div class="link-bar">
+        <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com/beta/index" />
+        <button id="copyBtn">Copy</button>
+      </div>
+
+      <!-- Social Buttons -->
+      <div class="social-buttons">
+        <a href="#" onclick="shareTo('whatsapp')" class="social-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" onclick="shareTo('facebook')" class="social-icon facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" onclick="shareTo('twitter')" class="social-icon twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" onclick="shareTo('bluesky')" class="social-icon bluesky"><i class="fa-brands fa-bluesky"></i></a>
+        <a href="#" onclick="shareTo('email')" class="social-icon email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="#" onclick="shareTo('gmail')" class="social-icon gmail"><i class="fa-brands fa-google-plus-g"></i></a>
+      </div>
+    </div>
+  </div>
     <script src="./script.js"></script>
     <!-- <script>
 if ('serviceWorker' in navigator) {
@@ -247,5 +272,8 @@ function showInstallPromotion() {
   }
 }
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'937f093b4ae87bc0',t:'MTc0NTkzMjE5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'937f093b4ae87bc0',t:'MTc0NTkzMjE5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <script src="share.js"></script>
+
+</body>
 </html>
