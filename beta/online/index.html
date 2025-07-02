@@ -100,13 +100,21 @@
             
 
             <main>
-                <div class="content-card">
+                <!-- <div class="content-card">
                     <h3 style="color: red;">*NOTE*</h3>
                     
 <a href="settings.html"><h4>if you want to change your name go to <span style="color: #3b82f6;">Settings</span></h4></a>
 <h5>the name you change it will change in pdf and image export </h5>
 <h5>i hope you enjoy 😉</h5>
+</div> -->
+<div class="content-card" id="noteContainer">
+    <button id="closeNoteBtn" class="close-note-btn"><i class="fas fa-times"></i></button>
+    <h3 style="color: red;">*NOTE*</h3>
+    <a href="settings.html"><h4>if you want to change your name go to <span style="color: #3b82f6;">Settings</span></h4></a>
+    <h5>the name you change it will change in pdf and image export </h5>
+    <h5>i hope you enjoy 😉</h5>
 </div>
+
                                 <div class="content-card">
                     <h2>Glucose Readings</h2>
                         <span id="currentDateTime"></span>
@@ -236,6 +244,23 @@
         <script src="suggest.js"></script>
         <script src="share.js"></script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const noteContainer = document.getElementById("noteContainer");
+        const closeBtn = document.getElementById("closeNoteBtn");
+
+        // Check if note was already dismissed
+        if (localStorage.getItem("noteDismissed") === "true") {
+            noteContainer.style.display = "none";
+        }
+
+        // When close button is clicked
+        closeBtn.addEventListener("click", function () {
+            noteContainer.style.display = "none";
+            localStorage.setItem("noteDismissed", "true");
+        });
+    });
+</script>
 
 
 </body>

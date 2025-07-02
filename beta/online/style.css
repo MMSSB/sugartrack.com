@@ -1055,7 +1055,8 @@ input:focus, select:focus, .comment:focus {
 .dropdown-menu {
     position: absolute;
     right: 0;
-    top: 100%; /* Align with bottom of button */
+    /* top: 100%;  */
+    /* Align with bottom of button */
     z-index: 2001; /* Higher than reading-actions */
     min-width: 150px;
     background: var(--card-bg);
@@ -1593,7 +1594,7 @@ button:hover {
 
 /* Modern Reading Items */
 .reading-item {
-    display: grid;
+    /* display: grid; */
     grid-template-columns: 1fr auto auto;
     align-items: center;
     padding: 1.25rem 1.5rem;
@@ -2927,7 +2928,7 @@ filter: brightness(0) saturate(100%) invert(40%) sepia(76%) saturate(1903%) hue-
 .dropdown-menu {
     position: absolute;
     right: 0;
-    top: 100%;
+    /* top: 100%; */
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 0.5rem;
@@ -3008,3 +3009,22 @@ filter: brightness(0) saturate(100%) invert(40%) sepia(76%) saturate(1903%) hue-
         margin-top: 0.5rem;
     }
 }
+
+
+.close-note-btn {
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.25rem;
+    float: right;
+    cursor: pointer;
+    margin-top: -10px;
+    margin-right: -10px;
+    position: relative;
+    z-index: 1;
+}
+
+.close-note-btn:hover {
+    color: var(--danger);
+}
+

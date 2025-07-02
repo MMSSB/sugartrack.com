@@ -251,6 +251,8 @@
         .dark-theme .input-group input:focus {
             box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.2);
         }
+
+ 
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -274,8 +276,10 @@
                       <i class="fa-solid fa-eye" id="tPassword" style="margin-left: -30px; cursor: pointer;"></i>
 
                 </div>
+                                <div class="g-recaptcha" data-sitekey="6LdU-HQrAAAAADiegcIE3ThiJRFmGmt9yBF7nVjd" style="margin: 15px 0;"></div>
                 <p id="loginError" class="error-message"></p>
                 <button type="submit">Sign In</button>
+
                 <a href="#" id="forgotPassword" class="forgot-password">Forgot Password?</a>
                 <div class="auth-links">
                     Create an account? <a href="signup.html">Sign Up</a>
@@ -298,6 +302,7 @@
     <script  src="auth.js"></script>
     <script  src="security.js"></script>
     <script src="securityFlase.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- <script>
             // Load script after some condition is met
 function loadScript() {
@@ -313,7 +318,7 @@ if (authenticated) {
     </script> -->
 
 
-    <script>
+    <!-- <script>
         const togglePassword = document.querySelector('#togglePassword');
   const password = document.querySelector('#password');
   
@@ -337,6 +342,44 @@ const tPassword = document.querySelector('#tPassword');
     this.classList.toggle('fa-eye-slash');
 });
 
+    </script> -->
+
+
+ <script>
+   function onSubmit(token) {
+     document.getElementById("demo-form").submit();
+   }
+ </script>
+
+     <script>
+        // Password toggle
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#loginPassword');
+        
+        togglePassword.addEventListener('click', function (e) {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Form submission with reCAPTCHA
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const response = grecaptcha.getResponse();
+            
+            if(response.length == 0) {
+                document.getElementById('loginError').textContent = 'Please complete the reCAPTCHA';
+                return;
+            }
+            
+            // Proceed with your login logic here
+            // You should verify the reCAPTCHA token with your backend
+            
+            // For now, just log the token
+            console.log('reCAPTCHA token:', response);
+            
+            // Your existing login logic would go here
+        });
     </script>
 </body>
 </html>
