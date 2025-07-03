@@ -431,9 +431,10 @@ exportImageButton.addEventListener('click', async () => {
 
     // Draw table headers
     const headers = ['Date', 'Time', 'Glucose ', 'Comment'];
-    const columnWidths = [150, 100, 100, width - 400]; // Adjust these widths as needed
+    const columnWidths = [150, 100, 100, width - 100]; // Adjust these widths as needed
     let yPosition = margin + logoHeight + heightPerRow;
-    ctx.font = `${fontSizeText}px Arial`;
+    // ctx.font = `${fontSizeText}px Arial`;
+    ctx.font = `bold ${fontSizeText}px Arial`;
     headers.forEach((header, index) => {
         ctx.fillText(header, margin + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
     });

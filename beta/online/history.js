@@ -857,8 +857,8 @@ function exportAsImage() {
     ctx.fillText(`Glucose Readings - ${userName}`, margin, margin + fontSizeTitle);
 
     // Draw table headers
-    const headers = ['Date', 'Time', 'Glucose (mg/dL)', 'Comment'];
-    const columnWidths = [150, 100, 100, width - 400];
+    const headers = ['Date', 'Time', 'Glucose', 'Comment'];
+    const columnWidths = [150, 100, 100, width - 100];
     let yPosition = margin + heightPerRow + fontSizeTitle;
     ctx.font = `bold ${fontSizeText}px Arial`;
     headers.forEach((header, index) => {
