@@ -1,0 +1,230 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="images/sugar.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="fontawesome-free-6.7.2-web/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="securityFlase.js"></script>
+</head>
+<body oncontextmenu="return false;">
+
+    <div class="app-container" id="appContainer" style="display: none;">
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger-btn mobile-only">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                
+               <a href="index.html"><div class="logo2">ST</div></a>
+                 <a href="index.html"><span class="app-name">SugarTrack V4</span></a>
+                
+                <button class="close-btn mobile-only">
+                    <i class="fas fa-times"></i>
+                </button>
+
+            </div>
+            <hr>
+            
+            <div class="sidebar-menu">
+                <a href="index.html" class="menu-item ">
+                    <i class="fas fa-home"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+                <a href="doctors.html" target="" class="menu-item ">
+                    <i class="fas fa-user-doctor"></i>
+                    <span class="menu-text">Doctors</span>
+                </a>
+                    <a href="weather.html" class="menu-item ">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span class="menu-text">Weather Forecast</span>
+                </a>
+                    <a href="history.html" class="menu-item ">
+                    <i class="fas fa-history"></i>
+                    <span class="menu-text">History</span>
+                </a>
+                    <a href="inbox.html" class="menu-item active ">
+                    <i class="fas fa-inbox"></i>
+                    <span class="menu-text">Inbox & Updates</span>
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span class="menu-text">Settings</span>
+                </a>
+            </div>
+            <div class="sidebar-footer">
+                <button class="buttonlogout" id="logoutButton">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="menu-text">Logout</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <nav class="top-nav">
+                
+                <div class="nav-content">
+                    <div class="nav-left">
+<!-- In your index.html, keep the toggle button simple -->
+<button class="toggle-collapse desktop-only">
+    <i class="fas fa-chevron-left"></i>
+</button>
+                    <div class="logo mobile-only">ST</div>
+     <div class="user-welcome">Welcome, <span id="userWelcomeName"></span></div>  
+                                        <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
+
+    </div>
+                    <div class="nav-right">
+                        
+                        <!-- <span id="currentDateTime"></span> -->
+                        <!-- <span id="readingsCount">0 Readings</span> -->
+                    </div>
+                </div>
+            </nav>
+            <!-- <hr> -->
+            
+
+            <main>
+                <!-- <div class="content-card">
+                    <h3 style="color: red;">Note*</h3>
+                    
+<a href="settings.html"><h4>if you want to change your name go to <span style="color: #3b82f6;">Settings</span></h4></a>
+<h5>the name you change it will change in pdf and image export </h5>
+<h5>i hope you enjoy 😉</h5>
+</div> -->
+                <div class="content-card">
+
+                    <h1  class="inbox-updates"><i class="fa-solid fa-inbox"></i>  Inbox & Updates</h1>
+                    
+                </div>
+                <div class="content-card">
+                    <!-- <H1 class="welcomest">Welcome To SugarTrack</H1> -->
+                    <img src="images/welcometosugar4.png" width="100%" style="border-radius: 1.5rem;" alt="">
+
+                </div>
+     
+
+<div class="content-card">
+  <h2 class="inboxtitle">
+    <!-- <img src="images/logo (15).png" class="stinbox" alt="Logo"> -->
+<div class="logo2">ST</div>
+    SugarTrack
+  </h2>
+<h3>New Update STV4.0 😉👍</h3>
+  <div class="actions-row">
+        <div class="content-wrap">
+    <!-- <div class="wrapper"> -->
+    <!-- <h3>Hi Welcome to SugarTrack I hope you enjoy 😉👍</h3> -->
+    <ul>
+    <li>New Design and New Colors</li>
+   <li>Personalization</li>
+   <li>Accent Color Change</li>
+   </ul>
+  <div class="actions-row">
+   <h3>SugarTrack Version: 4.0</h3>
+  <div class="actions-row">
+               <img src="images/stv4.0.png" style="align-content: center; border-radius: 1.5rem;" width="100%"  alt="SugarTrack Version: 4.0" title="STV4.0">
+
+        </div>
+  </div>
+</div>
+  </div>
+</div>
+
+
+<div class="content-card">
+  <h2 class="inboxtitle">
+    <!-- <img src="images/logo (15).png" class="stinbox" alt="Logo"> -->
+<div class="logo2">ST</div>
+    SugarTrack
+  </h2>
+<h3>Hi Welcome to SugarTrack I hope you enjoy with STV4.0 😉👍</h3>
+  <div class="actions-row">
+        <div class="content-wrap">
+    <!-- <div class="wrapper"> -->
+    <!-- <h3>Hi Welcome to SugarTrack I hope you enjoy 😉👍</h3> -->
+    <ul>
+    <li>in this Version you can save all your glucose data Online with Database</li>
+   <li>you can export your data into PDF or Image</li>
+   <li>and it has an Ai suggestion to keep you Healthy</li>
+   </ul>
+  <div class="actions-row">
+   <h3>SugarTrack Version: 4.0</h3>
+  <div class="actions-row">
+               <img src="images/stv4.0.png" style="align-content: center; border-radius: 1.5rem;" width="100%"  alt="SugarTrack Version: 4.0" title="STV4.0">
+
+        </div>
+  </div>
+</div>
+  </div>
+</div>
+
+  <!-- <div class="content-card">
+  <h2 class="inboxtitle">
+
+<h3>SugarTrack Version: 3.0</h3>
+  <div class="actions-row">
+        <div class="content-wrap">
+            <img src="images/logo (3).png" width="80%"  alt="">
+
+        </div>
+  </div> -->
+            </main>
+        </div>
+
+          <!-- Overlay & Share Menu -->
+  <div id="shareOverlay" class="overlay hidden">
+    <div class="share-menu">
+      <span id="closeBtn" class="close-btn">x</span>
+      <h3>Share this page</h3>
+
+      <!-- Link Bar -->
+      <div class="link-bar">
+        <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com/beta/online/index" />
+        <button id="copyBtn">Copy</button>
+      </div>
+
+      <!-- Social Buttons -->
+      <div class="social-buttons">
+        <a href="#" onclick="shareTo('whatsapp')" class="social-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" onclick="shareTo('facebook')" class="social-icon facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" onclick="shareTo('twitter')" class="social-icon twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" onclick="shareTo('bluesky')" class="social-icon bluesky"><i class="fa-brands fa-bluesky"></i></a>
+        <a href="#" onclick="shareTo('email')" class="social-icon email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="#" onclick="shareTo('gmail')" class="social-icon gmail"><i class="fa-brands fa-google-plus-g"></i></a>
+      </div>
+    </div>
+  </div>
+  
+    <script src="./history.js"></script>
+        <script src="security.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="suggesth.js"></script>
+        <script src="sidebar.js"></script>
+                <script src="share.js"></script>
+                        <script src="accentcolor.js"></script>
+
+
+
+
+<!-- Add these in the head section -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>

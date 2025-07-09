@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="images/sugar.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="fontawesome-free-6.7.2-web/css/all.css">
+</head>
+<body oncontextmenu="return false;">
+
+
+    <div class="app-container" id="appContainer">
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger-btn mobile-only">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                
+               <a href="index.html"><div class="logo2">ST</div></a>
+                 <a href="index.html"><span class="app-name">SugarTrack V4</span></a>
+                
+                <button class="close-btn mobile-only">
+                    <i class="fas fa-times"></i>
+                </button>
+
+            </div>
+            <hr>
+            <div class="sidebar-menu">
+                <a href="index.html" class="menu-item ">
+                    <i class="fas fa-home"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+                <a href="doctors.html" target="" class="menu-item ">
+                    <i class="fas fa-user-doctor"></i>
+                    <span class="menu-text">Doctors</span>
+                </a>
+                    <a href="weather.html" class="menu-item ">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span class="menu-text">Weather Forecast</span>
+                </a>
+                    <a href="history.html" class="menu-item ">
+                    <i class="fas fa-history"></i>
+                    <span class="menu-text">History</span>
+                </a>
+                    <a href="inbox.html" class="menu-item ">
+                    <i class="fas fa-inbox"></i>
+                    <span class="menu-text">Inbox & Updates</span>
+                </a>
+                <a href="settings.html" class="menu-item active">
+                    <i class="fas fa-cog"></i>
+                    <span class="menu-text">Settings</span>
+                </a>
+            </div>
+            <div class="sidebar-footer">
+                <button class="buttonlogout" id="logoutButton">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="menu-text">Logout</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <nav class="top-nav">
+                <div class="nav-content">
+                    <div class="nav-left">
+                        <button class="toggle-collapse desktop-only">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                    <a href="index.html"><div class="logo mobile-only">ST</div></a>
+     <a href="settings.html"><span>Hey, <span id="userWelcomeName"></span></span>   </a>      
+                               <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
+           
+                    </div>
+                    <div class="nav-right">
+                        <!-- <span id="currentDateTime"></span>
+                        <span id="readingsCount">0 Readings</span> -->
+                    </div>
+                </div>
+            </nav>
+
+            <main>
+                <div class="content-card">
+                    <h2>Settings</h2>
+                    <div class="input-group">
+                        <label for="themeSelect">Theme</label>
+                        <select id="themeSelect">
+                            <option value="system">System Default</option>
+                            <option value="light">Light Mode</option>
+                            <option value="dark">Dark Mode</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="content-card">
+    <h2>Accent Color</h2>
+    <div class="input-group">
+        <label for="accentColor">Choose your accent color</label>
+        <input type="color" id="accentColor" value="#3b82f6">
+        
+        <div class="color-presets">
+            <!-- <button style="background-color: #3b82f6;" class="color-preset" data-color="#3b82f6"><i class="fa-solid fa-palette"></i> Default</button>
+            <button style="background-color: #ef4444;" class="color-preset" data-color="#ef4444"><i class="fa-solid fa-brush"></i> Red</button>
+            <button style="background-color: #10b981;" class="color-preset" data-color="#10b981"><i class="fa-solid fa-brush"></i> Green</button>
+            <button style="background-color: #8b5cf6;" class="color-preset" data-color="#8b5cf6"><i class="fa-solid fa-brush"></i> Purple</button>
+            <button style="background-color: #ec4899;" class="color-preset" data-color="#ec4899"><i class="fa-solid fa-brush"></i> Pink</button>
+            <button style="background-color: #f59e0b;" class="color-preset" data-color="#f59e0b"><i class="fa-solid fa-brush"></i> Orange</button>
+            <button style="background-color: #ffd000;" class="color-preset" data-color="#ffd000"><i class="fa-solid fa-brush"></i> Yellow</button> -->
+            <button style="background-color: #3b82f6;" class="color-preset" data-color="#3b82f6"><i class="fa-solid fa-palette"></i></button>
+            <button style="background-color: #ef4444;" class="color-preset" data-color="#ef4444"><i class="fa-solid fa-brush"></i></button>
+            <button style="background-color: #10b981;" class="color-preset" data-color="#10b981"><i class="fa-solid fa-brush"></i></button>
+            <button style="background-color: #8b5cf6;" class="color-preset" data-color="#8b5cf6"><i class="fa-solid fa-brush"></i></button>
+            <button style="background-color: #ec4899;" class="color-preset" data-color="#ec4899"><i class="fa-solid fa-brush"></i></button>
+            <button style="background-color: #f59e0b;" class="color-preset" data-color="#f59e0b"><i class="fa-solid fa-brush"></i></button>
+            <button style="background-color: #ffd000;" class="color-preset" data-color="#ffd000"><i class="fa-solid fa-brush"></i></button>
+            <button style="background-color: #b6b6b6;" class="color-preset" data-color="#b6b6b6"><i class="fa-solid fa-brush"></i></button>
+            <button style="background-color: #000000;" class="color-preset" data-color="#000000"><i class="fa-solid fa-brush"></i></button>
+        </div>
+    </div>
+    <button id="saveAccentColor" class="settings-buttonsaveaccent">
+        <i class="fas fa-save"></i> Save Color
+    </button>
+</div>
+                <div class="content-card">
+                    <h2>Profile Settings</h2>
+                    <div class="settings-section">
+                        <div class="input-group">
+                            <label>First Name</label>
+                            <div class="reading-input">
+                                <input type="text" id="firstName" placeholder="Enter first name">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Last Name</label>
+                            <div class="reading-input">
+                                <input type="text" id="lastName" placeholder="Enter last name">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Email</label>
+                            <div class="reading-input">
+                                <input type="email" id="userEmail" disabled>
+                            </div>
+                        </div>
+                        <button id="updateProfileButton" class="settings-buttonsave">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h2>Change Password</h2>
+                    <div class="settings-section">
+                        <div class="input-group">
+                            <label>Current Password</label>
+                            <div class="reading-input">
+                                <input type="password" id="currentPassword" placeholder="Enter current password">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>New Password</label>
+                            <div class="reading-input">
+                                <input type="password" id="newPassword" placeholder="Enter new password">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Confirm New Password</label>
+                            <div class="reading-input">
+                                <input type="password" id="confirmPassword" placeholder="Confirm new password">
+                            </div>
+                        </div>
+                        <button id="changePasswordButton" class="settings-buttonupdate">
+                            <i class="fas fa-key"></i> Update Password
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h2>Delete Account</h2>
+                    <div class="settings-section">
+                        <p class="warning-text">Warning: This action cannot be undone. All your data will be permanently deleted.</p>
+                        <button id="deleteAccountButton" class="settings-buttondelete danger-button">
+                            <i class="fas fa-trash-alt"></i> Delete Account
+                        </button>
+                    </div>
+                </div>
+                    <div class="content-card">
+                        <h2>About</h2>
+                        
+                    <h3>This Website is made By <a href="https://mmssb.github.io" target="_blank" ><span class="Version">MMS</span></a></h3>
+                    <h4>this Website is made for storing gulocose data of user </h4>
+                </div>
+                <div class="content-card">
+                <div class="content-card1">
+  <div >
+     <div class="wave"></div>
+     <div class="wave"></div>
+     <div class="wave"></div>
+
+  
+            <div class="logov">ST</div>
+            <h1 class="welcomeh1">SugarTrack</h1>
+</div>
+
+
+                </div>
+                </div>
+                <div class="content-card">
+                    <h3>Version: <span class="Version">STV4.0</span></h3>
+                </div>
+            </main>
+        </div>
+    </div>
+<div id="mms-overlay">
+    <a href="https://mmssb.github.io/" target="_blank" rel="noopener noreferrer">
+      <img src="https://mmssb.github.io/assets/images/mmslogo.PNG" alt="MMS Logo" class="mms-logo">
+      <span>Made by MMS</span>
+    </a>
+  </div>
+          <!-- Overlay & Share Menu -->
+  <div id="shareOverlay" class="overlay hidden">
+    <div class="share-menu">
+      <span id="closeBtn" class="close-btn">x</span>
+      <h3>Share this page</h3>
+
+      <!-- Link Bar -->
+      <div class="link-bar">
+        <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com/beta/online/index" />
+        <button id="copyBtn">Copy</button>
+      </div>
+
+      <!-- Social Buttons -->
+      <div class="social-buttons">
+        <a href="#" onclick="shareTo('whatsapp')" class="social-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" onclick="shareTo('facebook')" class="social-icon facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" onclick="shareTo('twitter')" class="social-icon twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" onclick="shareTo('bluesky')" class="social-icon bluesky"><i class="fa-brands fa-bluesky"></i></a>
+        <a href="#" onclick="shareTo('email')" class="social-icon email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="#" onclick="shareTo('gmail')" class="social-icon gmail"><i class="fa-brands fa-google-plus-g"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add these right before the closing </head> tag -->
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="securityFlase.js"></script>
+    <script src="./settings.js"></script>
+        <script src="security.js"></script>
+                <script src="share.js"></script>
+                <script src="accentset.js"></script>
+                <script src="accentcolor.js"></script>
+                
+
+</body>
+</html>
