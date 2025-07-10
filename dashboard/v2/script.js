@@ -84,15 +84,25 @@ nameForm.addEventListener('submit', (e) => {
     }
 });
 
-// When loading the saved name
-const savedName = localStorage.getItem('userName');
-if (savedName) {
-    welcomeScreen.style.display = 'none';
-    appContainer.style.display = 'block';
-    const firstName = localStorage.getItem('userFirstName') || savedName.split(' ')[0];
-    userWelcomeName.textContent = firstName;
-}
-
+// // When loading the saved name
+// const savedName = localStorage.getItem('userName');
+// if (savedName) {
+//     welcomeScreen.style.display = 'none';
+//     appContainer.style.display = 'block';
+//     const firstName = localStorage.getItem('userFirstName') || savedName.split(' ')[0];
+//     userWelcomeName.textContent = firstName;
+// }
+    // Load saved name
+    const savedName = localStorage.getItem('userName');
+    if (savedName) {
+        if (welcomeScreen) welcomeScreen.style.display = 'none';
+        if (appContainer) appContainer.style.display = 'block';
+        
+        const firstName = savedName.split(' ')[0];
+        userWelcomeName.textContent = firstName;
+        userFullNameDisplay.textContent = savedName; // Show full name
+        newNameInput.value = savedName;
+    }
 
 // Load saved readings
 let readings = JSON.parse(localStorage.getItem('glucoseReadings') || '[]');
@@ -535,40 +545,40 @@ function formatTime12Hour(time) {
     return `${hours12}:${minutes} ${period}`;
 }
 
-// Theme switching functionality (add to any .js file)
-document.addEventListener('DOMContentLoaded', () => {
-    // Function to apply the theme
-    function applyTheme(theme) {
-        if (theme === 'system') {
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            document.body.classList.toggle('dark-theme', prefersDark);
-        } else {
-            document.body.classList.toggle('dark-theme', theme === 'dark');
-        }
-    }
+// // Theme switching functionality (add to any .js file)
+// document.addEventListener('DOMContentLoaded', () => {
+//     // Function to apply the theme
+//     function applyTheme(theme) {
+//         if (theme === 'system') {
+//             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+//             document.body.classList.toggle('dark-theme', prefersDark);
+//         } else {
+//             document.body.classList.toggle('dark-theme', theme === 'dark');
+//         }
+//     }
 
-    // Load saved theme or default to 'system'
-    const savedTheme = localStorage.getItem('theme') || 'system';
-    applyTheme(savedTheme);
+//     // Load saved theme or default to 'system'
+//     const savedTheme = localStorage.getItem('theme') || 'system';
+//     applyTheme(savedTheme);
 
-    // If a theme select element exists on the page, set it up
-    const themeSelect = document.getElementById('themeSelect');
-    if (themeSelect) {
-        themeSelect.value = savedTheme;
-        themeSelect.addEventListener('change', () => {
-            const selectedTheme = themeSelect.value;
-            localStorage.setItem('theme', selectedTheme);
-            applyTheme(selectedTheme);
-        });
-    }
+//     // If a theme select element exists on the page, set it up
+//     const themeSelect = document.getElementById('themeSelect');
+//     if (themeSelect) {
+//         themeSelect.value = savedTheme;
+//         themeSelect.addEventListener('change', () => {
+//             const selectedTheme = themeSelect.value;
+//             localStorage.setItem('theme', selectedTheme);
+//             applyTheme(selectedTheme);
+//         });
+//     }
 
-    // Listen for system theme changes (for 'system' setting)
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (localStorage.getItem('theme') === 'system' || !localStorage.getItem('theme')) {
-            applyTheme('system');
-        }
-    });
-});
+//     // Listen for system theme changes (for 'system' setting)
+//     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+//         if (localStorage.getItem('theme') === 'system' || !localStorage.getItem('theme')) {
+//             applyTheme('system');
+//         }
+//     });
+// });
 
 
 // Sidebar functionality remains unchanged

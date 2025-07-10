@@ -5,7 +5,7 @@ const copyBtn = document.getElementById("copyBtn");
 const shareLinkInput = document.getElementById("shareLink");
 
 // Replace this with your actual URL or dynamically set it
-let currentUrl = "http://mmssb.github.io/sugartrack.com/beta/online/index ";
+let currentUrl = "http://mmssb.github.io/sugartrack.com ";
 
 // Open menu
 shareBtn.addEventListener("click", () => {
@@ -54,10 +54,9 @@ function shareTo(platform) {
        
     //    https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Your+Subject+here&body='+msgbody+'&ui=2&tf=1&pli=1
        break;
-           case "bluesky":
+    case "bluesky":
       shareUrl = `https://bsky.app/intent/compose?text=${title}+${url}`;
       break;
-
   }
 
   window.open(shareUrl, "_blank");
