@@ -856,7 +856,8 @@ input:focus, select:focus, .comment:focus {
 .logo {
     width: 4rem;
     height: 4rem;
-    background: var(--primary);
+    background: linear-gradient(#3b82f6, #1d4ed8);
+    /* background: var(--primary); */
     color: white;
     border-radius: 1.4rem;
     display: flex;
@@ -872,6 +873,7 @@ input:focus, select:focus, .comment:focus {
 
 .logo:hover {
     transform: scale(1.05);
+    cursor: pointer;
 }
 
 .logo::after {
@@ -3484,4 +3486,12 @@ background-color: var(--primary);
 background-color: var(--primary);
   float:right; 
   margin-right:0.5rem;
+}
+
+
+.back{
+
+position: absolute;
+font-size: larger;
+
 }
