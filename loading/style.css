@@ -3489,9 +3489,11 @@ background-color: var(--primary);
 }
 
 
-.back{
+.back, .fa-arrow-left{
 
 position: absolute;
-font-size: larger;
+font-size: large;
+font-weight:900;
+color: #000000;
 
 }
