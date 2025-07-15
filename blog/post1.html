@@ -69,6 +69,12 @@
     <p>SugarTrack was born from a simple yet powerful idea: diabetes management should be accessible, intuitive, and effective for everyone. After months of development and testing with real users, we've created a solution that combines essential tracking features with a user-friendly interface.</p>
     
     <h2>Key Features of Version 1.0</h2>
+    <a  data-fancybox="gallery" data-src="../images/dashboard.png" class="fancybox" data-caption="STV1.0 Dashboard">
+    <img src="../images/dashboard.png" alt="Understanding Glucose Levels" class="blog-post-image"></a>
+   
+    <!-- <img src="../images/dashboard.png" alt="Understanding Glucose Levels" class="blog-post-image" onclick="openModal('../images/dashboard.png')"> -->
+
+
     <h3>1. Comprehensive Glucose Tracking</h3>
     <p>Log your blood sugar readings with timestamps, notes, and contextual information to identify patterns and trends.</p>
     
@@ -104,18 +110,18 @@
     
     <p>We invite you to try SugarTrack and share your feedback. Together, we can build tools that make diabetes management simpler and more effective for everyone.</p>
     
-    <div class="author-box">
+    <!-- <div class="author-box">
         <img src="../images/logo (15).png" alt="" class="author-avatar">
         <div class="author-info">
             <h4>SugarTrack</h4>
             <h6>Website</h6>
             <p>Empowering diabetes management through simple, effective technology.</p>
             <div class="author-social">
-                <!-- Social links would go here -->
+
             </div>
         </div>
     </div>
-</div>
+</div> -->
         
         <!-- <div class="related-posts">
             <h3>You Might Also Like</h3>
@@ -193,12 +199,65 @@
             </div>
         </div>
     </footer>
-
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
     <script src="../script.js"></script>
 
 
-    <!-- Binance Pay Button -->
+<!-- <script>
+    function openModal(imageSrc) {
+    let modal = document.getElementById("myModal");
+    let modalImg = document.getElementById("modalImage");
+    modal.style.display = "block";
+    modalImg.src = imageSrc;
+}
+function closeModal() {
+    let modal = document.getElementById("myModal");
+    modal.style.display = "none";
+}
+</script> -->
+<script>
+    $('[data-fancybox="gallery"]').fancybox({
+  buttons: [
+    "slideShow",
+    "thumbs",
+    "zoom",
+    "fullScreen",
+    "share",
+    "close"
+  ],
+  loop: false,
+  protect: true
+});
+ const options = {
+  Carousel: {
+    Thumbs: true,
+    Toolbar: {
+      display: {
+        left: [],
+        middle: [],
+        right: ["close"],
+      },
+    },
+    Zoomable: {
+      Panzoom: {
+        maxScale: "cover",
+        panMode: "mousemove",
+        mouseMoveFactor: 1.1,
+      },
+    },
+  },
+};
+</script>
+<script>
+   
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
+<link href="../fancybox/dist/jquery.fancybox.min.css" rel="stylesheet" />
+<script src="../fancybox/dist/jquery.fancybox.min.js"></script>
 
 
 </body>
