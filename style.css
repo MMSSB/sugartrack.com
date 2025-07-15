@@ -1647,3 +1647,9 @@ footer {
 .inboxtitle{
   display: inline-flex;
 }
+
+
+ .fancybox{
+    cursor: pointer;
+ }
+
