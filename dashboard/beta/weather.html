@@ -63,11 +63,45 @@
                     <span class="menu-text">Settings</span>
                 </a>
             </div>
-            <div class="sidebar-footer">
+            <!-- <div class="sidebar-footer">
                 <button class="buttonlogout" id="logoutButton">
                     <i class="fas fa-sign-out-alt"></i>
                     <span class="menu-text">Logout</span>
-                </button>
+                </button> -->
+                <div class="sidebar-footer">
+    <div class="user-badge" id="userBadge">
+        <img class="user-badge-avatar" id="userBadgeAvatar" src="" alt="User Avatar">
+        <span class="user-badge-name" id="userBadgeName">Loading...</span>
+        <!-- <i class="fas fa-chevron-down user-badge-arrow"></i> -->
+    </div>
+    
+    <!-- Submenu Wrap -->
+    <div class="sub-menu-wrap">
+        <div class="sub-menu">
+            <div class="user-info">
+                <img id="submenuUserAvatar" src="" alt="User">
+                <div>
+                    <h4 id="submenuUserName">User Name</h4>
+                    <p id="submenuUserEmail">user@example.com</p>
+                </div>
+            </div>
+            <hr>
+            <a href="profile.html" class="sub-menu-link">
+                <i class="fas fa-user"></i>
+                <p>My Profile</p>
+                <span>&gt;</span>
+            </a>
+            <a href="settings.html" class="sub-menu-link">
+                <i class="fas fa-cog"></i>
+                <p>Settings</p>
+                <span>&gt;</span>
+            </a>
+
+            <button class="sub-menubuttonlogout" id="logoutButton">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span >Logout</span>
+
+                </button> 
             </div>
         </nav>
 
@@ -103,7 +137,8 @@
                         <div class="search-box">
                             <input type="text" id="city-search" placeholder="Search for a city..." autocomplete="off">
                             <button id="search-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> -->
                             </button>
                         </div>
                         <div class="location-toggle">
@@ -222,7 +257,7 @@
 
                 <!-- Link Bar -->
                 <div class="link-bar">
-                    <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com/beta/online/index" />
+                    <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com"/>
                     <button id="copyBtn">Copy</button>
                 </div>
 
@@ -247,7 +282,8 @@
     <script src="share.js"></script>
     <script src="weather.js"></script>
             <script src="accentcolor.js"></script>
-        <script src="accentcolor.js"></script>
+        <script src="menu.js"></script>
+        <script src="profile/user-badge.js"></script>
 
 
     <!-- Add these in the head section -->

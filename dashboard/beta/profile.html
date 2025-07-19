@@ -1,19 +1,26 @@
-
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="images/sugar.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - SugarTrack</title>
+    <title>SugarTrack</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="fontawesome-free-6.7.2-web/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="securityFlase.js"></script>
 </head>
 <body oncontextmenu="return false;">
 
-
-    <div class="app-container" id="appContainer">
+    <div class="app-container" id="appContainer" style="display: none;">
         <!-- Mobile Hamburger Button -->
         <button class="hamburger-btn mobile-only">
             <i class="fas fa-bars"></i>
@@ -32,6 +39,7 @@
 
             </div>
             <hr>
+            
             <div class="sidebar-menu">
                 <a href="index.html" class="menu-item ">
                     <i class="fas fa-home"></i>
@@ -53,15 +61,14 @@
                     <i class="fas fa-inbox"></i>
                     <span class="menu-text">Inbox & Updates</span>
                 </a>
-                                <a href="profile.html" class="menu-item ">
+                 <a href="profile.html" class="menu-item active">
                     <i class="fas fa-user"></i>
                     <span class="menu-text">profile</span>
                 </a>
-                <a href="settings.html" class="menu-item active">
+                <a href="settings.html" class="menu-item">
                     <i class="fas fa-cog"></i>
                     <span class="menu-text">Settings</span>
                 </a>
-                
             </div>
 <div class="sidebar-footer">
     <div class="user-badge" id="userBadge">
@@ -91,16 +98,11 @@
                 <p>Settings</p>
                 <span>&gt;</span>
             </a>
-            <!-- <button class="sub-menu-link" id="logoutButton">
-                <i class="fas fa-sign-out-alt"></i>
-                <p>Logout</p>
-                <span>&gt;</span>
-            </button> -->
-            <!-- <button class="buttonlogout" id="logoutButton"> -->
+
             <button class="sub-menubuttonlogout" id="logoutButton">
                     <i class="fas fa-sign-out-alt"></i>
                     <span >Logout</span>
-                    <!-- <span class="menu-text">Logout</span> -->
+
                 </button> 
         <!-- </div> -->
     </div>
@@ -111,95 +113,98 @@
         <!-- Main Content Area -->
         <div class="main-content">
             <nav class="top-nav">
+                
                 <div class="nav-content">
                     <div class="nav-left">
-                        <button class="toggle-collapse desktop-only">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                    <a href="index.html"><div class="logo mobile-only">ST</div></a>
-     <!-- <a href="settings.html"><span>Hey, <span id="userWelcomeName"></span></span>   </a>       -->
-<div class="user-welcome">Hey, <span id="userWelcomeName"></span></div>
-                               <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
-           
-                    </div>
+<!-- In your index.html, keep the toggle button simple -->
+<button class="toggle-collapse desktop-only">
+    <i class="fas fa-chevron-left"></i>
+</button>
+                    <div class="logo mobile-only">ST</div>
+     <div class="user-welcome">Hey, <span id="userWelcomeName"></span></div>  
+                                        <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
+
+    </div>
                     <div class="nav-right">
-                        <!-- <span id="currentDateTime"></span>
-                        <span id="readingsCount">0 Readings</span> -->
+                        
+                        <!-- <span id="currentDateTime"></span> -->
+                        <!-- <span id="readingsCount">0 Readings</span> -->
                     </div>
                 </div>
             </nav>
+            <!-- <hr> -->
+            
 
             <main>
-                <!-- <div class="content-card">
-                                              <div class="content-card">
-                    <h2>Profile Picture</h2>
-                    <p class="subtitle">Select an avatar for your account</p>
-                    
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label>Current Profile Picture</label>
+
+
+                <!-- <div class="content-card"> -->
+                    <!-- <div class="input-row">
+                        <div class="input-group"> -->
+
+
+
+
+<!-- For displaying the profile image -->
+<!-- <div class="profile-image-container">
+  <img class="profile-image" id="profileImageDisplay" src="" alt="Profile Image">
+</div> -->
+
+
+                            <!-- </div> -->
+                        <!-- </div>
+                    </div> -->
+                            <div class="content-card">
+                                                    <!-- <h2>Profile Picture</h2> -->
+                    <!-- <p class="subtitle">Select an avatar for your account</p> -->
+                            <!-- <label>Current Profile Picture</label> -->
+                            <!-- <div class="input-row">
+                        <div class="input-group"> -->
                             <div class="profile-image-container">
+                                
                                 <img id="currentProfileImage" src="" alt="Current Profile Image" class="profile-image">
-                            </div>
+
+     
+
+              <div>    
+    <!-- For displaying the name -->
+<h1 class="user-name-display" id="userNameDisplay"> Loading name...</h1>
+<h4 class="user-name-display" id="UserEmailDisplay"> Loading ...</h4>
+</div>         
+</div>
+</div>
+                                                        <!-- <div class="content-card">
+
+                    </div> -->
+<div class="content-card">
+    <div class="input-row">
+        <div class="input-group">
+            <label>Select New Avatar</label>
+            <button id="openAvatarModal" class="settings-buttonedit">
+            <!-- <button id="openAvatarModal" class="settings-buttonupdate"> -->
+                <i class="fas fa-user-edit"></i> Choose Avatar
+            </button>
+            
+
+        
+
+
+                  <h6 style="color: red;">*if the Profile not showing or the image select is not changed refreh page or click Refresh Button*</h6>     
+                </div>
+                
                         </div>
-                    </div>
+                                            <button class="refreshbutton" id="refreshButton">Refresh</button>
+</div>
                     
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label>Select New Avatar</label>
-                            <div class="avatar-grid" id="avatarGrid">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="actions-row">
+                    <!-- <div class="actions-row">
                         <button id="saveProfileImage" class="settings-buttonsave">
                             <i class="fas fa-save"></i> Save Changes
                         </button>
                     </div>
-                </div>   
-                </div> -->
+                </div>    -->
+
+
                 <div class="content-card">
-                    <h2>Settings</h2>
-                    <div class="input-group">
-                        <label for="themeSelect">Theme</label>
-                        <select id="themeSelect">
-                            <option value="system">System Default</option>
-                            <option value="light">Light Mode</option>
-                            <option value="dark">Dark Mode</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="content-card">
-    <h2>Accent Color</h2>
-    <div class="input-group">
-        <label for="accentColor">Choose your accent color</label>
-        <input type="color" id="accentColor" value="#3b82f6">
-        
-        <div class="color-presets">
-            <!-- <button style="background-color: #3b82f6;" class="color-preset" data-color="#3b82f6"><i class="fa-solid fa-palette"></i> Default</button>
-            <button style="background-color: #ef4444;" class="color-preset" data-color="#ef4444"><i class="fa-solid fa-brush"></i> Red</button>
-            <button style="background-color: #10b981;" class="color-preset" data-color="#10b981"><i class="fa-solid fa-brush"></i> Green</button>
-            <button style="background-color: #8b5cf6;" class="color-preset" data-color="#8b5cf6"><i class="fa-solid fa-brush"></i> Purple</button>
-            <button style="background-color: #ec4899;" class="color-preset" data-color="#ec4899"><i class="fa-solid fa-brush"></i> Pink</button>
-            <button style="background-color: #f59e0b;" class="color-preset" data-color="#f59e0b"><i class="fa-solid fa-brush"></i> Orange</button>
-            <button style="background-color: #ffd000;" class="color-preset" data-color="#ffd000"><i class="fa-solid fa-brush"></i> Yellow</button> -->
-            <button style="background-color: #3b82f6;" class="color-preset" data-color="#3b82f6"><i class="fa-solid fa-palette"></i></button>
-            <button style="background-color: #ef4444;" class="color-preset" data-color="#ef4444"><i class="fa-solid fa-brush"></i></button>
-            <button style="background-color: #10b981;" class="color-preset" data-color="#10b981"><i class="fa-solid fa-brush"></i></button>
-            <button style="background-color: #8b5cf6;" class="color-preset" data-color="#8b5cf6"><i class="fa-solid fa-brush"></i></button>
-            <button style="background-color: #ec4899;" class="color-preset" data-color="#ec4899"><i class="fa-solid fa-brush"></i></button>
-            <button style="background-color: #f59e0b;" class="color-preset" data-color="#f59e0b"><i class="fa-solid fa-brush"></i></button>
-            <button style="background-color: #ffd000;" class="color-preset" data-color="#ffd000"><i class="fa-solid fa-brush"></i></button>
-            <button style="background-color: #b6b6b6;" class="color-preset" data-color="#b6b6b6"><i class="fa-solid fa-brush"></i></button>
-            <button style="background-color: #000000;" class="color-preset" data-color="#000000"><i class="fa-solid fa-brush"></i></button>
-        </div>
-    </div>
-    <button id="saveAccentColor" class="settings-buttonsaveaccent">
-        <i class="fas fa-save"></i> Save Color
-    </button>
-</div>
-                <!-- <div class="content-card">
                     <h2>Profile Settings</h2>
                     <div class="settings-section">
                         <div class="input-group">
@@ -261,40 +266,12 @@
                             <i class="fas fa-trash-alt"></i> Delete Account
                         </button>
                     </div>
-                </div> -->
-                    <div class="content-card">
-                        <h2>About</h2>
-                        
-                    <h3>This Website is made By <a href="https://mmssb.github.io" target="_blank" ><span class="Version">MMS</span></a></h3>
-                    <h4>this Website is made for storing gulocose data of user </h4>
                 </div>
-                <div class="content-card">
-                <div class="content-card1">
-  <div >
-     <div class="wave"></div>
-     <div class="wave"></div>
-     <div class="wave"></div>
-
-  
-            <div class="logov">ST</div>
-            <h1 class="welcomeh1">SugarTrack</h1>
-</div>
 
 
-                </div>
-                </div>
-                <div class="content-card">
-                    <h3>Version: <span class="Version">STV4.0</span></h3>
-                </div>
             </main>
         </div>
-    </div>
-<div id="mms-overlay">
-    <a href="https://mmssb.github.io/" target="_blank" rel="noopener noreferrer">
-      <img src="https://mmssb.github.io/assets/images/mmslogo.PNG" alt="MMS Logo" class="mms-logo">
-      <span>Made by MMS</span>
-    </a>
-  </div>
+
           <!-- Overlay & Share Menu -->
   <div id="shareOverlay" class="overlay hidden">
     <div class="share-menu">
@@ -318,23 +295,57 @@
       </div>
     </div>
   </div>
+  
 
-  <!-- Add these right before the closing </head> tag -->
-<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
-    <script src="securityFlase.js"></script>
-    <script src="./settings.js"></script>
+
+  <!-- Add this modal structure before the closing </body> tag in profile.html -->
+<div id="avatarModal" class="avatar-modal hidden">
+    <div class="avatar-modal-content">
+        <div class="avatar-modal-header">
+            <h3>Select Your Avatar</h3>
+            <span style="font-size: 2rem;" class="close-modal">&times;</span>
+        </div>
+        <div class="avatar-modal-body">
+            <div class="avatar-grid" id="avatarGridModal">
+                <!-- Avatars will be loaded dynamically here -->
+            </div>
+        </div>
+        <div class="avatar-modal-footer">
+            <button id="saveProfileImageModal" class="settings-buttonsave">
+                <i class="fas fa-save"></i> Save Changes
+            </button>
+            <!-- <button class="settings-buttonupdate close-modal"> -->
+            <button class="settings-buttoncancel close-modal">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modify the existing avatar selection button in profile.html -->
+
+    <script src="./history.js"></script>
         <script src="security.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="suggesth.js"></script>
+        <script src="sidebar.js"></script>
                 <script src="share.js"></script>
-                <script src="accentset.js"></script>
-                <script src="accentcolor.js"></script>
-                <!-- <script src="profile/profile.js"></script> -->
-                <script src="profile/user-badge.js"></script>
-                <!-- <script src="./history.js"></script> -->
-                 <script src="menu.js"></script>
-                
+                        <script src="accentcolor.js"></script>
+                <script src="profile/profile.js"></script>
 
+<script>
+            const refreshButton = document.getElementById('refreshButton');
 
+        refreshButton.addEventListener('click', () => {
+            location.reload();
+        });
+</script>
+
+<script src="profile/user-badge.js"></script>
+<!-- Add these in the head section -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="menu.js"></script>
 </body>
 </html>

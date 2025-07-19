@@ -66,11 +66,40 @@
                     <span class="menu-text">Settings</span>
                 </a>
             </div>
-            <div class="sidebar-footer">
-                <button class="buttonlogout" id="logoutButton">
+<div class="sidebar-footer">
+    <div class="user-badge" id="userBadge">
+        <img class="user-badge-avatar" id="userBadgeAvatar" src="" alt="User Avatar">
+        <span class="user-badge-name" id="userBadgeName">Loading...</span>
+        <!-- <i class="fas fa-chevron-down user-badge-arrow"></i> -->
+    </div>
+    
+    <!-- Submenu Wrap -->
+    <div class="sub-menu-wrap">
+        <div class="sub-menu">
+            <div class="user-info">
+                <img id="submenuUserAvatar" src="" alt="User">
+                <div>
+                    <h4 id="submenuUserName">User Name</h4>
+                    <p id="submenuUserEmail">user@example.com</p>
+                </div>
+            </div>
+            <hr>
+            <a href="profile.html" class="sub-menu-link">
+                <i class="fas fa-user"></i>
+                <p>My Profile</p>
+                <span>&gt;</span>
+            </a>
+            <a href="settings.html" class="sub-menu-link">
+                <i class="fas fa-cog"></i>
+                <p>Settings</p>
+                <span>&gt;</span>
+            </a>
+
+            <button class="sub-menubuttonlogout" id="logoutButton">
                     <i class="fas fa-sign-out-alt"></i>
-                    <span class="menu-text">Logout</span>
-                </button>
+                    <span >Logout</span>
+
+                </button> 
             </div>
         </nav>
 
@@ -89,6 +118,7 @@
                                         <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
 
     </div>
+    
                     <div class="nav-right">
                         
                         <!-- <span id="currentDateTime"></span> -->
@@ -117,6 +147,33 @@
                     <img src="images/welcometosugar4.png" width="100%" style="border-radius: 1.5rem;" alt="">
 
                 </div>
+                <div class="content-card">
+  <h2 class="inboxtitle">
+    <!-- <img src="images/logo (15).png" class="stinbox" alt="Logo"> -->
+<div class="logo2">ST</div>
+    SugarTrack
+  </h2>
+<h3>New Update STV4.0 😉👍</h3>
+  <div class="actions-row">
+        <div class="content-wrap">
+    <!-- <div class="wrapper"> -->
+    <!-- <h3>Hi Welcome to SugarTrack I hope you enjoy 😉👍</h3> -->
+    <ul>
+    <li>Added Profile Account</li>
+   <li>Added New Profile Images</li>
+   <li>New changes in Ui</li>
+   </ul>
+  <div class="actions-row">
+   <h3>SugarTrack Version: 4.0</h3>
+  <div class="actions-row">
+               <img src="images/stv4.0.png" style="align-content: center; border-radius: 1.5rem;" width="100%"  alt="SugarTrack Version: 4.0" title="STV4.0">
+
+        </div>
+  </div>
+</div>
+  </div>
+</div>
+
      
 
 <div class="content-card">
@@ -195,7 +252,7 @@
 
       <!-- Link Bar -->
       <div class="link-bar">
-        <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com/beta/online/index" />
+        <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com"/>
         <button id="copyBtn">Copy</button>
       </div>
 
@@ -220,7 +277,8 @@
                         <script src="accentcolor.js"></script>
 
 
-
+<script src="profile/user-badge.js"></script>
+<script src="menu.js"></script>
 
 <!-- Add these in the head section -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>

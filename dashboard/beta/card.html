@@ -49,15 +49,15 @@
                     <i class="fas fa-user-doctor"></i>
                     <span class="menu-text">Doctors</span>
                 </a>
-                      <a href="weather.html" class="menu-item ">
+                    <a href="weather.html" class="menu-item ">
                     <i class="fas fa-cloud-sun"></i>
                     <span class="menu-text">Weather Forecast</span>
                 </a>
-                    <a href="history.html" class="menu-item active">
+                    <a href="history.html" class="menu-item ">
                     <i class="fas fa-history"></i>
                     <span class="menu-text">History</span>
                 </a>
-                    <a href="inbox.html" class="menu-item ">
+                    <a href="inbox.html" class="menu-item">
                     <i class="fas fa-inbox"></i>
                     <span class="menu-text">Inbox & Updates</span>
                 </a>
@@ -66,7 +66,7 @@
                     <span class="menu-text">Settings</span>
                 </a>
             </div>
-<div class="sidebar-footer">
+            <div class="sidebar-footer">
     <div class="user-badge" id="userBadge">
         <img class="user-badge-avatar" id="userBadgeAvatar" src="" alt="User Avatar">
         <span class="user-badge-name" id="userBadgeName">Loading...</span>
@@ -129,113 +129,59 @@
             
 
             <main>
-                <!-- <div class="content-card">
-                    <h3 style="color: red;">Note*</h3>
-                    
-<a href="settings.html"><h4>if you want to change your name go to <span style="color: #3b82f6;">Settings</span></h4></a>
-<h5>the name you change it will change in pdf and image export </h5>
-<h5>i hope you enjoy 😉</h5>
-</div> -->
-                                <div class="content-card">
-                    <h2>Glucose Readings</h2>
-                        <span id="currentDateTime"></span>
-                        <h2 id="readingsCount">0 Readings</h2>  
-                        <div id="trendsChart"></div>
-                </div>
-                <!-- <div class="content-card">
-    <h2>AI Glucose Suggestions</h2>
-    <p class="subtitle" id="trendsMessage">Add at least two readings for suggestions</p>
-    <div id="trendsChart"></div>
-</div> -->
+            
+<div class="profile-card">
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <img id="profileAvatar" src="" alt="Profile Picture">
 
-<!-- <div class="content-card">
-  <h2>AI Glucose Insights</h2>
-  <div id="trendsChart"></div>
-</div> -->
+    </div>
+    <div class="profile-info">
+      <h2 class="cardtext" id="profileFullName">Loading...</h2>
+      <p id="profileEmail">user@example.com</p>
+    </div>
+  </div>
+  
+  <div class="profile-details">
+    <div class="detail-item">
+      <i class="fas fa-user-tag"></i>
+      <div>
+        <span>Username</span>
+        <p id="profileUsername">@username</p>
+      </div>
+    </div>
+    <div class="detail-item">
+      <i class="fas fa-calendar-alt"></i>
+      <div>
+        <span>Member since</span>
+        <p id="profileJoinDate">January 2023</p>
+      </div>
+    </div>
+    <div class="detail-item">
+      <i class="fas fa-history"></i>
+      <div>
+        <span>Last active</span>
+        <p id="profileLastActive">Just now</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- <div class="profile-actions">
+    <button class="profile-action-btn" id="editProfileBtn">
+      <i class="fas fa-user-edit"></i> Edit Profile
+    </button> -->
+    <!-- <button class="profile-action-btn secondary" id="accountSettingsBtn">
+      <i class="fas fa-cog"></i> Account Settings
+    </button> -->
+  </div>
+</div>
 
-     
-                <div class="content-card">
-                    <h2>Save History</h2>
-                    <p class="subtitle"></p>
-                    <!-- <div class="input-row"> -->
-                        <!-- <div class="input-group">
-                            <label>Date & Time</label>
-                            <div class="date-time-inputs">
-                                <input type="date" id="date">
-                                <input type="time" id="time">
-                            </div>
-                        </div> -->
-                        <!-- <div class="input-group">
-                            <label>Glucose Reading (mg/dL)</label>
-                            <div class="reading-input">
-                                <input type="number" max="-" id="glucose" placeholder="Enter glucose value">
-                                <button id="addReading">Add</button>
-                            </div>
-                        </div> -->
-                        <!-- <div class="input-group">
-                            <label>Comment (Optional)</label>
-                            <input class="comment" type="text" id="comment" placeholder="Add a comment or note">
-                        </div>
-                    </div> -->
 
-                    <div class="actions-row">
-                        <!-- <button id="resetButton" class="reset-button">
-                            <i class="fas fa-redo"></i> Reset
-                        </button> -->
-                        <div class="export-buttons">
-                            <button id="importButton">
-                                <i class="fas fa-file-import"></i> Import
-                            </button>
-                            <input type="file" id="fileInput" accept=".diab" style="display: none;">
-                            <button id="saveButton">
-                                <i class="fas fa-save"></i> Save
-                            </button>
-                            <button id="exportImage">
-                                <i class="fas fa-image"></i> Image
-                            </button>
-                            <button id="exportPDF">
-                                <i class="fas fa-file-pdf"></i> PDF
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="content-card">
-                    <h2>Readings</h2>
-                    <div class="readings-list" id="readingsList"></div>
-                </div>
-
-                <!-- <div class="content-card">
-                    <h2>Glucose Trends</h2>
-                    <p class="subtitle" id="trendsMessage">Add at least two readings to see your trends</p>
-                    <div id="trendsChart"></div>
-                </div> -->
             </main>
         </div>
 
-        <!-- Hidden export template -->
-        <div id="exportContent" class="export-template">
-            <h1 id="exportTitle"></h1>
-            <table id="exportTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Glucose (mg/dL)</th>
-                        <th>Comment</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-    </div>
-<!-- <div id="mms-overlay">
-    <a href="https://mmssb.github.io/" target="_blank" rel="noopener noreferrer">
-      <img src="https://mmssb.github.io/assets/images/mmslogo.PNG" alt="MMS Logo" class="mms-logo">
-      <span>Made by MMS</span>
-    </a>
-  </div> -->
-            <!-- Overlay & Share Menu -->
+          <!-- Overlay & Share Menu -->
   <div id="shareOverlay" class="overlay hidden">
     <div class="share-menu">
       <span id="closeBtn" class="close-btn">x</span>
@@ -258,17 +204,21 @@
       </div>
     </div>
   </div>
+  
     <script src="./history.js"></script>
         <script src="security.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="suggesth.js"></script>
         <script src="sidebar.js"></script>
-                <script src="accentcolor.js"></script>
-
-
                 <script src="share.js"></script>
-        <script src="menu.js"></script>
-        <script src="profile/user-badge.js"></script>
+                        <script src="accentcolor.js"></script>
+
+
+<script src="profile/user-badge.js"></script>
+<script src="menu.js"></script>
+<script src="profile-card.js"></script>
+
+
 <!-- Add these in the head section -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
