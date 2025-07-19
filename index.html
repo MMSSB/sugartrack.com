@@ -156,7 +156,7 @@
                 <p>SugarTrack was created to simplify diabetes management for everyone. Our mission is to provide accessible tools that help users understand their glucose patterns without complexity or high costs.</p>
                 <p>With over 10,000 active users, we're committed to privacy-first design and continuous improvement based on real user feedback.</p>
                 <div class="stats">
-                    <div class="stat">
+<!--                     <div class="stat">
                         <div class="number">10K+</div>
                         <div class="label">Active Users</div>
                     </div>
@@ -167,7 +167,40 @@
                     <div class="stat">
                         <div class="number">100%</div>
                         <div class="label">Secure</div>
-                    </div>
+                    </div> -->
+                        <div class="stat">
+      <div class="number" 
+           data-target="10" 
+           data-speed="2000" 
+           data-prefix="" 
+           data-suffix="K+" 
+           data-decimals="0">
+        0
+      </div>
+      <div class="label">Active Users</div>
+    </div>
+    <div class="stat">
+      <div class="number" 
+           data-target="100" 
+           data-speed="1500" 
+           data-prefix="" 
+           data-suffix="%" 
+           data-decimals="0">
+        0
+      </div>
+      <div class="label">Offline Access in Version 1.0 & 2.0</div>
+    </div>
+    <div class="stat">
+      <div class="number" 
+           data-target="100" 
+           data-speed="1500" 
+           data-prefix="" 
+           data-suffix="%" 
+           data-decimals="0">
+        0
+      </div>
+      <div class="label">Secure</div>
+    </div>
                 </div>
             </div>
         </div>
@@ -228,5 +261,28 @@
 
     <script src="script.js"></script>
     <script src="logo-slider.js"></script>
+      <script>
+    document.querySelectorAll('.number').forEach(element => {
+      const target = parseFloat(element.getAttribute('data-target')) || 10000;
+      const speed = parseInt(element.getAttribute('data-speed')) || 2000; // Duration in ms
+      const prefix = element.getAttribute('data-prefix') || '';
+      const suffix = element.getAttribute('data-suffix') || '';
+      const decimals = parseInt(element.getAttribute('data-decimals')) || 0;
+
+      let current = 0;
+      const increment = target / (speed / 16); // Approx 60fps
+      const update = () => {
+        current += increment;
+        if (current >= target) {
+          current = target; // Stop exactly at target
+          element.textContent = prefix + current.toFixed(decimals) + suffix;
+        } else {
+          element.textContent = prefix + current.toFixed(decimals) + suffix;
+          requestAnimationFrame(update);
+        }
+      };
+      requestAnimationFrame(update);
+    });
+  </script>
 </body>
 </html>
