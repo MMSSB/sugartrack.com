@@ -352,6 +352,12 @@ button,
     justify-content: center;
     font-weight: bold;
     flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+
+.sidebar-header .logo2:hover {
+    transform: scale(1.2);
 }
 
 .app-name {
