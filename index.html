@@ -23,6 +23,9 @@
                 <a href="blog.html">Blog</a>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfkX90s1BrOsiEEH8Go9vOB5MCD1_ypeWL4RjqoP9nZm3ZHhQ/viewform?usp=dialog">Contact Us</a>
                 <a href="loading3.html" class="login"><i class="fas fa-user"></i> Login</a>
+                <!-- <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support me ', '#3b82f6', 'K3K81IHYZC');kofiwidget2.draw();</script>  -->
+                <a href="https://ko-fi.com/mmssb" class="login" target="_blank"><i class="fa-solid fa-mug-hot"></i> Support Me</a>
+
             </div>
             <button class="menu-toggle">
                 <!-- <i class="fas fa-bars"></i> -->
@@ -134,7 +137,7 @@
                     <ul>
                         <li><i class="fas fa-check"></i> Everything in V1.0 & 2.0</li>
                         <li><i class="fas fa-check"></i> Data backups</li>
-                        <li><i class="fas fa-check"></i><img src="images/shines0.png" style="width: 20px;" alt=""> Ai suggesion</li>
+                        <li><i class="fas fa-check"></i><img src="images/shines.png" style="width: 20px;" alt=""> Ai suggesion</li>
                         <li><i class="fas fa-check"></i> weather app</li>
                         <li><i class="fas fa-check"></i> Database online</li>
                         <li><i class="fas fa-check"></i> Advanced analytics</li>
@@ -156,7 +159,7 @@
                 <p>SugarTrack was created to simplify diabetes management for everyone. Our mission is to provide accessible tools that help users understand their glucose patterns without complexity or high costs.</p>
                 <p>With over 10,000 active users, we're committed to privacy-first design and continuous improvement based on real user feedback.</p>
                 <div class="stats">
-<!--                     <div class="stat">
+                    <div class="stat">
                         <div class="number">10K+</div>
                         <div class="label">Active Users</div>
                     </div>
@@ -167,40 +170,7 @@
                     <div class="stat">
                         <div class="number">100%</div>
                         <div class="label">Secure</div>
-                    </div> -->
-                        <div class="stat">
-      <div class="number" 
-           data-target="10" 
-           data-speed="2000" 
-           data-prefix="" 
-           data-suffix="K+" 
-           data-decimals="0">
-        0
-      </div>
-      <div class="label">Active Users</div>
-    </div>
-    <div class="stat">
-      <div class="number" 
-           data-target="100" 
-           data-speed="1500" 
-           data-prefix="" 
-           data-suffix="%" 
-           data-decimals="0">
-        0
-      </div>
-      <div class="label">Offline Access in Version 1.0 & 2.0</div>
-    </div>
-    <div class="stat">
-      <div class="number" 
-           data-target="100" 
-           data-speed="1500" 
-           data-prefix="" 
-           data-suffix="%" 
-           data-decimals="0">
-        0
-      </div>
-      <div class="label">Secure</div>
-    </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -217,6 +187,7 @@
   </div>
 </div>
 </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -259,30 +230,24 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
-    <script src="logo-slider.js"></script>
-      <script>
-    document.querySelectorAll('.number').forEach(element => {
-      const target = parseFloat(element.getAttribute('data-target')) || 10000;
-      const speed = parseInt(element.getAttribute('data-speed')) || 2000; // Duration in ms
-      const prefix = element.getAttribute('data-prefix') || '';
-      const suffix = element.getAttribute('data-suffix') || '';
-      const decimals = parseInt(element.getAttribute('data-decimals')) || 0;
+<script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('mmssb', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': 'Support Me',
+    'floating-chat.donateButton.background-color': '#3b82f6',
+    'floating-chat.donateButton.text-color': '#fff'
 
-      let current = 0;
-      const increment = target / (speed / 16); // Approx 60fps
-      const update = () => {
-        current += increment;
-        if (current >= target) {
-          current = target; // Stop exactly at target
-          element.textContent = prefix + current.toFixed(decimals) + suffix;
-        } else {
-          element.textContent = prefix + current.toFixed(decimals) + suffix;
-          requestAnimationFrame(update);
-        }
-      };
-      requestAnimationFrame(update);
-    });
-  </script>
+  });
+</script>
+<style>
+        .floatingchat-container-wrap { left: unset; right: 10px; width: 50%; }
+    .floatingchat-container-wrap-mobi { left: unset; right: 10px; width: 50%;}
+    .floating-chat-kofi-popup-iframe { left: unset; right: 10px; }
+    .floating-chat-kofi-popup-iframe-mobi { left: unset; right: 10px; }
+    .floating-chat-kofi-popup-iframe-closer-mobi { left: unset; right: 10px; }
+</style>
+<script src="script.js"></script>
+    <script src="logo-slider.js"></script>
 </body>
 </html>
