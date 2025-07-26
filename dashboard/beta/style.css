@@ -331,7 +331,7 @@ button,
         height: 3rem;
         background: var(--primary);
         color: white;
-        border-radius: 0.75rem;
+        border-radius: 1.1rem;
         display: flex;
         align-items: center;
         justify-content: center;
