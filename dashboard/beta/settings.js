@@ -332,7 +332,40 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-    
+    // Make sure this code runs after Firebase is initialized
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        // Load user data from Firestore
+        db.collection('users').doc(user.uid).get()
+            .then((doc) => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    
+                    // Update profile image
+                    const profileImage = document.getElementById('currentProfileImage');
+                    if (profileImage) {
+                        profileImage.src = userData.profileImage || 'images/user.png';
+                    }
+                    
+                    // Update name display
+                    const userNameDisplay = document.getElementById('userNameDisplay');
+                    if (userNameDisplay) {
+                        const fullName = [userData.firstName, userData.lastName].filter(Boolean).join(' ');
+                        userNameDisplay.textContent = fullName || user.email.split('@')[0];
+                    }
+                    
+                    // Update email display
+                    const userEmailDisplay = document.getElementById('UserEmailDisplay');
+                    if (userEmailDisplay) {
+                        userEmailDisplay.textContent = user.email;
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error('Error loading user data:', error);
+            });
+    }
+});
     // Close sidebar when clicking outside on mobile
     document.addEventListener('click', (e) => {
         if (window.matchMedia('(max-width: 992px)').matches) {

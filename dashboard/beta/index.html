@@ -44,28 +44,38 @@
                     <i class="fas fa-home"></i>
                     <span class="menu-text">Dashboard</span>
                 </a>
-                <a href="doctors.html" target="" class="menu-item ">
+                <a href="doctors.html" class="menu-item">
                     <i class="fas fa-user-doctor"></i>
                     <span class="menu-text">Doctors</span>
                 </a>
-                                    <a href="weather.html" class="menu-item ">
+                <a href="weather.html" class="menu-item">
                     <i class="fas fa-cloud-sun"></i>
                     <span class="menu-text">Weather Forecast</span>
                 </a>
-
-                    <a href="history.html" class="menu-item ">
+                <a href="history.html" class="menu-item">
                     <i class="fas fa-history"></i>
                     <span class="menu-text">History</span>
                 </a>
-                    <a href="inbox.html" class="menu-item ">
+                <a href="ai-insights.html" class="menu-item ">
+                    <i class="fas fa-brain"></i>
+                    <span class="menu-text">AI Insights</span>
+                </a>
+                <a href="analytics.html" class="menu-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="menu-text">Analytics</span>
+                </a>
+                <a href="inbox.html" class="menu-item">
                     <i class="fas fa-inbox"></i>
                     <span class="menu-text">Inbox & Updates</span>
                 </a>
-
                 <a href="settings.html" class="menu-item">
                     <i class="fas fa-cog"></i>
                     <span class="menu-text">Settings</span>
                 </a>
+                <!-- <a href="#" class="menu-item">
+                    <i class="fas fa-clock"></i>
+                    <div id="MyClockDisplay"  class="menu-text" onload="showTime()"></div>
+                </a> -->
             </div>
 
 <div class="sidebar-footer">
@@ -130,6 +140,7 @@
                     <div class="logo mobile-only">ST</div>
                     
      <div class="user-welcome">Welcome, <a href="profile.html"><span id="userWelcomeName"></span></div>  </a>
+
                           <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
     </div>
                     <div class="nav-right">
@@ -155,8 +166,6 @@
     <h3 style="color: red;">*NOTE*</h3>
     <a href="profile.html"><h4>Setup your Profile Account <span class="note">Click Here</span></h4></a>
     <h5>the name you change it will change in pdf and image export </h5>
-<!--     <a href="profile.html"><h4>if you want to change your name go to <span class="note">Profile</span></h4></a>
-    <h5>the name you change it will change in pdf and image export </h5> -->
     <h5>i hope you enjoy 😉</h5>
 </div>
 
@@ -290,15 +299,67 @@
       </div>
     </div>
   </div>
-    <script src="./script.js"></script>
+  <!-- Edit Reading Modal -->
+<div id="editModal" class="avatar-modal">
+    <div class="avatar-modal-content">
+        <div class="avatar-modal-header">
+            <h3>Edit Reading</h3>
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="avatar-modal-body">
+            <div class="input-group">
+                <label>Date</label>
+                <input type="date" id="editDate">
+            </div>
+            <div class="input-group">
+                <label>Time</label>
+                <input type="time" id="editTime">
+            </div>
+            <div class="input-group">
+                <label>Glucose Reading (mg/dL)</label>
+                <input type="number" id="editGlucose" placeholder="Enter glucose value">
+            </div>
+            <div class="input-group">
+                <label>Comment (Optional)</label>
+                <input type="text" id="editComment" placeholder="Add a comment or note">
+            </div>
+        </div>
+        <div class="avatar-modal-footer">
+            <button class="profile-action-btn secondary close-modal">Cancel</button>
+            <button id="saveEditButton" class="profile-action-btn">Save Changes</button>
+        </div>
+    </div>
+</div>
+    <script src="script.js"></script>
         <script src="security.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="suggest.js"></script>
         <script src="share.js"></script>
         <script src="accentcolor.js"></script>
                         <script src="profile/user-badge.js"></script>
+<!-- Custom Alert System -->
+<div id="customAlert" class="custom-alert hidden">
+  <div class="custom-alert-content">
+    <div class="custom-alert-message" id="customAlertMessage"></div>
+    <div class="custom-alert-buttons">
+      <button id="customAlertCancel" class="custom-alert-button secondary">Cancel</button>
+      <button id="customAlertConfirm" class="custom-alert-button primary">Confirm</button>
+    </div>
+  </div>
+</div>
 
-
+<!-- Notification System -->
+<div id="notification" class="notification hidden">
+  <div class="notification-content">
+    <span id="notification-message"></span>
+  </div>
+</div>
+<div id="customAlert" class="custom-alert">
+    <span class="custom-alert-icon">✓</span>
+    <span id="customAlertMessage"></span>
+    <span class="custom-alert-close">&times;</span>
+</div>
+<!-- <script src="notifications.js"></script> -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const noteContainer = document.getElementById("noteContainer");
@@ -336,6 +397,7 @@ updateClock();
 setInterval(updateClock, 1000);
 </script>
 <script src="menu.js"></script>
+<script src="clock.js"></script>
 
 </body>
 </html>

@@ -49,6 +49,14 @@
                     <i class="fas fa-history"></i>
                     <span class="menu-text">History</span>
                 </a>
+                    <a href="ai-insights.html" class="menu-item ">
+                    <i class="fa-solid fa-brain"></i>                    
+                    <span class="menu-text">Ai Insights</span>
+                </a>
+                    <a href="analytics.html" class="menu-item ">
+                    <i class="fa-solid fa-chart-line"></i>                    
+                    <span class="menu-text">Analytics</span>
+                </a>
                     <a href="inbox.html" class="menu-item ">
                     <i class="fas fa-inbox"></i>
                     <span class="menu-text">Inbox & Updates</span>
@@ -60,6 +68,33 @@
                 <a href="settings.html" class="menu-item active">
                     <i class="fas fa-cog"></i>
                     <span class="menu-text">Settings</span>
+                </a>
+                <a href="#" class="menu-item">
+                                                            <i class="fas fa-clock"></i>
+
+                    <div id="MyClockDisplay"  class="menu-text" onload="showTime()"></div>
+
+<!-- <div id="txt"onload="startTime()"></div>
+    <div class="clock">
+        <div class="clock-face">
+            <div class="number number1">1</div>
+            <div class="number number2">2</div>
+            <div class="number number3">3</div>
+            <div class="number number4">4</div>
+            <div class="number number5">5</div>
+            <div class="number number6">6</div>
+            <div class="number number7">7</div>
+            <div class="number number8">8</div>
+            <div class="number number9">9</div>
+            <div class="number number10">10</div>
+            <div class="number number11">11</div>
+            <div class="number number12">12</div>
+            <div class="hand hour-hand" id="hour-hand"></div>
+            <div class="hand minute-hand" id="minute-hand"></div>
+            <div class="hand second-hand" id="second-hand"></div>
+        </div>
+    </div> -->
+                  <!-- <span class="menu-text">Settings</span> -->
                 </a>
                 
             </div>
@@ -119,6 +154,8 @@
                     <a href="index.html"><div class="logo mobile-only">ST</div></a>
      <!-- <a href="settings.html"><span>Hey, <span id="userWelcomeName"></span></span>   </a>       -->
 <div class="user-welcome">Hey, <span id="userWelcomeName"></span></div>
+                               <div id="navclock"  class="menu-text" onload="showTime()"></div>
+
                                <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
            
                     </div>
@@ -159,6 +196,20 @@
                     </div>
                 </div>   
                 </div> -->
+                                            <div class="content-card">
+
+<div class="profile-image-container">
+    <img id="currentProfileImage" src="" alt="Current Profile Image" class="profile-image">
+    <div>    
+        <h1 class="user-name-display" id="userNameDisplay">Loading name...</h1>
+        <h4 class="user-name-display" id="UserEmailDisplay">Loading...</h4>
+        <br>
+           <a href="profile.html"> <button>
+        <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+    </button> </a>
+    </div>
+</div>
+</div>
                 <div class="content-card">
                     <h2>Settings</h2>
                     <div class="input-group">
@@ -175,8 +226,9 @@
     <div class="input-group">
         <label for="accentColor">Choose your accent color</label>
         <input type="color" id="accentColor" value="#3b82f6">
-        
-        <div class="color-presets">
+<div>                    <label for="accentColor"> choose preset color</label>
+            <div class="color-presets">
+
             <!-- <button style="background-color: #3b82f6;" class="color-preset" data-color="#3b82f6"><i class="fa-solid fa-palette"></i> Default</button>
             <button style="background-color: #ef4444;" class="color-preset" data-color="#ef4444"><i class="fa-solid fa-brush"></i> Red</button>
             <button style="background-color: #10b981;" class="color-preset" data-color="#10b981"><i class="fa-solid fa-brush"></i> Green</button>
@@ -193,6 +245,9 @@
             <button style="background-color: #ffd000;" class="color-preset" data-color="#ffd000"><i class="fa-solid fa-brush"></i></button>
             <button style="background-color: #b6b6b6;" class="color-preset" data-color="#b6b6b6"><i class="fa-solid fa-brush"></i></button>
             <button style="background-color: #000000;" class="color-preset" data-color="#000000"><i class="fa-solid fa-brush"></i></button>
+</div>
+
+
         </div>
     </div>
     <button id="saveAccentColor" class="settings-buttonsaveaccent">
@@ -318,7 +373,12 @@
       </div>
     </div>
   </div>
-
+<!-- Notification System -->
+<div id="notification" class="notification hidden">
+    <div class="notification-content">
+        <span id="notification-message"></span>
+    </div>
+</div>
   <!-- Add these right before the closing </head> tag -->
 <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
@@ -334,7 +394,26 @@
                 <!-- <script src="./history.js"></script> -->
                  <script src="menu.js"></script>
                 
+<!-- <script>
+function setClock() {
+    const now = new Date();
+    const seconds = now.getSeconds();
+    const minutes = now.getMinutes();
+    const hours = now.getHours();
 
+    const secondDeg = ((seconds / 60) * 360) + 90;
+    const minuteDeg = ((minutes / 60) * 360) + 90;
+    const hourDeg = ((hours / 12) * 360) + 90;
 
+    document.getElementById("second-hand").style.transform = `rotate(${secondDeg}deg)`;
+    document.getElementById("minute-hand").style.transform = `rotate(${minuteDeg}deg)`;
+    document.getElementById("hour-hand").style.transform = `rotate(${hourDeg}deg)`;
+}
+
+setInterval(setClock, 1000);
+setClock();
+</script> -->
+<script src="clock.js"></script>
+<script src="profile/profile.js"></script>
 </body>
 </html>

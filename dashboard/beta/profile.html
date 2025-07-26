@@ -41,27 +41,35 @@
             <hr>
             
             <div class="sidebar-menu">
-                <a href="index.html" class="menu-item ">
+                <a href="index.html" class="menu-item">
                     <i class="fas fa-home"></i>
                     <span class="menu-text">Dashboard</span>
                 </a>
-                <a href="doctors.html" target="" class="menu-item ">
+                <a href="doctors.html" class="menu-item">
                     <i class="fas fa-user-doctor"></i>
                     <span class="menu-text">Doctors</span>
                 </a>
-                    <a href="weather.html" class="menu-item ">
+                <a href="weather.html" class="menu-item">
                     <i class="fas fa-cloud-sun"></i>
                     <span class="menu-text">Weather Forecast</span>
                 </a>
-                    <a href="history.html" class="menu-item ">
+                <a href="history.html" class="menu-item ">
                     <i class="fas fa-history"></i>
                     <span class="menu-text">History</span>
                 </a>
-                    <a href="inbox.html" class="menu-item ">
+                <a href="ai-insights.html" class="menu-item ">
+                    <i class="fas fa-brain"></i>
+                    <span class="menu-text">AI Insights</span>
+                </a>
+                <a href="analytics.html" class="menu-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="menu-text">Analytics</span>
+                </a>
+                <a href="inbox.html" class="menu-item">
                     <i class="fas fa-inbox"></i>
                     <span class="menu-text">Inbox & Updates</span>
                 </a>
-                 <a href="profile.html" class="menu-item active">
+                <a href="profile.html" class="menu-item active">
                     <i class="fas fa-user"></i>
                     <span class="menu-text">profile</span>
                 </a>
@@ -213,18 +221,21 @@
                                 <input type="text" id="firstName" placeholder="Enter first name">
                             </div>
                         </div>
+                        <br>
                         <div class="input-group">
                             <label>Last Name</label>
                             <div class="reading-input">
                                 <input type="text" id="lastName" placeholder="Enter last name">
                             </div>
                         </div>
+                        <br>
                         <div class="input-group">
                             <label>Email</label>
                             <div class="reading-input">
                                 <input type="email" id="userEmail" disabled>
                             </div>
                         </div>
+                        <br>
                         <button id="updateProfileButton" class="settings-buttonsave">
                             <i class="fas fa-save"></i> Save Changes
                         </button>
@@ -240,18 +251,21 @@
                                 <input type="password" id="currentPassword" placeholder="Enter current password">
                             </div>
                         </div>
+                        <br>
                         <div class="input-group">
                             <label>New Password</label>
                             <div class="reading-input">
                                 <input type="password" id="newPassword" placeholder="Enter new password">
                             </div>
                         </div>
+                        <br>
                         <div class="input-group">
                             <label>Confirm New Password</label>
                             <div class="reading-input">
                                 <input type="password" id="confirmPassword" placeholder="Confirm new password">
                             </div>
                         </div>
+                        <br>
                         <button id="changePasswordButton" class="settings-buttonupdate">
                             <i class="fas fa-key"></i> Update Password
                         </button>
@@ -321,7 +335,12 @@
         </div>
     </div>
 </div>
-
+<!-- Notification System -->
+<div id="notification" class="notification hidden">
+    <div class="notification-content">
+        <span id="notification-message"></span>
+    </div>
+</div>
 <!-- Modify the existing avatar selection button in profile.html -->
 
     <script src="./history.js"></script>
