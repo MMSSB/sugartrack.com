@@ -1,0 +1,106 @@
+:root {
+    /* --primary: #1d4ed8; */
+    --primary: #3b82f6;
+    --primary-light: #60a5fa;
+    --text: #1f2937;
+    --text-light: #6b7280;
+    --background: #f3f4f6;
+    --card-bg: #ffffff;
+    --border: #e5e7eb;
+    --actives: #008cff69;
+    --danger: #ef4444;
+    --success: #10b981;
+    
+    /* --sidebar-width: 250px;
+    --sidebar-collapsed-width: 70px;
+    --top-nav-height: 60px; */
+}
+/* Dark Theme with modern colors */
+body.dark-theme {
+    --text: #f3f4f6;
+    --text-light: #9ca3af;
+    --background: #111827;
+    --card-bg: #1f2937;
+    --border: rgba(255, 255, 255, 0.1);
+    --primary: #3b82f6;
+    /* --primary: #60a5fa; */
+    /* --primary: #1d4ed8; */
+    --primary-light: #93c5fd;
+    --danger: #ef4444;
+    --success: #10b981;
+
+}
+
+
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--card-bg);
+    /* box-shadow: 0 -1px 5px rgba(255, 255, 255, 0.1); */
+    border: var(--border);
+    /* z-index: 1000; */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border);
+}
+
+.bottom-nav .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text);
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.bottom-nav .nav-link img {
+    height: 24px;
+    width: 24px;
+    margin-bottom: 4px;
+    transition: transform 0.3s; /* Smooth transform effect */
+}
+
+/* Hover effect for non-active links */
+.bottom-nav .nav-link:hover {
+    color: var(--primary); /* Gold color on hover */
+    background-color: rgba(255, 255, 255, 0.1); /* Slight background on hover */
+    border-radius: .5rem; /* Rounded corners on hover */
+    
+    
+}
+
+/* Hover effect specifically for the icon */
+.bottom-nav .nav-link:hover img {
+    transform: scale(1.2); /* Scale up icon on hover */
+}
+
+/* Active link styling */
+.bottom-nav .nav-link.active {
+    color: var(--primary); /* Gold color for active link */
+}
+
+/* Active and hover effect for active link */
+.bottom-nav .nav-link.active:hover {
+    color: var(--primary); /* Orange color for hover effect on active link */
+    background-color: rgba(0, 81, 255, 0.295); /* Slightly different background */
+}
+
+/* Hover effect specifically for the icon when active */
+.bottom-nav .nav-link.active:hover img {
+    transform: scale(1.2); /* Scale up icon on hover, same as non-active */
+}
+
+@media (min-width: 993px) {
+    .bottom-nav {
+        display: none;
+    }
+}
+
+
+  
