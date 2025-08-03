@@ -4,8 +4,8 @@
 /*=============== VARIABLES CSS ===============*/
 
 :root {
-    --primary: #ffffff;
-    /* --primary: #3b82f6; */
+    /* --primary: #ffffff; */
+    --primary: #3b82f6;
     --primary-light: #60a5fa;
     --text: #1f2937;
     --text-light: #6b7280;
@@ -36,8 +36,8 @@ body.dark-theme {
     --background: #000000;
     --card-bg: #242424;
     --border: rgba(255, 255, 255, 0.1);
-    --primary: #030303;
-    /* --primary: #3b82f6; */
+    /* --primary: #030303; */
+    --primary: #3b82f6;
     --primary-light: #93c5fd;
     --danger: #ef4444;
     --success: #10b981;
