@@ -138,8 +138,20 @@
 
 /**
  * Applies the accent color to CSS variables and key elements
- * @param {string} color - Hex color string like "#FF5733"
- */
+//  * @param {string} color - Hex color string like "#FF5733"
+//  */
+// function applyAccentColor(color) {
+//     if (!color || !/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
+//         console.warn("Invalid accent color:", color);
+//         return;
+//     }
+
+//     // Update global CSS variables
+//     document.documentElement.style.setProperty('--primary', color);
+//     document.documentElement.style.setProperty('--primary-light', lightenColor(color, 20));
+    
+// accentcolor.js - Simplified accent color application
+
 function applyAccentColor(color) {
     if (!color || !/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
         console.warn("Invalid accent color:", color);
@@ -149,8 +161,6 @@ function applyAccentColor(color) {
     // Update global CSS variables
     document.documentElement.style.setProperty('--primary', color);
     document.documentElement.style.setProperty('--primary-light', lightenColor(color, 20));
-    
-
     // Apply to key elements
     const elements = {
         // Reading items and related elements
@@ -209,16 +219,52 @@ function applyAccentColor(color) {
         '.inbox-updates': 'color'
     };
 
+//     Object.entries(elements).forEach(([selector, property]) => {
+//         document.querySelectorAll(selector).forEach(el => {
+//             el.style[property] = color;
+//         });
+//     });
+// }
     Object.entries(elements).forEach(([selector, property]) => {
         document.querySelectorAll(selector).forEach(el => {
             el.style[property] = color;
         });
     });
 }
-
 /**
- * Lighten a hex color by a percentage
- */
+//  * Lighten a hex color by a percentage
+//  */
+// function lightenColor(color, percent) {
+//     const num = parseInt(color.replace("#", ""), 16),
+//         amt = Math.round(2.55 * percent),
+//         R = Math.min(255, (num >> 16) + amt),
+//         G = Math.min(255, ((num >> 8) & 0x00FF) + amt),
+//         B = Math.min(255, (num & 0x0000FF) + amt);
+
+//     return "#" + (1 << 24 | R << 16 | G << 8 | B).toString(16).slice(1).toUpperCase();
+// }
+
+// // Initialize on page load
+// document.addEventListener('DOMContentLoaded', () => {
+//     if (!auth || !db) {
+//         console.error("Firebase not initialized");
+//         return;
+//     }
+
+//     auth.onAuthStateChanged(user => {
+//         if (user) {
+//             db.collection('users').doc(user.uid).onSnapshot(doc => {
+//                 if (doc.exists && doc.data().accentColor) {
+//                     applyAccentColor(doc.data().accentColor);
+//                 }
+//             });
+//         }
+//     });
+// });
+
+
+
+
 function lightenColor(color, percent) {
     const num = parseInt(color.replace("#", ""), 16),
         amt = Math.round(2.55 * percent),
@@ -236,21 +282,28 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    // Check localStorage first for faster loading
+    const localColor = localStorage.getItem('accentColor');
+    if (localColor && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(localColor)) {
+        applyAccentColor(localColor);
+    }
+
+    // Then check Firebase for updates
     auth.onAuthStateChanged(user => {
         if (user) {
             db.collection('users').doc(user.uid).onSnapshot(doc => {
                 if (doc.exists && doc.data().accentColor) {
-                    applyAccentColor(doc.data().accentColor);
+                    const firebaseColor = doc.data().accentColor;
+                    // Only update if different from local storage
+                    if (!localColor || localColor !== firebaseColor) {
+                        applyAccentColor(firebaseColor);
+                        localStorage.setItem('accentColor', firebaseColor);
+                    }
                 }
             });
         }
     });
 });
-
-
-
-
-
 
 
 
