@@ -11,7 +11,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="fontawesome-free-6.7.2-web/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+                        <link rel="stylesheet" href="bottom bar/fonts/remixicon.css">
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"> -->
+       <link rel="stylesheet" href="bottom bar/css/styles.css">
     <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
@@ -42,7 +44,8 @@
             
             <div class="sidebar-menu">
                 <a href="index.html" class="menu-item">
-                    <i class="fas fa-home"></i>
+                    <!-- <i class="fas fa-home"></i> -->
+                     <i class="ri-home-smile-2-line"></i>
                     <span class="menu-text">Dashboard</span>
                 </a>
                 <a href="doctors.html" class="menu-item active">
@@ -121,7 +124,47 @@
 <button class="toggle-collapse desktop-only">
     <i class="fas fa-chevron-left"></i>
 </button>
-                    <div class="logo mobile-only">ST</div>
+                    <!-- <div class="logo mobile-only">ST</div> -->
+                                              <div class="user-badge2" id="userBadge2">
+        <img class="user-badge-nav" id="userBadgenav" src="images/user.png" alt="User Avatar" onclick="toggleMenu()">
+        <!-- <span class="user-badge-name" id="userBadgeName">Loading...</span> -->
+        <!-- <i class="fas fa-chevron-down user-badge-arrow"></i> -->
+    </div>
+        <!-- Submenu Wrap -->
+    <div class="sub-menu-wrap2" id="submenu2">
+        <div class="sub-menu2">
+            <div class="user-info">
+                <img id="submenuUserAvatar2" src="images/user.png" alt="User">
+                <div>
+                    <h4 id="submenuUserName2">User Name</h4>
+                    <p id="submenuUserEmail2">user@example.com</p>
+                </div>
+            </div>
+            <hr>
+            <a href="profile.html" class="sub-menu-link">
+                <i class="fas fa-user"></i>
+                <p>My Profile</p>
+                <span>&gt;</span>
+            </a>
+            <a href="settings.html" class="sub-menu-link">
+                <i class="fas fa-cog"></i>
+                <p>Settings</p>
+                <span>&gt;</span>
+            </a>
+            <!-- <button class="sub-menu-link" id="logoutButton">
+                <i class="fas fa-sign-out-alt"></i>
+                <p>Logout</p>
+                <span>&gt;</span>
+            </button> -->
+            <!-- <button class="buttonlogout" id="logoutButton"> -->
+            <button class="sub-menubuttonlogout" id="logoutButton">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span >Logout</span>
+                    <!-- <span class="menu-text">Logout</span> -->
+                </button> 
+        <!-- </div> -->
+    </div>
+</div>
      <div class="user-welcome">Welcome, <span id="userWelcomeName"></span></div>  
                                         <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
 
@@ -212,5 +255,79 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+      <!--=============== NAVBAR ===============-->
+      <nav class="nav">
+         <ul class="nav__list">
+            <!-- <li> -->
+               <a href="index.html" class="nav__link ">
+                  <i class="ri-home-smile-2-line"></i>
+                   <!-- <i class="ri-dashboard-fill"></i> -->
+                                  <!-- <p style="font-size: 8px;">Home</p> -->
+
+               </a>
+            </li>
+
+            <li>
+               <a href="profile.html" class="nav__link">
+                  <i class="ri-user-line"></i>
+               </a>
+            </li>
+
+            <!-- Expand list -->
+            <li>
+               <button class="nav__expand" id="nav-expand">
+                  <!-- <i class="ri-add-line nav__expand-icon" id="nav-expand-icon"></i> -->
+                  <i class="ri-shining-2-fill nav__expand-icon" id="nav-expand-icon" ></i>
+                  <!-- <i class="ri-sparkling-line nav__expand-icon" id="nav-expand-icon" ></i> -->
+               </button>
+
+               <ul class="nav__expand-list" id="nav-expand-list">
+                  <!-- <li> -->
+                     <a href="history.html" class="nav__expand-link">
+                      <i class="ri-history-line"></i>
+                        <span>History</span>
+                     </a>
+                  </li>
+      
+
+                  <li>
+                     <a href="ai-insights.html" class="nav__expand-link">
+                        <!-- <i class="ri-bookmark-3-line"></i> -->
+                         <i class="ri-brain-2-line"></i>
+                        <span>Ai Insights</span>
+                     </a>
+                  </li>
+
+
+                  <li>
+                     <a href="analytics.html" class="nav__expand-link">
+                        <!-- <i class="ri-settings-3-line"></i> -->
+                         <i class="ri-line-chart-fill"></i>
+                        <span>Analytics</span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+         
+            <li>
+               <a href="inbox.html" class="nav__link">
+                  <!-- <i class="ri-briefcase-line"></i> -->
+                   <i class="ri-inbox-2-line"></i>
+               </a>
+            </li>
+
+            <li>
+               <a href="settings.html" class="nav__link">
+                  <i class="ri-settings-3-line"></i>
+               </a>
+            </li>
+         </ul>
+      </nav>
+<br>
+<br>
+<script src="bottom bar/js/main.js"></script>
+<script src="profile/user-profile.js"></script>
+
+
 </body>
 </html>

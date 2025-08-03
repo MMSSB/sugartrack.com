@@ -12,7 +12,7 @@ const glucoseInput = document.getElementById('glucose');
 const commentInput = document.getElementById('comment');
 const addReadingButton = document.getElementById('addReading');
 const readingsList = document.getElementById('readingsList');
-const resetButton = document.getElementById('resetButton');
+// const resetButton = document.getElementById('resetButton');
 const exportImageButton = document.getElementById('exportImage');
 const exportPDFButton = document.getElementById('exportPDF');
 const exportContent = document.getElementById('exportContent');
@@ -157,8 +157,57 @@ function handleLogout() {
             alert('Error logging out. Please try again.');
         });
 }
+// // Example of modified add reading function in index.js
+// addReadingButton.addEventListener('click', () => {
+//     const date = dateInput.value;
+//     const time = timeInput.value;
+//     const glucose = parseFloat(glucoseInput.value);
+//     const comment = commentInput.value.trim();
 
-// Add new reading
+//     if (!date || !time || isNaN(glucose)) {
+//         showCustomAlert('Please fill in all required fields', true);
+//         return;
+//     }
+
+//     if (!currentUser) {
+//         showCustomAlert('Please sign in to add readings', true);
+//         window.location.href = 'login.html';
+//         return;
+//     }
+
+//     const newReading = {
+//         userId: currentUser.uid,
+//         date,
+//         time,
+//         glucose,
+//         comment,
+//         timestamp: firebase.firestore.FieldValue.serverTimestamp()
+//     };
+
+//     // Disable add button while saving
+//     addReadingButton.disabled = true;
+//     addReadingButton.textContent = 'Adding...';
+
+//     db.collection('readings').add(newReading)
+//         .then(() => {
+//             showCustomAlert('Glucose reading added successfully!');
+//             // Clear inputs
+//             glucoseInput.value = '';
+//             commentInput.value = '';
+//             // Reset time to current time
+//             const now = new Date();
+//             timeInput.value = now.toTimeString().slice(0, 5);
+//         })
+//         .catch((error) => {
+//             console.error('Error adding reading:', error);
+//             showCustomAlert('Failed to add reading: ' + error.message, true);
+//         })
+//         .finally(() => {
+//             addReadingButton.disabled = false;
+//             addReadingButton.textContent = 'Add';
+//         });
+// });
+// // Add new reading
 addReadingButton.addEventListener('click', () => {
     const date = dateInput.value;
     const time = timeInput.value;
@@ -195,7 +244,7 @@ addReadingButton.addEventListener('click', () => {
             console.log('Reading added with ID:', docRef.id);
             glucoseInput.value = '';
             commentInput.value = '';
-            alert('Reading added successfully!');
+            // alert('Reading added successfully!');
         })
         .catch((error) => {
             console.error('Error adding reading:', error);
@@ -267,29 +316,199 @@ function updateReadingsList() {
             actions.classList.toggle('active');
         });
     });
+// Custom alert functions (add these at the top of your index.js)
+function showCustomAlert(message, isError = false) {
+    const alert = document.getElementById('customAlert');
+    const messageElement = document.getElementById('customAlertMessage');
+    
+    // Reset classes
+    alert.className = 'custom-alert';
+    if (isError) {
+        alert.classList.add('error');
+    }
+    
+    messageElement.textContent = message;
+    alert.classList.add('show');
+    
+    // Auto-hide after 3 seconds
+    setTimeout(() => {
+        hideCustomAlert();
+    }, 3000);
+}
 
-    // Edit button handler
-    document.querySelectorAll('.edit-button').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const readingId = e.target.getAttribute('data-id');
-            const reading = readings.find(r => r.id === readingId);
+function hideCustomAlert() {
+    const alert = document.getElementById('customAlert');
+    alert.classList.remove('show');
+}
+
+// Initialize close button listener (add this where you initialize other event listeners)
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.custom-alert-close')?.addEventListener('click', hideCustomAlert);
+});
+    // // Edit button handler
+    // document.querySelectorAll('.edit-button').forEach(button => {
+    //     button.addEventListener('click', (e) => {
+    //         const readingId = e.target.getAttribute('data-id');
+    //         const reading = readings.find(r => r.id === readingId);
             
-            if (reading) {
-                dateInput.value = reading.date;
-                timeInput.value = reading.time;
-                glucoseInput.value = reading.glucose;
-                commentInput.value = reading.comment || '';
+    //         if (reading) {
+    //             dateInput.value = reading.date;
+    //             timeInput.value = reading.time;
+    //             glucoseInput.value = reading.glucose;
+    //             commentInput.value = reading.comment || '';
                 
-                // Remove the reading
-                db.collection('readings').doc(readingId).delete()
-                    .catch((error) => {
-                        console.error('Error removing reading:', error);
-                        alert('Error removing reading. Please try again.');
-                    });
-            }
-        });
+    //             // Remove the reading
+    //             db.collection('readings').doc(readingId).delete()
+    //                 .catch((error) => {
+    //                     console.error('Error removing reading:', error);
+    //                     alert('Error removing reading. Please try again.');
+    //                 });
+    //         }
+    //     });
+    // });
+// Edit button handler
+document.querySelectorAll('.edit-button').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const readingId = e.target.getAttribute('data-id');
+        const reading = readings.find(r => r.id === readingId);
+        
+        if (reading) {
+            // Populate the modal with current reading data
+            document.getElementById('editDate').value = reading.date;
+            document.getElementById('editTime').value = reading.time;
+            document.getElementById('editGlucose').value = reading.glucose;
+            document.getElementById('editComment').value = reading.comment || '';
+            
+            // Store the reading ID and original timestamp in the save button
+            const saveButton = document.getElementById('saveEditButton');
+            saveButton.dataset.id = readingId;
+            saveButton.dataset.originalTimestamp = reading.timestamp.toString();
+            
+            // Show the modal
+            document.getElementById('editModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
     });
+});
+// In the save edit handler:
+document.getElementById('saveEditButton').addEventListener('click', () => {
+    const readingId = document.getElementById('saveEditButton').dataset.id;
+    const originalReading = readings.find(r => r.id === readingId);
+    
+    if (!originalReading) {
+        showNotification('Reading not found', 'error');
+        return;
+    }
+    
+    const updatedReading = {
+        date: document.getElementById('editDate').value,
+        time: document.getElementById('editTime').value,
+        glucose: parseFloat(document.getElementById('editGlucose').value),
+        comment: document.getElementById('editComment').value.trim(),
+        timestamp: originalReading.timestamp
+    };
+    
+    // Validate inputs
+    if (!updatedReading.date || !updatedReading.time || !updatedReading.glucose) {
+        showNotification('Please fill in all required fields', 'error');
+        return;
+    }
+    
+    const saveButton = document.getElementById('saveEditButton');
+    saveButton.disabled = true;
+    saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+    
+    // Update the reading in Firestore
+    db.collection('readings').doc(readingId).update(updatedReading)
+        .then(() => {
+            // Close the modal
+            document.getElementById('editModal').classList.remove('active');
+            document.body.style.overflow = '';
+            showNotification('Reading updated successfully!');
+        })
+        .catch((error) => {
+            console.error('Error updating reading:', error);
+            showNotification('Error updating reading', 'error');
+        })
+        .finally(() => {
+            saveButton.disabled = false;
+            saveButton.textContent = 'Save Changes';
+        });
+});
+// // Save edited reading
+// document.getElementById('saveEditButton').addEventListener('click', () => {
+//     const readingId = document.getElementById('saveEditButton').dataset.id;
+//     const originalReading = readings.find(r => r.id === readingId);
+    
+//     if (!originalReading) return;
+    
+//     const updatedReading = {
+//         date: document.getElementById('editDate').value,
+//         time: document.getElementById('editTime').value,
+//         glucose: parseFloat(document.getElementById('editGlucose').value),
+//         comment: document.getElementById('editComment').value.trim(),
+//         // Keep the original timestamp instead of updating it
+//         timestamp: originalReading.timestamp
+//     };
+    
+//     // Validate inputs
+//     if (!updatedReading.date || !updatedReading.time || !updatedReading.glucose) {
+//         alert('Please fill in all required fields (date, time, and glucose reading)');
+//         return;
+//     }
+    
+//     const saveButton = document.getElementById('saveEditButton');
+//     saveButton.disabled = true;
+//     saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+    
+//     // Update the reading in Firestore
+//     db.collection('readings').doc(readingId).update(updatedReading)
+//         .then(() => {
+//             // Close the modal
+//             document.getElementById('editModal').classList.remove('active');
+//             document.body.style.overflow = '';
+//             alert('Reading updated successfully!');
+//         })
+//         .catch((error) => {
+//             console.error('Error updating reading:', error);
+//             alert('Error updating reading. Please try again.');
+//         })
+//         .finally(() => {
+//             saveButton.disabled = false;
+//             saveButton.textContent = 'Save Changes';
+//         });
+// });
 
+// Close modal when clicking outside or on close button
+document.querySelectorAll('.close-modal').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.getElementById('editModal').classList.remove('active');
+        document.body.style.overflow = '';
+    });
+});
+// Notification function
+function showNotification(message, type = 'success') {
+    const notification = document.getElementById('notification');
+    const messageElement = document.getElementById('notification-message');
+    
+    // Set message and type
+    messageElement.textContent = message;
+    notification.className = `notification ${type}`;
+    
+    // Show notification
+    notification.classList.remove('hidden');
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        notification.classList.add('hidden');
+    }, 3000);
+}
+document.getElementById('editModal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('editModal')) {
+        document.getElementById('editModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
     // Delete button handler
     document.querySelectorAll('.delete-button').forEach(button => {
         button.addEventListener('click', (e) => {
@@ -313,41 +532,41 @@ function updateReadingsList() {
     }
 }
 
-// Reset all data
-resetButton.addEventListener('click', () => {
-    if (!currentUser) {
-        alert('Please sign in to reset readings');
-        return;
-    }
+// // Reset all data
+// resetButton.addEventListener('click', () => {
+//     if (!currentUser) {
+//         alert('Please sign in to reset readings');
+//         return;
+//     }
 
-    if (confirm('Are you sure you want to reset all readings? This cannot be undone.')) {
-        // Delete all readings for this user
-        const batch = db.batch();
-        const readingsRef = db.collection('readings').where('userId', '==', currentUser.uid);
+//     if (confirm('Are you sure you want to reset all readings? This cannot be undone.')) {
+//         // Delete all readings for this user
+//         const batch = db.batch();
+//         const readingsRef = db.collection('readings').where('userId', '==', currentUser.uid);
         
-        readingsRef.get()
-            .then((querySnapshot) => {
-                if (querySnapshot.empty) {
-                    alert('No readings to reset.');
-                    return;
-                }
+//         readingsRef.get()
+//             .then((querySnapshot) => {
+//                 if (querySnapshot.empty) {
+//                     alert('No readings to reset.');
+//                     return;
+//                 }
 
-                querySnapshot.forEach((doc) => {
-                    batch.delete(doc.ref);
-                });
-                return batch.commit();
-            })
-            .then(() => {
-                // No need to manually update readings array or UI
-                // onSnapshot will handle that automatically
-                alert('All readings have been reset successfully.');
-            })
-            .catch((error) => {
-                console.error('Error resetting readings:', error);
-                alert('Error resetting readings. Please try again.');
-            });
-    }
-});
+//                 querySnapshot.forEach((doc) => {
+//                     batch.delete(doc.ref);
+//                 });
+//                 return batch.commit();
+//             })
+//             .then(() => {
+//                 // No need to manually update readings array or UI
+//                 // onSnapshot will handle that automatically
+//                 alert('All readings have been reset successfully.');
+//             })
+//             .catch((error) => {
+//                 console.error('Error resetting readings:', error);
+//                 alert('Error resetting readings. Please try again.');
+//             });
+//     }
+// });
 
 // Prepare export content
 function prepareExportContent() {
@@ -611,7 +830,57 @@ fileInput.addEventListener('change', (e) => {
         alert('Invalid file format. Please upload a valid .diab or JSON file.');
     }
 });
+// // Reset all data
+// resetButton.addEventListener('click', () => {
+//     if (!currentUser) {
+//         showNotification('Please sign in to reset readings', 'error');
+//         return;
+//     }
 
+//     // Custom confirmation
+//     if (confirm('Are you sure you want to reset all readings? This cannot be undone.')) {
+//         const batch = db.batch();
+//         const readingsRef = db.collection('readings').where('userId', '==', currentUser.uid);
+        
+//         readingsRef.get()
+//             .then((querySnapshot) => {
+//                 if (querySnapshot.empty) {
+//                     showNotification('No readings to reset.', 'warning');
+//                     return;
+//                 }
+
+//                 querySnapshot.forEach((doc) => {
+//                     batch.delete(doc.ref);
+//                 });
+//                 return batch.commit();
+//             })
+//             .then(() => {
+//                 showNotification('All readings have been reset successfully.');
+//             })
+//             .catch((error) => {
+//                 console.error('Error resetting readings:', error);
+//                 showNotification('Error resetting readings. Please try again.', 'error');
+//             });
+//     }
+// });
+
+// // Delete button handler
+// document.querySelectorAll('.delete-button').forEach(button => {
+//     button.addEventListener('click', (e) => {
+//         const readingId = e.target.getAttribute('data-id');
+        
+//         if (confirm('Are you sure you want to delete this reading?')) {
+//             db.collection('readings').doc(readingId).delete()
+//                 .then(() => {
+//                     showNotification('Reading deleted successfully.');
+//                 })
+//                 .catch((error) => {
+//                     console.error('Error deleting reading:', error);
+//                     showNotification('Error deleting reading. Please try again.', 'error');
+//                 });
+//         }
+//     });
+// });
 // Helper function to convert 24-hour time to 12-hour time with AM/PM
 function formatTime12Hour(time) {
     const [hours, minutes] = time.split(':');
@@ -663,12 +932,93 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// // Initialize sidebar state
+// const sidebar = document.querySelector('.sidebar');
+// const mainContent = document.querySelector('.main-content');
+// const isSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+// const isMobile = window.matchMedia('(max-width: 992px)').matches;
+
+// if (isSidebarCollapsed && !isMobile) {
+//     sidebar.classList.add('collapsed');
+//     mainContent.classList.add('expanded');
+// }
+
+// // Sidebar functionality
+// document.addEventListener('DOMContentLoaded', () => {
+//     const hamburgerBtn = document.querySelector('.hamburger-btn');
+//     const closeBtn = document.querySelector('.close-btn');
+//     const toggleCollapse = document.querySelector('.toggle-collapse');
+    
+//     // Mobile menu toggle
+//     hamburgerBtn.addEventListener('click', () => {
+//         sidebar.classList.add('open');
+//     });
+    
+//     closeBtn.addEventListener('click', () => {
+//         sidebar.classList.remove('open');
+//     });
+    
+//     // Desktop sidebar collapse toggle
+//     toggleCollapse.addEventListener('click', () => {
+//         sidebar.classList.toggle('collapsed');
+//         mainContent.classList.toggle('expanded');
+        
+//         if (window.matchMedia('(min-width: 993px)').matches) {
+//             localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+//         }
+//     });
+    
+//     // Handle window resize
+//     window.addEventListener('resize', () => {
+//         const isMobileNow = window.matchMedia('(max-width: 992px)').matches;
+        
+//         if (isMobileNow) {
+//             sidebar.classList.remove('collapsed', 'open');
+//             mainContent.classList.remove('expanded');
+//         } else {
+//             if (localStorage.getItem('sidebarCollapsed') === 'true') {
+//                 sidebar.classList.add('collapsed');
+//                 mainContent.classList.add('expanded');
+//             } else {
+//                 sidebar.classList.remove('collapsed');
+//                 mainContent.classList.remove('expanded');
+//             }
+//         }
+//     });
+    
+//     // Close sidebar when clicking outside on mobile
+//     document.addEventListener('click', (e) => {
+//         if (window.matchMedia('(max-width: 992px)').matches) {
+//             if (!sidebar.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+//                 sidebar.classList.remove('open');
+//             }
+//         }
+//     });
+// });
+// --- SIDEBAR LOGIC ---
+
 // Initialize sidebar state
 const sidebar = document.querySelector('.sidebar');
 const mainContent = document.querySelector('.main-content');
 const isSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
 const isMobile = window.matchMedia('(max-width: 992px)').matches;
 
+// Function to update the toggle icon based on sidebar state
+function updateToggleIcon() {
+    const toggleIcon = document.querySelector('.toggle-collapse i');
+    if (toggleIcon) { // Ensure the icon element exists
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        if (isCollapsed) {
+            toggleIcon.classList.remove('fa-chevron-left');
+            toggleIcon.classList.add('fa-chevron-right');
+        } else {
+            toggleIcon.classList.remove('fa-chevron-right');
+            toggleIcon.classList.add('fa-chevron-left');
+        }
+    }
+}
+
+// Apply initial collapsed state from localStorage
 if (isSidebarCollapsed && !isMobile) {
     sidebar.classList.add('collapsed');
     mainContent.classList.add('expanded');
@@ -679,25 +1029,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const hamburgerBtn = document.querySelector('.hamburger-btn');
     const closeBtn = document.querySelector('.close-btn');
     const toggleCollapse = document.querySelector('.toggle-collapse');
+
+    // Set initial icon state for desktop view
+    if (toggleCollapse) {
+        updateToggleIcon();
+    }
     
     // Mobile menu toggle
-    hamburgerBtn.addEventListener('click', () => {
-        sidebar.classList.add('open');
-    });
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', () => {
+            sidebar.classList.add('open');
+        });
+    }
     
-    closeBtn.addEventListener('click', () => {
-        sidebar.classList.remove('open');
-    });
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+        });
+    }
     
     // Desktop sidebar collapse toggle
-    toggleCollapse.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-        mainContent.classList.toggle('expanded');
-        
-        if (window.matchMedia('(min-width: 993px)').matches) {
-            localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
-        }
-    });
+    if (toggleCollapse) {
+        toggleCollapse.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+            
+            if (window.matchMedia('(min-width: 993px)').matches) {
+                localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+            }
+            // Update icon after click
+            updateToggleIcon(); 
+        });
+    }
     
     // Handle window resize
     window.addEventListener('resize', () => {
@@ -714,12 +1077,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 sidebar.classList.remove('collapsed');
                 mainContent.classList.remove('expanded');
             }
+            // Update icon on resize for desktop view
+            updateToggleIcon();
         }
     });
     
     // Close sidebar when clicking outside on mobile
     document.addEventListener('click', (e) => {
-        if (window.matchMedia('(max-width: 992px)').matches) {
+        if (window.matchMedia('(max-width: 992px)').matches && hamburgerBtn) {
             if (!sidebar.contains(e.target) && !hamburgerBtn.contains(e.target)) {
                 sidebar.classList.remove('open');
             }

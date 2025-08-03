@@ -641,6 +641,8 @@ const readingsList = document.getElementById('readingsList');
 const exportContent = document.getElementById('exportContent');
 const exportTitle = document.getElementById('exportTitle');
 const trendsMessage = document.getElementById('trendsMessage');
+const resetButton = document.getElementById('resetButton');
+
 
 // Initialize variables
 let readings = [];
@@ -1010,5 +1012,40 @@ function init() {
     document.getElementById('fileInput')?.addEventListener('change', handleFileImport);
 }
 
+// Reset all data
+resetButton.addEventListener('click', () => {
+    if (!currentUser) {
+        alert('Please sign in to reset readings');
+        return;
+    }
+
+    if (confirm('Are you sure you want to reset all readings? This cannot be undone.')) {
+        // Delete all readings for this user
+        const batch = db.batch();
+        const readingsRef = db.collection('readings').where('userId', '==', currentUser.uid);
+        
+        readingsRef.get()
+            .then((querySnapshot) => {
+                if (querySnapshot.empty) {
+                    alert('No readings to reset.');
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    batch.delete(doc.ref);
+                });
+                return batch.commit();
+            })
+            .then(() => {
+                // No need to manually update readings array or UI
+                // onSnapshot will handle that automatically
+                alert('All readings have been reset successfully.');
+            })
+            .catch((error) => {
+                console.error('Error resetting readings:', error);
+                alert('Error resetting readings. Please try again.');
+            });
+    }
+});
 // Start the application
 init();

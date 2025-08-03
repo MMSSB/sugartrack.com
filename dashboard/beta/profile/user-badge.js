@@ -197,6 +197,8 @@ async function loadUserBadgeData(user) {
 }
 
 
+
+
 // auth.onAuthStateChanged((user) => {
 //     if (user) {
 //         loadUserBadgeData();

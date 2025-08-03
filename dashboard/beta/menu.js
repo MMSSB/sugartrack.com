@@ -1,3 +1,10 @@
+    let submenu2 = document.getElementById("submenu2");
+function toggleMenu(){
+     submenu2.classList.toggle("open-menu2");
+}
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const userBadge = document.getElementById('userBadge');
     const subMenuWrap = document.querySelector('.sub-menu-wrap');
@@ -26,6 +33,25 @@ document.addEventListener('DOMContentLoaded', function() {
                         const submenuAvatar = document.getElementById('submenuUserAvatar');
                         const submenuName = document.getElementById('submenuUserName');
                         const submenuEmail = document.getElementById('submenuUserEmail');
+                        
+                        if (submenuAvatar) submenuAvatar.src = userData.profileImage || 'images/images/userblue.png';
+                        if (submenuName) submenuName.textContent = [userData.firstName, userData.lastName].filter(Boolean).join(' ') || 'User';
+                        if (submenuEmail) submenuEmail.textContent = user.email;
+                    }
+                });
+            }
+        });
+    // }
+    
+        // Update submenu user info
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                db.collection('users').doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        const submenuAvatar = document.getElementById('submenuUserAvatar2');
+                        const submenuName = document.getElementById('submenuUserName2');
+                        const submenuEmail = document.getElementById('submenuUserEmail2');
                         
                         if (submenuAvatar) submenuAvatar.src = userData.profileImage || 'images/images/userblue.png';
                         if (submenuName) submenuName.textContent = [userData.firstName, userData.lastName].filter(Boolean).join(' ') || 'User';
@@ -108,3 +134,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }, 5000);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+

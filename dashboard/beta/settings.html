@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="fontawesome-free-6.7.2-web/css/all.css">
+                <link rel="stylesheet" href="bottom bar/fonts/remixicon.css">
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"> -->
+       <link rel="stylesheet" href="bottom bar/css/styles.css">
 </head>
 <body oncontextmenu="return false;">
 
@@ -34,7 +37,8 @@
             <hr>
             <div class="sidebar-menu">
                 <a href="index.html" class="menu-item ">
-                    <i class="fas fa-home"></i>
+                    <!-- <i class="fas fa-home"></i> -->
+                     <i class="ri-home-smile-2-line"></i>
                     <span class="menu-text">Dashboard</span>
                 </a>
                 <a href="doctors.html" target="" class="menu-item ">
@@ -69,10 +73,10 @@
                     <i class="fas fa-cog"></i>
                     <span class="menu-text">Settings</span>
                 </a>
-                <a href="#" class="menu-item">
+                <!-- <a href="#" class="menu-item">
                                                             <i class="fas fa-clock"></i>
 
-                    <div id="MyClockDisplay"  class="menu-text" onload="showTime()"></div>
+                    <div id="MyClockDisplay"  class="menu-text" onload="showTime()"></div> -->
 
 <!-- <div id="txt"onload="startTime()"></div>
     <div class="clock">
@@ -95,7 +99,7 @@
         </div>
     </div> -->
                   <!-- <span class="menu-text">Settings</span> -->
-                </a>
+                <!-- </a> -->
                 
             </div>
 <div class="sidebar-footer">
@@ -344,12 +348,12 @@
             </main>
         </div>
     </div>
-<div id="mms-overlay">
+<!-- <div id="mms-overlay">
     <a href="https://mmssb.github.io/" target="_blank" rel="noopener noreferrer">
       <img src="https://mmssb.github.io/assets/images/mmslogo.PNG" alt="MMS Logo" class="mms-logo">
       <span>Made by MMS</span>
     </a>
-  </div>
+  </div> -->
           <!-- Overlay & Share Menu -->
   <div id="shareOverlay" class="overlay hidden">
     <div class="share-menu">
@@ -415,5 +419,83 @@ setClock();
 </script> -->
 <script src="clock.js"></script>
 <script src="profile/profile.js"></script>
+      <!--=============== NAVBAR ===============-->
+      <nav class="nav">
+         <ul class="nav__list">
+            <!-- <li> -->
+               <a href="index.html" class="nav__link ">
+                  <i class="ri-home-smile-2-line"></i>
+                   <!-- <i class="ri-dashboard-fill"></i> -->
+                                  <!-- <p style="font-size: 8px;">Home</p> -->
+
+               </a>
+            </li>
+
+            <li>
+               <a href="profile.html" class="nav__link">
+                  <i class="ri-user-line"></i>
+               </a>
+            </li>
+
+            <!-- Expand list -->
+            <li>
+               <button class="nav__expand" id="nav-expand">
+                  <!-- <i class="ri-add-line nav__expand-icon" id="nav-expand-icon"></i> -->
+                  <i class="ri-shining-2-fill nav__expand-icon" id="nav-expand-icon" ></i>
+                  <!-- <i class="ri-sparkling-line nav__expand-icon" id="nav-expand-icon" ></i> -->
+               </button>
+
+               <ul class="nav__expand-list" id="nav-expand-list">
+                  <!-- <li> -->
+                     <a href="history.html" class="nav__expand-link">
+                      <i class="ri-history-line"></i>
+                        <span>History</span>
+                     </a>
+                  </li>
+      
+                  <!-- <li>
+                     <a href="weather.html" class="nav__expand-link">
+                         <i class="ri-sun-cloudy-line"></i>
+                        <span>Weather Forecast</span>
+                     </a>
+                  </li> -->
+      
+                  <li>
+                     <a href="ai-insights.html" class="nav__expand-link">
+                        <!-- <i class="ri-bookmark-3-line"></i> -->
+                         <i class="ri-brain-2-line"></i>
+                        <span>Ai Insights</span>
+                     </a>
+                  </li>
+
+
+                  <li>
+                     <a href="analytics.html" class="nav__expand-link">
+                        <!-- <i class="ri-settings-3-line"></i> -->
+                         <i class="ri-line-chart-fill"></i>
+                        <span>Analytics</span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+         
+            <li>
+               <a href="inbox.html" class="nav__link">
+                  <!-- <i class="ri-briefcase-line"></i> -->
+                   <i class="ri-inbox-2-line"></i>
+               </a>
+            </li>
+
+            <li>
+               <a href="settings.html" class="nav__link active-link">
+                  <i class="ri-settings-3-fill"></i>
+               </a>
+            </li>
+         </ul>
+      </nav>
+<br>
+<br>
+       <script src="bottom bar/js/main.js"></script>
+
 </body>
 </html>

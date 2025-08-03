@@ -171,6 +171,41 @@ function loadAvatarOptionsModal() {
             });
         });
     }
+
+    // Example for save profile
+if (updateProfileButton) {
+  updateProfileButton.addEventListener('click', () => {
+    const firstName = firstNameInput.value.trim();
+    const lastName = lastNameInput.value.trim();
+
+    if (!firstName) {
+      showNotification('Please enter your first name', 'error');
+      return;
+    }
+
+    updateProfileButton.disabled = true;
+    updateProfileButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+    db.collection('users').doc(currentUser.uid).update({
+      firstName: firstName,
+      lastName: lastName
+    })
+    .then(() => {
+      if (userWelcomeName) {
+        userWelcomeName.textContent = firstName;
+      }
+      showNotification('Profile updated successfully!');
+    })
+    .catch((error) => {
+      console.error('Error updating profile:', error);
+      showNotification('Error updating profile. Please try again.', 'error');
+    })
+    .finally(() => {
+      updateProfileButton.disabled = false;
+      updateProfileButton.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+    });
+  });
+}
     // Available avatar options
     const avatarOptions = [
         "images/images/thunder.gif",
@@ -293,7 +328,42 @@ function loadAvatarOptionsModal() {
             });
         });
     }
+// In your profile.js, replace all alerts with showNotification()
 
+// Example for updating profile:
+if (updateProfileButton) {
+    updateProfileButton.addEventListener('click', () => {
+        const firstName = firstNameInput.value.trim();
+        const lastName = lastNameInput.value.trim();
+
+        if (!firstName) {
+            showNotification('Please enter your first name', 'error');
+            return;
+        }
+
+        updateProfileButton.disabled = true;
+        updateProfileButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+        db.collection('users').doc(currentUser.uid).update({
+            firstName: firstName,
+            lastName: lastName
+        })
+        .then(() => {
+            if (userWelcomeName) {
+                userWelcomeName.textContent = firstName;
+            }
+            showNotification('Profile updated successfully!');
+        })
+        .catch((error) => {
+            console.error('Error updating profile:', error);
+            showNotification('Error updating profile. Please try again.', 'error');
+        })
+        .finally(() => {
+            updateProfileButton.disabled = false;
+            updateProfileButton.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+        });
+    });
+}
     // Change Password
     if (changePasswordButton) {
         changePasswordButton.addEventListener('click', () => {
@@ -382,7 +452,36 @@ function loadAvatarOptionsModal() {
             }
         });
     }
-    
+    // Delete Account
+if (deleteAccountButton) {
+    deleteAccountButton.addEventListener('click', () => {
+        // Create a custom confirmation modal instead of using confirm()
+        const confirmDelete = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+        
+        if (confirmDelete) {
+            deleteAccountButton.disabled = true;
+            deleteAccountButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
+
+            db.collection('users').doc(currentUser.uid).delete()
+                .then(() => {
+                    return currentUser.delete();
+                })
+                .then(() => {
+                    window.location.href = 'login.html';
+                })
+                .catch((error) => {
+                    console.error('Error deleting account:', error);
+                    if (error.code === 'auth/requires-recent-login') {
+                        showNotification('Please log out and log back in before deleting your account.', 'warning');
+                    } else {
+                        showNotification('Error deleting account: ' + error.message, 'error');
+                    }
+                    deleteAccountButton.disabled = false;
+                    deleteAccountButton.innerHTML = '<i class="fas fa-trash-alt"></i> Delete Account';
+                });
+        }
+    });
+}
     // Load user profile data
     function loadUserProfile() {
         if (!currentUser) return;
@@ -473,7 +572,34 @@ function loadAvatarOptionsModal() {
             });
         });
     }
-
+// Save profile image
+if (saveProfileImageBtn) {
+    saveProfileImageBtn.addEventListener('click', () => {
+        if (!selectedAvatar) {
+            showNotification('Please select an avatar first.', 'error');
+            return;
+        }
+        
+        saveProfileImageBtn.disabled = true;
+        saveProfileImageBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        
+        db.collection('users').doc(currentUser.uid).update({
+            profileImage: selectedAvatar,
+            lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+            showNotification('Profile image updated successfully!');
+        })
+        .catch((error) => {
+            console.error('Error updating profile image:', error);
+            showNotification('Error updating profile image. Please try again.', 'error');
+        })
+        .finally(() => {
+            saveProfileImageBtn.disabled = false;
+            saveProfileImageBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+        });
+    });
+}
     // Update user-badge with full name
     function updateUserBadge() {
         if (!currentUser) return;

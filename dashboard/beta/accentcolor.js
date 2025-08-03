@@ -183,7 +183,10 @@ function applyAccentColor(color) {
         '.hourly-container':'scrollbarcolor',
         '.Version':'color',
         '.note':'color',
+        '.active-link':'color',
+        '.nav__link:hover':'color',
         '.ai':'color',
+        '.nav__expand-link:hover':'color',
         // '.profile-image':'border',
         '.dark-theme .avatar-option':'border',
         '.spinner':'bordertopcolor',
@@ -197,6 +200,7 @@ function applyAccentColor(color) {
         // UI elements
         '.menu-item.active': 'backgroundColor',
         '.settings-buttonsaveaccent': 'backgroundColor',
+        '.nav__expand': 'backgroundColor',
         '.sidebar-header .logo2': 'backgroundColor',
         '.nav-left .logo.mobile-only': 'backgroundColor',
         
