@@ -33,74 +33,77 @@ body.dark-theme {
 
 
 
+/* Mobile Bottom Navigation Bar */
 .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 60px;
+    background: var(--card-bg);
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: var(--card-bg);
-    /* box-shadow: 0 -1px 5px rgba(255, 255, 255, 0.1); */
-    border: var(--border);
-    /* z-index: 1000; */
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--border);
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--border);
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Hidden by default */
 }
 
-.bottom-nav .nav-link {
+.bottom-nav.mobile-only {
+    display: none; /* Will be shown only on mobile via media query */
+}
+
+.nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    color: var(--text);
-    transition: color 0.3s, background-color 0.3s;
+    color: var(--text-light);
+    padding: 0.5rem;
+    flex: 1;
+    text-align: center;
+    transition: all 0.2s ease;
 }
 
-.bottom-nav .nav-link img {
-    height: 24px;
-    width: 24px;
-    margin-bottom: 4px;
-    transition: transform 0.3s; /* Smooth transform effect */
+.nav-item i {
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
 }
 
-/* Hover effect for non-active links */
-.bottom-nav .nav-link:hover {
-    color: var(--primary); /* Gold color on hover */
-    background-color: rgba(255, 255, 255, 0.1); /* Slight background on hover */
-    border-radius: .5rem; /* Rounded corners on hover */
+.nav-text {
+    font-size: 0.7rem;
+}
+
+.nav-item.active {
+    color: var(--primary);
+}
+
+.nav-item:active {
+    transform: scale(0.95);
+}
+
+/* Show bottom nav only on mobile */
+@media (max-width: 992px) {
+    .bottom-nav.mobile-only {
+        display: flex;
+    }
     
-    
-}
-
-/* Hover effect specifically for the icon */
-.bottom-nav .nav-link:hover img {
-    transform: scale(1.2); /* Scale up icon on hover */
-}
-
-/* Active link styling */
-.bottom-nav .nav-link.active {
-    color: var(--primary); /* Gold color for active link */
-}
-
-/* Active and hover effect for active link */
-.bottom-nav .nav-link.active:hover {
-    color: var(--primary); /* Orange color for hover effect on active link */
-    background-color: rgba(0, 81, 255, 0.295); /* Slightly different background */
-}
-
-/* Hover effect specifically for the icon when active */
-.bottom-nav .nav-link.active:hover img {
-    transform: scale(1.2); /* Scale up icon on hover, same as non-active */
-}
-
-@media (min-width: 993px) {
-    .bottom-nav {
-        display: none;
+    /* Add padding to main content to prevent bottom nav overlap */
+    .main-content {
+        padding-bottom: 70px;
     }
 }
 
+/* Active state indicator */
+.nav-item.active::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 5px;
+    background: var(--primary);
+    border-radius: 50%;
+    margin-top: 0.25rem;
+}
 
   

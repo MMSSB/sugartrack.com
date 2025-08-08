@@ -18,3 +18,20 @@ function setActive() {
 
 // Call the function to set the active link on page load
 document.addEventListener('DOMContentLoaded', setActive);
+
+
+
+// Highlight active page in bottom nav
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPage = window.location.pathname.split('/').pop();
+    const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+    
+    navItems.forEach(item => {
+        const link = item.getAttribute('href');
+        if (link === currentPage || 
+            (currentPage === '' && link === 'index.html') || 
+            (currentPage === 'index.html' && link === 'index.html')) {
+            item.classList.add('active');
+        }
+    });
+});
