@@ -3050,3 +3050,60 @@ filter: brightness(0) saturate(100%) invert(40%) sepia(76%) saturate(1903%) hue-
         display: none !important;
     }
 }
+
+
+/* User Info Styles */
+.user-info-container {
+    margin-bottom: 1.5rem;
+}
+
+.user-info {
+    background: var(--background);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+}
+
+.user-info p {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.user-info p strong {
+    min-width: 100px;
+    display: inline-block;
+    color: var(--primary);
+}
+
+#duplicateInfoBtn {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.user-info-copy {
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-top: 1rem;
+    border: 1px dashed var(--primary);
+    position: relative;
+}
+
+.user-info-copy .delete-copy {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: var(--danger);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
