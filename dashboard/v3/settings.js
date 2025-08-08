@@ -26,40 +26,77 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Load user data from Firestore
-    function loadUserData() {
-        console.log('Loading user data for:', currentUser.uid);
-        db.collection('users').doc(currentUser.uid).get()
-            .then((doc) => {
-                if (doc.exists) {
-                    const userData = doc.data();
-                    console.log('User data loaded:', userData);
+    // // Load user data from Firestore
+    // function loadUserData() {
+    //     console.log('Loading user data for:', currentUser.uid);
+    //     db.collection('users').doc(currentUser.uid).get()
+    //         .then((doc) => {
+    //             if (doc.exists) {
+    //                 const userData = doc.data();
+    //                 console.log('User data loaded:', userData);
                     
-                    // Update form fields
-                    firstNameInput.value = userData.firstName || '';
-                    lastNameInput.value = userData.lastName || '';
-                    userEmailInput.value = currentUser.email;
+    //                 // Update form fields
+    //                 firstNameInput.value = userData.firstName || '';
+    //                 lastNameInput.value = userData.lastName || '';
+    //                 userEmailInput.value = currentUser.email;
                     
-                    // Update welcome name
-                    if (userWelcomeName) {
-                        userWelcomeName.textContent = userData.firstName || 'User';
-                    }
-                } else {
-                    console.log('No user document found, creating default');
-                    return db.collection('users').doc(currentUser.uid).set({
-                        firstName: 'User',
-                        lastName: '',
-                        email: currentUser.email,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
+    //                 // Update welcome name
+    //                 if (userWelcomeName) {
+    //                     userWelcomeName.textContent = userData.firstName || 'User';
+    //                 }
+    //             } else {
+    //                 console.log('No user document found, creating default');
+    //                 return db.collection('users').doc(currentUser.uid).set({
+    //                     firstName: 'User',
+    //                     lastName: '',
+    //                     email: currentUser.email,
+    //                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    //                 });
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error loading user data:', error);
+    //             alert('Error loading user data. Please try again.');
+    //         });
+    // }
+// In the loadUserData function:
+function loadUserData() {
+    console.log('Loading user data for:', currentUser.uid);
+    db.collection('users').doc(currentUser.uid).get()
+        .then((doc) => {
+            if (doc.exists) {
+                const userData = doc.data();
+                console.log('User data loaded:', userData);
+                
+                // Update form fields
+                firstNameInput.value = userData.firstName || '';
+                lastNameInput.value = userData.lastName || '';
+                document.getElementById('userEmailInput').value = currentUser.email;
+                
+                // Update display elements
+                document.getElementById('UserEmailDisplay').textContent = currentUser.email;
+                document.getElementById('userNameDisplay').textContent = 
+                    `${userData.firstName || ''} ${userData.lastName || ''}`.trim();
+                
+                // Update welcome name
+                if (userWelcomeName) {
+                    userWelcomeName.textContent = userData.firstName || 'User';
                 }
-            })
-            .catch((error) => {
-                console.error('Error loading user data:', error);
-                alert('Error loading user data. Please try again.');
-            });
-    }
-
+            } else {
+                console.log('No user document found, creating default');
+                return db.collection('users').doc(currentUser.uid).set({
+                    firstName: 'User',
+                    lastName: '',
+                    email: currentUser.email,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+        })
+        .catch((error) => {
+            console.error('Error loading user data:', error);
+            alert('Error loading user data. Please try again.');
+        });
+}
     // Update profile
     if (updateProfileButton) {
         updateProfileButton.addEventListener('click', () => {
