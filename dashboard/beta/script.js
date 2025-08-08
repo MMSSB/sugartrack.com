@@ -677,6 +677,92 @@ exportImageButton.addEventListener('click', async () => {
     link.click();
 });
 
+// // Export as PDF
+// exportPDFButton.addEventListener('click', () => {
+//     // Initialize jsPDF with A4 dimensions
+//     const pdf = new jsPDF({
+//         orientation: 'portrait',
+//         unit: 'mm',
+//         format: 'a4'
+//     });
+
+//     // Website information
+//     const websiteName = 'SugarTrack.com';
+//     const weblink = 'https://mmssb.github.io/sugartrack.com';
+//     const websiteLinkText = 'Visit our website';
+//     const websiteURL = 'https://mmssb.github.io/sugartrack.com';
+
+//     // Add website header
+//     pdf.setFontSize(25);
+//     pdf.text(websiteName, 5, 20);
+//     pdf.setFontSize(10);
+//     pdf.text(weblink, 5, 25);
+//     pdf.setTextColor(0, 0, 255);
+//     pdf.textWithLink(websiteLinkText, 5, 30, { url: websiteURL });
+
+//     // Reset text color and set font styles
+//     pdf.setTextColor(0, 0, 0);
+//     pdf.setFontSize(14);
+//     pdf.setFont('helvetica');
+
+//     // Get user data from Firestore
+//     db.collection('users').doc(currentUser.uid).get()
+//         .then((doc) => {
+//             const userData = doc.exists ? doc.data() : { firstName: 'User' };
+//             const userName = userData.firstName;
+
+//             // Add title with user name
+//             pdf.text(`Diabetes Tracker Data - ${userName}`, 10, 35);
+
+//             // Table setup
+//             const headers = ['Date', 'Time', 'Glucose (mg/dL)', 'Comment'];
+//             const columnWidths = [50, 30, 40, 60];
+//             const headerHeight = 10;
+//             let yPosition = 45;
+
+//             // Draw table headers
+//             headers.forEach((header, index) => {
+//                 pdf.text(header, 10 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+//             });
+//             yPosition += headerHeight;
+
+//             // Add table rows
+//             readings.forEach((reading) => {
+//                 const formattedTime = formatTime12Hour(reading.time);
+//                 const rowData = [
+//                     reading.date,
+//                     formattedTime,
+//                     reading.glucose.toString(),
+//                     reading.comment || ''
+//                 ];
+
+//                 // Check if new page is needed
+//                 if (yPosition + headerHeight > pdf.internal.pageSize.getHeight()) {
+//                     pdf.addPage();
+//                     yPosition = 20;
+
+//                     // Redraw headers on new page
+//                     headers.forEach((header, index) => {
+//                         pdf.text(header, 10 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+//                     });
+//                     yPosition += headerHeight;
+//                 }
+
+//                 // Draw row data
+//                 rowData.forEach((cell, colIndex) => {
+//                     pdf.text(cell, 10 + columnWidths.slice(0, colIndex).reduce((a, b) => a + b, 0), yPosition);
+//                 });
+//                 yPosition += headerHeight;
+//             });
+
+//             // Save the PDF
+//             pdf.save(`glucose-readings-${new Date().toISOString().split('T')[0]}.pdf`);
+//         })
+//         .catch((error) => {
+//             console.error('Error generating PDF:', error);
+//             alert('Error generating PDF. Please try again.');
+//         });
+// });
 // Export as PDF
 exportPDFButton.addEventListener('click', () => {
     // Initialize jsPDF with A4 dimensions
@@ -708,12 +794,14 @@ exportPDFButton.addEventListener('click', () => {
     // Get user data from Firestore
     db.collection('users').doc(currentUser.uid).get()
         .then((doc) => {
-            const userData = doc.exists ? doc.data() : { firstName: 'User' };
-            const userName = userData.firstName;
+            const userData = doc.exists ? doc.data() : { firstName: 'User', lastName: '' };
+            // Combine first and last name for full name
+            const userName = `${userData.firstName} ${userData.lastName}`.trim();
 
-            // Add title with user name
+            // Add title with user's full name
             pdf.text(`Diabetes Tracker Data - ${userName}`, 10, 35);
 
+            // Rest of your PDF generation code...
             // Table setup
             const headers = ['Date', 'Time', 'Glucose (mg/dL)', 'Comment'];
             const columnWidths = [50, 30, 40, 60];
@@ -763,7 +851,6 @@ exportPDFButton.addEventListener('click', () => {
             alert('Error generating PDF. Please try again.');
         });
 });
-
 // Save user data as a .diab file
 saveButton.addEventListener('click', () => {
     const data = {

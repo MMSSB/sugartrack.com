@@ -887,53 +887,110 @@ function exportAsImage() {
     link.click();
 }
 
+// // Export as PDF
+// function exportAsPDF() {
+//     const userName = document.getElementById('userWelcomeName').textContent || 'User';
+//     const pdf = new jsPDF({
+//         orientation: 'portrait',
+//         unit: 'mm',
+//         format: 'a4'
+//     });
+
+//     // Add title
+//     pdf.setFontSize(16);
+//     pdf.text(`Glucose Readings - ${userName}`, 15, 15);
+
+//     // Table setup
+//     const headers = ['Date', 'Time', 'Glucose', 'Comment'];
+//     const columnWidths = [40, 25, 25, 100];
+//     const rowHeight = 7;
+//     let yPosition = 25;
+
+//     // Add headers
+//     pdf.setFontSize(12);
+//     pdf.setFont(undefined, 'bold');
+//     headers.forEach((header, index) => {
+//         pdf.text(header, 15 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+//     });
+//     yPosition += rowHeight;
+
+//     // Add data rows
+//     pdf.setFont(undefined, 'normal');
+//     [...readings].reverse().forEach(reading => {
+//         if (yPosition > 270) { // Add new page if needed
+//             pdf.addPage();
+//             yPosition = 20;
+//         }
+
+//         const formattedTime = formatTime12Hour(reading.time);
+//         const rowData = [reading.date, formattedTime, reading.glucose.toString(), reading.comment || ''];
+//         rowData.forEach((cell, index) => {
+//             pdf.text(cell, 15 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+//         });
+//         yPosition += rowHeight;
+//     });
+
+//     // Save the PDF
+//     pdf.save(`glucose-readings-${new Date().toISOString().split('T')[0]}.pdf`);
+// }
 // Export as PDF
 function exportAsPDF() {
-    const userName = document.getElementById('userWelcomeName').textContent || 'User';
-    const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4'
-    });
+    // Get user data from Firestore first
+    db.collection('users').doc(currentUser.uid).get()
+        .then((doc) => {
+            const userData = doc.exists ? doc.data() : { firstName: 'User', lastName: '' };
+            // Combine first and last name for full name
+            const userName = `${userData.firstName} ${userData.lastName}`.trim();
 
-    // Add title
-    pdf.setFontSize(16);
-    pdf.text(`Glucose Readings - ${userName}`, 15, 15);
+            // Initialize jsPDF with A4 dimensions
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4'
+            });
 
-    // Table setup
-    const headers = ['Date', 'Time', 'Glucose', 'Comment'];
-    const columnWidths = [40, 25, 25, 100];
-    const rowHeight = 7;
-    let yPosition = 25;
+            // Add title with full name
+            pdf.setFontSize(16);
+            pdf.text(`Glucose Readings - ${userName}`, 15, 15);
 
-    // Add headers
-    pdf.setFontSize(12);
-    pdf.setFont(undefined, 'bold');
-    headers.forEach((header, index) => {
-        pdf.text(header, 15 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
-    });
-    yPosition += rowHeight;
+            // Table setup
+            const headers = ['Date', 'Time', 'Glucose', 'Comment'];
+            const columnWidths = [40, 25, 25, 100];
+            const rowHeight = 7;
+            let yPosition = 25;
 
-    // Add data rows
-    pdf.setFont(undefined, 'normal');
-    [...readings].reverse().forEach(reading => {
-        if (yPosition > 270) { // Add new page if needed
-            pdf.addPage();
-            yPosition = 20;
-        }
+            // Add headers
+            pdf.setFontSize(12);
+            pdf.setFont(undefined, 'bold');
+            headers.forEach((header, index) => {
+                pdf.text(header, 15 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+            });
+            yPosition += rowHeight;
 
-        const formattedTime = formatTime12Hour(reading.time);
-        const rowData = [reading.date, formattedTime, reading.glucose.toString(), reading.comment || ''];
-        rowData.forEach((cell, index) => {
-            pdf.text(cell, 15 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+            // Add data rows
+            pdf.setFont(undefined, 'normal');
+            [...readings].reverse().forEach(reading => {
+                if (yPosition > 270) { // Add new page if needed
+                    pdf.addPage();
+                    yPosition = 20;
+                }
+
+                const formattedTime = formatTime12Hour(reading.time);
+                const rowData = [reading.date, formattedTime, reading.glucose.toString(), reading.comment || ''];
+                rowData.forEach((cell, index) => {
+                    pdf.text(cell, 15 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0), yPosition);
+                });
+                yPosition += rowHeight;
+            });
+
+            // Save the PDF
+            pdf.save(`glucose-readings-${new Date().toISOString().split('T')[0]}.pdf`);
+        })
+        .catch((error) => {
+            console.error('Error getting user data for PDF:', error);
+            alert('Error generating PDF. Please try again.');
         });
-        yPosition += rowHeight;
-    });
-
-    // Save the PDF
-    pdf.save(`glucose-readings-${new Date().toISOString().split('T')[0]}.pdf`);
 }
-
 // Save data to file
 function saveData() {
     const data = {
