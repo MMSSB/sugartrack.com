@@ -140,7 +140,7 @@
                     <h2>SugarTracker</h2>
                     <p class="subtitle">Track your glucose readings over time</p>
 
-                    <div class="input-row">
+                    <div class="input-row" id="dash">
                         <div class="input-group">
                             <label>Date & Time</label>
                             <div class="date-time-inputs">
@@ -249,7 +249,7 @@
         <script src="suggest.js"></script>
         <script src="share.js"></script>
         
-        <div class="bottom-nav">
+        <!-- <div class="bottom-nav">
     <a href="index.html" class="nav-link">
                     <i class="fas fa-home"></i>
 
@@ -259,9 +259,7 @@
         <i class="fas fa-history"></i>
         <span style="font-size: 9px;">History</span>
     </a>
-    <!-- <a href=".html" class="nav-link">
-        <span style="font-size: 9px;" >test</span>
-    </a> -->
+ 
     <a href="inbox.html" class="nav-link">
         <i class="fas fa-inbox"></i>
         <span style="font-size: 9px;">Inbox</span>
@@ -274,6 +272,27 @@
 </div>
     <br>
     <br>
+<script src="bottom bar/js/main.js"></script> -->
+<!-- Mobile Bottom Navigation Bar -->
+<div class="bottom-nav mobile-only">
+    <a href="index.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span class="nav-text">Home</span>
+    </a>
+    <a href="history.html" class="nav-item">
+        <i class="fas fa-history"></i>
+        <span class="nav-text">History</span>
+    </a>
+    <a href="inbox.html" class="nav-item">
+        <!-- <i class="fas fa-user-doctor"></i> -->
+         <i class="fas fa-inbox"></i>
+        <span class="nav-text">Inbox</span>
+    </a>
+    <a href="settings.html" class="nav-item">
+        <i class="fas fa-cog"></i>
+        <span class="nav-text">Settings</span>
+    </a>
+</div>
 <script src="bottom bar/js/main.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -293,6 +312,23 @@
     });
 </script>
 
-
+<script>
+        // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>
