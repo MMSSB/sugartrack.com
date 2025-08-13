@@ -209,6 +209,8 @@ function applyAccentColor(color) {
         
         // UI elements
         '.menu-item.active': 'backgroundColor',
+        '.notification-badge': 'backgroundColor',
+        '.icon-button__badge': 'backgroundColor',
         '.settings-buttonsaveaccent': 'backgroundColor',
         '.nav__expand': 'backgroundColor',
         '.sidebar-header .logo2': 'backgroundColor',
@@ -586,4 +588,5 @@ document.addEventListener('DOMContentLoaded', () => {
 //         attributes: true,
 //         attributeFilter: ['class']
 //     });
+
 // });
