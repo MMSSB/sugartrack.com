@@ -5236,3 +5236,33 @@ display: none;
   margin: 5px 10px;
 }
 
+.notification-badge {
+  position: absolute;
+  top: 7px; /* Adjust vertical position */
+  right: 2px; /* Adjust horizontal position */
+  background-color: red; /* Badge background color */
+  color: white; /* Badge text color */
+  border-radius: 50%; /* Makes it circular */
+  padding: 4px 8px; /* Adjust padding for size */
+  font-size: 12px; /* Adjust font size */
+  min-width: 18px; /* Ensures minimum width for single digits */
+  text-align: center;
+  line-height: 1; /* Centers text vertically */
+}
+.icon-button__badge {
+  /* position: absolute; */
+  /* top: -50px; */
+  /* right: -50px; */
+  position: relative;
+    top: 2px;
+    right: 28px;
+  width: 25px;
+  height: 25px;
+  background: var(--primary);
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
