@@ -5282,3 +5282,93 @@ display: none;
   top: 0;
   right: 0;
 }
+/* .profile-cont{
+    display: flex;
+    flex-wrap: wrap;
+} */
+
+/* Add this to your style.css file */
+.profile-image-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#currentProfileImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--text);
+}
+
+.user-info-display {
+    flex: 1;
+    min-width: 0; /* Allows text to wrap properly */
+}
+
+.user-name-display {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--text);
+    margin: 0;
+    word-break: break-word; /* Ensures long names wrap */
+}
+
+#UserEmailDisplay {
+    color: var(--text-light);
+    font-size: 1rem;
+    margin: 0.25rem 0 0;
+    word-break: break-all; /* Handles long email addresses */
+    overflow-wrap: break-word;
+}
+
+/* For the avatar edit badge */
+.icon-button__badge {
+    position: absolute;
+    bottom: 10px;
+    right: 2px;
+    background: var(--primary);
+    color: white;
+    width: 30px;
+    height: 30px;
+    /* width: 32px;
+    height: 32px; */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    /* font-size: medium; */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    /* .profile-image-container {
+        flex-direction: column;
+        text-align: center;
+    } */
+    
+    .user-info-display {
+        text-align: center;
+        width: 100%;
+    }
+    
+    #currentProfileImage {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .user-name-display {
+        font-size: 1.25rem;
+        text-align: start;
+    }
+    
+    #UserEmailDisplay {
+        font-size: 0.9rem;
+        text-align: start;
+    }
+}
