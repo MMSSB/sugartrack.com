@@ -588,5 +588,4 @@ document.addEventListener('DOMContentLoaded', () => {
 //         attributes: true,
 //         attributeFilter: ['class']
 //     });
-
 // });
