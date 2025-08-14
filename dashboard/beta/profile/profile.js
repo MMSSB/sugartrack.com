@@ -208,7 +208,7 @@ if (updateProfileButton) {
 }
     // Available avatar options
     const avatarOptions = [
-        "images/images/thunder.gif",
+        // "images/images/thunder.gif",
         "images/images/userblue.png",
         "images/images/userred.png",
         "images/images/usergreen.png",
