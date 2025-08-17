@@ -146,8 +146,8 @@ a {
 }
 /* Hide nav on desktop */
 @media screen and (min-width: 1301px) {
-/* @media screen and (min-width: 993px) {
-    .nav { */
+/* @media screen and (min-width: 993px) { */
+    .nav {
         display: none;
     }
   }
