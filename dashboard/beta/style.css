@@ -3314,6 +3314,7 @@ input[type="color"] {
 
 .inbox-updates{
     color: var(--primary);
+    text-align: center;
 }
 
 
