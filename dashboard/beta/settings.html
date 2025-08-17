@@ -203,15 +203,21 @@
                                             <div class="content-card">
 
 <div class="profile-image-container">
-    <img id="currentProfileImage" src="" alt="Current Profile Image" class="profile-image">
-    <div>    
+    <div style="position: relative;">
+        <img id="currentProfileImage" src="" alt="Current Profile Image" class="profile-image">
+        <!-- <span class="icon-button__badge" id="openAvatarModal">
+            <i class="fa-solid fa-plus" style="font-size: larger;"></i>
+        </span> -->
+    </div>
+    <div class="user-info-display">
         <h1 class="user-name-display" id="userNameDisplay">Loading name...</h1>
-        <h4 class="user-name-display" id="UserEmailDisplay">Loading...</h4>
-        <br>
+        <h5 class="user-email-display" id="UserEmailDisplay">Loading...</h5>
+                <br>
            <a href="profile.html"> <button>
         <i class="fa-solid fa-pen-to-square"></i> Edit Profile
     </button> </a>
     </div>
+    
 </div>
 </div>
                 <div class="content-card">
@@ -498,4 +504,5 @@ setClock();
        <script src="bottom bar/js/main.js"></script>
 
 </body>
+
 </html>
