@@ -145,8 +145,8 @@ a {
     /* box-shadow: 0 0 0 3px rgba(92, 92, 92, 0.747); */
 }
 /* Hide nav on desktop */
-@media screen and (min-width: 1301px) {
-/* @media screen and (min-width: 993px) { */
+/* @media screen and (min-width: 1301px) { */
+@media screen and (min-width: 993px) {
     .nav {
         display: none;
     }
