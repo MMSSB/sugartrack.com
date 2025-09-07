@@ -118,6 +118,31 @@
                     <img src="images/welcometosugar.png" width="100%" style="border-radius: 1.5rem;" alt="">
 
                 </div>
+                        <!-- Messages Container -->
+<div class="content-card">
+    <div class="inbox-header">
+        <h2>Your Messages</h2>
+        <div class="inbox-actions">
+            <button id="refreshInbox" class="btn btn-primary">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button id="markAllRead" class="btn btn-secondary">
+                <i class="fas fa-check-double"></i> Mark All Read
+            </button>
+        </div>
+    </div>
+    
+    <div id="messagesContainer" class="messages-container">
+        <div class="loading-messages">
+            <i class="fas fa-spinner fa-spin"></i> Loading messages...
+        </div>
+    </div>
+    
+    <div id="noMessages" class="no-messages" style="display: none;">
+        <i class="fas fa-envelope-open"></i>
+        <p>No messages yet</p>
+    </div>
+</div>
     <div class="content-card">
   <h2 class="inboxtitle">
     <img src="images/logo (15).png" class="stinbox" alt="Logo">
@@ -249,7 +274,27 @@
   </div> -->
             </main>
         </div>
-
+                <!-- Message View Modal -->
+        <div id="messageModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalSubject"></h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="message-meta">
+                        <span id="modalSender"></span>
+                        <span id="modalDate"></span>
+                        <span id="modalPriority" class="priority-badge"></span>
+                    </div>
+                    <div id="modalBody" class="message-body"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="markAsReadBtn" class="btn btn-primary">Mark as Read</button>
+                    <button class="btn btn-secondary close-modal" style="font-size: medium; background-color: #ef4444;">Close</button>
+                </div>
+            </div>
+        </div>
           <!-- Overlay & Share Menu -->
   <div id="shareOverlay" class="overlay hidden">
     <div class="share-menu">
@@ -280,6 +325,7 @@
         <script src="suggesth.js"></script>
         <script src="sidebar.js"></script>
                 <script src="share.js"></script>
+                <script src="inbox.js"></script>
 
 
 
@@ -309,5 +355,4 @@
 </div>
 <script src="bottom bar/js/main.js"></script>
 </body>
-
 </html>
