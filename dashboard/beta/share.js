@@ -5,7 +5,7 @@ const copyBtn = document.getElementById("copyBtn");
 const shareLinkInput = document.getElementById("shareLink");
 
 // Replace this with your actual URL or dynamically set it
-let currentUrl = "http://mmssb.github.io/sugartrack.com/beta/online/index ";
+let currentUrl = "http://mmssb.github.io/sugartrack.com";
 
 // Open menu
 shareBtn.addEventListener("click", () => {
@@ -61,4 +61,5 @@ function shareTo(platform) {
   }
 
   window.open(shareUrl, "_blank");
+
 }
