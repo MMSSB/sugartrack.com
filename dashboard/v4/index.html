@@ -1,0 +1,750 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="images/sugar.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarTrack</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="fontawesome-free-6.7.2-web/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+      <link rel="stylesheet" href="bottom bar/fonts/remixicon.css">
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"> -->
+<link rel="stylesheet" href="bottom bar/css/styles.css">
+    <!-- Add pdf-lib for better text handling -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1"></script>
+    <!-- Add jsPDF-AutoTable for table support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <!-- Add custom font support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPDF-CustomFonts-support/1.0.0/jspdf.customfonts.min.js"></script>
+<!-- put BEFORE your history.js -->
+<script src="https://cdn.jsdelivr.net/npm/arabic-shaping@1.0.3/dist/arabic-shaping.umd.min.js"></script>
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="assets/securityFlase.js"></script>
+
+</head>
+<body oncontextmenu="return false;">
+    <div class="app-container" id="appContainer" style="display: none;">
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger-btn mobile-only">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                
+               <a href="index.html"><div class="logo2">ST</div></a>
+                 <a href="index.html"><span class="app-name">SugarTrack V4</span></a>
+                
+                <button class="close-btn mobile-only">
+                    <i class="fas fa-times"></i>
+                </button>
+
+            </div>
+            <hr>
+            
+            <div class="sidebar-menu">
+                <a href="index.html" class="menu-item active">
+                    <!-- <i class="fas fa-home"></i> -->
+                     <i class="ri-home-smile-2-fill"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+                <a href="doctors.html" class="menu-item">
+                    <i class="fas fa-user-doctor"></i>
+                    <span class="menu-text">Doctors</span>
+                </a>
+                <a href="weather.html" class="menu-item">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span class="menu-text">Weather Forecast</span>
+                </a>
+                <a href="history.html" class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span class="menu-text">History</span>
+                </a>
+                <a href="ai-insights.html" class="menu-item ">
+                    <i class="fas fa-brain"></i>
+                    <span class="menu-text">AI Insights</span>
+                </a>
+                <a href="analytics.html" class="menu-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="menu-text">Analytics</span>
+                </a>
+                <a href="inbox.html" class="menu-item">
+                    <i class="fas fa-inbox"></i>
+                    <span class="menu-text">Inbox & Updates</span>
+                      <!-- <span class="notification-badge">1</span> -->
+
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span class="menu-text">Settings</span>
+                </a>
+                <!-- <a href="#" class="menu-item">
+                    <i class="fas fa-clock"></i>
+                    <div id="MyClockDisplay"  class="menu-text" onload="showTime()"></div>
+                </a> -->
+            </div>
+
+<div class="sidebar-footer">
+    <div class="user-badge" id="userBadge">
+        <img class="user-badge-avatar" id="userBadgeAvatar" src="images/user.png" alt="User Avatar">
+        <span class="user-badge-name" id="userBadgeName">Loading...</span>
+        <!-- <i class="fas fa-chevron-down user-badge-arrow"></i> -->
+    </div>
+    
+    <!-- Submenu Wrap -->
+    <div class="sub-menu-wrap">
+        <div class="sub-menu">
+            <div class="user-info">
+                <img id="submenuUserAvatar" src="images/user.png" alt="User">
+                <div>
+                    <h4 id="submenuUserName">User Name</h4>
+                    <p id="submenuUserEmail">user@example.com</p>
+                </div>
+            </div>
+            <hr>
+            <a href="profile.html" class="sub-menu-link">
+                <i class="fas fa-user"></i>
+                <p>My Profile</p>
+                <span>&gt;</span>
+            </a>
+            <a href="settings.html" class="sub-menu-link">
+                <i class="fas fa-cog"></i>
+                <p>Settings</p>
+                <span>&gt;</span>
+            </a>
+            <!-- <button class="sub-menu-link" id="logoutButton">
+                <i class="fas fa-sign-out-alt"></i>
+                <p>Logout</p>
+                <span>&gt;</span>
+            </button> -->
+            <!-- <button class="buttonlogout" id="logoutButton"> -->
+            <button class="sub-menubuttonlogout" id="logoutButton">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span >Logout</span>
+                    <!-- <span class="menu-text">Logout</span> -->
+                </button> 
+        <!-- </div> -->
+    </div>
+</div>
+                <!-- <button class="buttonlogout" id="logoutButton">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="menu-text">Logout</span>
+                </button> -->
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <nav class="top-nav">
+                
+                <div class="nav-content">
+                    <div class="nav-left">
+<!-- In your index.html, keep the toggle button simple -->
+<!-- <button class="toggle-collapse desktop-only">
+    <i class="fas fa-chevron-left"></i>
+</button> -->
+<button class="toggle-collapse desktop-only">
+    <i class="fas fa-chevron-left"></i>
+</button>
+
+                    <!-- <div class="logo mobile-only">ST</div> -->
+                         <div class="user-badge2" id="userBadge2">
+        <img class="user-badge-nav" id="userBadgenav" src="images/user.png" alt="User Avatar" onclick="toggleMenu()">
+        <!-- <span class="user-badge-name" id="userBadgeName">Loading...</span> -->
+        <!-- <i class="fas fa-chevron-down user-badge-arrow"></i> -->
+    </div>
+        <!-- Submenu Wrap -->
+    <div class="sub-menu-wrap2" id="submenu2">
+        <div class="sub-menu2">
+            <div class="user-info">
+                <img id="submenuUserAvatar2" src="images/user.png" alt="User">
+                <div>
+                    <h4 id="submenuUserName2">User Name</h4>
+                    <p id="submenuUserEmail2">user@example.com</p>
+                </div>
+            </div>
+            <hr>
+            <a href="profile.html" class="sub-menu-link">
+                <i class="fas fa-user"></i>
+                <p>My Profile</p>
+                <span>&gt;</span>
+            </a>
+            <a href="settings.html" class="sub-menu-link">
+                <i class="fas fa-cog"></i>
+                <p>Settings</p>
+                <span>&gt;</span>
+            </a>
+            <!-- <button class="sub-menu-link" id="logoutButton">
+                <i class="fas fa-sign-out-alt"></i>
+                <p>Logout</p>
+                <span>&gt;</span>
+            </button> -->
+            <!-- <button class="buttonlogout" id="logoutButton"> -->
+            <button class="sub-menubuttonlogout" id="logoutButton">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span >Logout</span>
+                    <!-- <span class="menu-text">Logout</span> -->
+                </button> 
+        <!-- </div> -->
+    </div>
+</div>
+                    
+     <div class="user-welcome">Welcome, <a href="profile.html"><span id="userWelcomeName"></span></div>  </a>
+
+                          <!-- <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i> -->
+                          <br>
+                          <i id="tourStarter" title="help?" alt="help?" class="fa-solid fa-question tour-btnI"></i>
+    </div>
+                    <div class="nav-right">
+                        
+                        <!-- <span id="currentDateTime"></span> -->
+                        <!-- <span id="readingsCount">0 Readings</span> -->
+                    </div>
+                </div>
+            </nav>
+            <!-- <hr> -->
+            
+
+            <main>
+                <!-- <div class="content-card">
+                    <h3 style="color: red;">*NOTE*</h3>
+                    
+<a href="settings.html"><h4>if you want to change your name go to <span style="color: #3b82f6;">Settings</span></h4></a>
+<h5>the name you change it will change in pdf and image export </h5>
+<h5>i hope you enjoy 😉</h5>
+</div> -->
+<div class="content-card" id="noteContainer">
+    <button id="closeNoteBtn" class="close-note-btn"><i class="fas fa-times"></i></button>
+    <h3 style="color: red;">*NOTE*</h3>
+    <a href="profile.html"><h4>Setup your Profile Account <span class="note">Click Here</span></h4></a>
+    <h5>the name you change it will change in pdf and image export </h5>
+    <h5>i hope you enjoy 😉</h5>
+</div>
+
+
+                                <!-- <div class="content-card">
+                <div style="font-size: xx-large; font-weight: 900;  text-align: center; right: 500px; justify-content: center;"  id="clock"></div>
+                                </div> -->
+                                <div class="content-card">
+                    <h2>Glucose Readings</h2>
+                        <span id="currentDateTime"></span>
+                        <h2 id="readingsCount">0 Readings</h2>  
+                        
+      
+
+                        <!-- <div id="trendsChart"></div> -->
+                </div>
+                <!-- <div class="content-card">
+    <h2>AI Glucose Suggestions</h2>
+    <p class="subtitle" id="trendsMessage">Add at least two readings for suggestions</p>
+    <div id="trendsChart"></div>
+</div> -->
+
+<div class="content-card">
+  <h2 class="">AI Glucose Insights</h2>
+  <div id="trendsChart"></div>
+
+</div>
+
+     
+                <div class="content-card">
+                    <h2>SugarTracker</h2>
+                    <p class="subtitle">Track your glucose readings over time</p>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Date & Time</label>
+                            <div class="date-time-inputs">
+                                <input type="date" class="custom-date-picker" id="date">
+                                <input type="time" id="time">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Glucose Reading (mg/dL)</label>
+                            <div class="reading-input">
+                                <input type="number" max="-" id="glucose" placeholder="Enter glucose value">
+                                <button id="addReading">Add</button>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Comment (Optional)</label>
+                            <input class="comment" type="text" id="comment" placeholder="Add a comment or note">
+                        </div>
+                    </div>
+
+                    <div class="actions-row">
+                        <!-- <button id="resetButton" class="reset-button">
+                            <i class="fas fa-redo"></i> Reset
+                        </button> -->
+                        <div class="export-buttons">
+                            <!-- <button id="importButton">
+                                <i class="fas fa-file-import"></i> Import
+                            </button>
+                            <input type="file" id="fileInput" accept=".diab" style="display: none;">
+                            <button id="saveButton">
+                                <i class="fas fa-save"></i> Save
+                            </button> -->
+                            <button id="exportImage" title="Export to Image">
+                                <i class="fas fa-image"></i> Image
+                            </button>
+                            <button id="exportPDF" title="Export to PDF">
+                                <i class="fas fa-file-pdf"></i> PDF
+                            </button>
+                            <!-- Add this button to your HTML file alongside the PDF and Image export buttons -->
+<button id="exportExcel" class="export-button" title="Export to Excel"><i class="fa-solid fa-table"></i> Excel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h2>Recent Readings</h2>
+                    <div class="readings-list" id="readingsList"></div>
+                </div>
+
+                <!-- <div class="content-card">
+                    <h2>Glucose Trends</h2>
+                    <p class="subtitle" id="trendsMessage">Add at least two readings to see your trends</p>
+                    <div id="trendsChart"></div>
+                </div> -->
+            </main>
+        </div>
+
+        <!-- Hidden export template -->
+        <div id="exportContent" class="export-template">
+            <h1 id="exportTitle"></h1>
+            <table id="exportTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Glucose (mg/dL)</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+<!-- <div id="mms-overlay">
+    <a href="https://mmssb.github.io/" target="_blank" rel="noopener noreferrer">
+      <img src="https://mmssb.github.io/assets/images/mmslogo.PNG" alt="MMS Logo" class="mms-logo">
+      <span>Made by MMS</span>
+    </a>
+  </div> -->
+          <!-- Overlay & Share Menu -->
+  <div id="shareOverlay" class="overlay hidden">
+    <div class="share-menu">
+      <span id="closeBtn" class="close-btn">x</span>
+      <h3>Share this page</h3>
+
+      <!-- Link Bar -->
+      <div class="link-bar">
+        <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com"/>
+        <button id="copyBtn">Copy</button>
+      </div>
+
+      <!-- Social Buttons -->
+      <div class="social-buttons">
+        <a href="#" onclick="shareTo('whatsapp')" class="social-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" onclick="shareTo('facebook')" class="social-icon facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" onclick="shareTo('twitter')" class="social-icon twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" onclick="shareTo('bluesky')" class="social-icon bluesky"><i class="fa-brands fa-bluesky"></i></a>
+        <a href="#" onclick="shareTo('email')" class="social-icon email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="#" onclick="shareTo('gmail')" class="social-icon gmail"><i class="fa-brands fa-google-plus-g"></i></a>
+      </div>
+    </div>
+  </div>
+  <!-- Edit Reading Modal -->
+<div id="editModal" class="avatar-modal">
+    <div class="avatar-modal-content">
+        <div class="avatar-modal-header">
+            <h3>Edit Reading</h3>
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="avatar-modal-body">
+            <div class="input-group">
+                <label>Date</label>
+                <input type="date" id="editDate">
+            </div>
+            <div class="input-group">
+                <label>Time</label>
+                <input type="time" id="editTime">
+            </div>
+            <div class="input-group">
+                <label>Glucose Reading (mg/dL)</label>
+                <input type="number" id="editGlucose" placeholder="Enter glucose value">
+            </div>
+            <div class="input-group">
+                <label>Comment (Optional)</label>
+                <input type="text" id="editComment" placeholder="Add a comment or note">
+            </div>
+        </div>
+        <div class="avatar-modal-footer">
+            <button class="profile-action-btn secondary close-modal">Cancel</button>
+            <button id="saveEditButton" class="profile-action-btn">Save Changes</button>
+        </div>
+    </div>
+</div>
+    <script src="assets/script.js"></script>
+        <script src="assets/security.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="assets/suggest.js"></script>
+        <script src="assets/share.js"></script>
+        <script src="assets/accentcolor.js"></script>
+                        <script src="profile/user-badge.js"></script>
+
+<!-- Add this to your website's HTML where you want the tour to appear -->
+<!-- <button class="tour-start-btn" id="tourStarter" title="Start Guided Tour">?</button> -->
+
+<div class="tour-backdrop" id="tourBackdrop"></div>
+
+<div class="tour-popup" id="tourPopup">
+    <button class="tour-close" id="closeTour">×</button>
+    <h3 id="popupTitle">Welcome to the Tour</h3>
+    <p id="popupContent">Let me show you around our website and highlight the key features.</p>
+    <div class="tour-nav">
+        <!-- <button class="tour-btn" id="prevStep">Previous</button> -->
+        <span class="tour-progress" id="tourProgress">Step 1 of 5</span>
+        <button class="tour-btn" id="nextStep">Next</button>
+    </div>
+</div>
+
+<script src="assets/tour-config.js"></script>
+<script src="assets/tour-guide.js"></script>
+
+
+<!-- Custom Alert System -->
+<div id="customAlert" class="custom-alert hidden">
+  <div class="custom-alert-content">
+    <div class="custom-alert-message" id="customAlertMessage"></div>
+    <div class="custom-alert-buttons">
+      <button id="customAlertCancel" class="custom-alert-button secondary">Cancel</button>
+      <button id="customAlertConfirm" class="custom-alert-button primary">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Notification System -->
+<div id="notification" class="notification hidden">
+  <div class="notification-content">
+    <span id="notification-message"></span>
+  </div>
+</div>
+<div id="customAlert" class="custom-alert">
+    <span class="custom-alert-icon">✓</span>
+    <span id="customAlertMessage"></span>
+    <span class="custom-alert-close">&times;</span>
+</div>
+<!-- <script src="notifications.js"></script> -->
+
+<script src="assets/menu.js"></script>
+      <!--=============== NAVBAR ===============-->
+      <nav class="nav">
+         <ul class="nav__list">
+            <!-- <li> -->
+               <a href="index.html" class="nav__link active-link">
+                  <i class="ri-home-smile-2-fill"></i>
+                  <!-- <i class="ri-home-smile-2-line"></i> -->
+                   <!-- <i class="ri-dashboard-fill"></i> -->
+                                  <!-- <p style="font-size: 8px;">Home</p> -->
+
+               </a>
+            </li>
+
+            <li>
+                              <a href="card.html" class="nav__link">
+               <!-- <a href="profile.html" class="nav__link"> -->
+                  <i class="ri-user-line"></i>
+               </a>
+            </li>
+
+            <!-- Expand list -->
+            <li>
+               <button class="nav__expand" id="nav-expand">
+                  <!-- <i class="ri-add-line nav__expand-icon" id="nav-expand-icon"></i> -->
+                  <i class="ri-shining-2-fill nav__expand-icon" id="nav-expand-icon" ></i>
+                  <!-- <i class="ri-sparkling-line nav__expand-icon" id="nav-expand-icon" ></i> -->
+               </button>
+
+               <ul class="nav__expand-list" id="nav-expand-list">
+                  <!-- <li> -->
+                     <a href="history.html" class="nav__expand-link">
+                      <i class="ri-history-line"></i>
+                        <span>History</span>
+                     </a>
+                  </li>
+      
+                  <!-- <li>
+                     <a href="weather.html" class="nav__expand-link">
+                         <i class="ri-sun-cloudy-line"></i>
+                        <span>Weather Forecast</span>
+                     </a>
+                  </li> -->
+      
+                  <li>
+                     <a href="ai-insights.html" class="nav__expand-link">
+                        <!-- <i class="ri-bookmark-3-line"></i> -->
+                         <i class="ri-brain-2-line"></i>
+                        <span>Ai Insights</span>
+                     </a>
+                  </li>
+
+
+                  <li>
+                     <a href="analytics.html" class="nav__expand-link">
+                        <!-- <i class="ri-settings-3-line"></i> -->
+                         <i class="ri-line-chart-fill"></i>
+                        <span>Analytics</span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+         
+            <li>
+               <a href="inbox.html" class="nav__link">
+                  <!-- <i class="ri-briefcase-line"></i> -->
+                   <i class="ri-inbox-2-line"></i>
+               </a>
+            </li>
+
+            <li>
+               <a href="settings.html" class="nav__link">
+                  <i class="ri-settings-3-line"></i>
+               </a>
+            </li>
+         </ul>
+      </nav>
+<br>
+<br>
+       <script src="bottom bar/js/main.js"></script>
+
+<script src="profile/user-profile.js"></script>
+    <!-- <script>
+        // Universal Tour Guide Script - Add this to your website's JS
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tour configuration - EDIT THIS SECTION FOR YOUR WEBSITE
+            const tourSteps = [
+                {
+                    element: 'head', // CSS selector for the element to highlight
+                    title: 'Welcome Header', // Title for the popup
+                    content: 'This is the header section where we introduce our website and its main purpose.', // Content for the popup
+                    position: 'bttom' // Position of the popup relative to the element (top, bottom, left, right)
+                },
+                {
+                    element: '#currentDateTime', // Example: navigation menu
+                    title: 'Main Navigation',
+                    content: 'Use this menu to navigate through different sections of our website.',
+                    position: 'bottom'
+                },
+                {
+                    element: '#time', // Example: main feature
+                    title: 'Key Feature',
+                    content: 'This is our most important feature that helps you accomplish your goals.',
+                    position: 'bottom'
+                },
+                {
+                    element: '#date', // Example: contact form
+                    title: '#date',
+                    content: 'Fill out this form to get in touch with our team for any questions or support.',
+                    position: 'top'
+                },
+                                {
+                    element: '#comment', // Example: footer
+                    title: 'Additional Information',
+                    content: 'Check our footer for links to important pages, policies, and social media.',
+                    position: 'top'
+                },
+                {
+                    element: '.reading-input', // Example: contact form
+                    title: 'input',
+                    content: 'Fill out this form to get in touch with our team for any questions or support.',
+                    position: 'bottom'
+                }
+
+            ];
+            
+            // Tour variables
+            let currentStep = 0;
+            const backdrop = document.getElementById('tourBackdrop');
+            const popup = document.getElementById('tourPopup');
+            const popupTitle = document.getElementById('popupTitle');
+            const popupContent = document.getElementById('popupContent');
+            const tourProgress = document.getElementById('tourProgress');
+            const prevButton = document.getElementById('prevStep');
+            const nextButton = document.getElementById('nextStep');
+            const closeButton = document.getElementById('closeTour');
+            const startButton = document.getElementById('tourStarter');
+            
+            // Start the tour
+            startButton.addEventListener('click', startTour);
+            
+            // Navigate through steps
+            prevButton.addEventListener('click', goToPrevStep);
+            nextButton.addEventListener('click', goToNextStep);
+            
+            // Close the tour
+            closeButton.addEventListener('click', closeTour);
+            
+            function startTour() {
+                currentStep = 0;
+                showStep(currentStep);
+            }
+            
+            function showStep(stepIndex) {
+                const step = tourSteps[stepIndex];
+                
+                // Highlight the element
+                const element = document.querySelector(step.element);
+                if (element) {
+                    // Remove previous highlights
+                    const previousHighlights = document.querySelectorAll('.tour-highlight');
+                    previousHighlights.forEach(el => {
+                        el.classList.remove('tour-highlight');
+                    });
+                    
+                    // Add highlight to current element
+                    element.classList.add('tour-highlight');
+                    
+                    // Scroll to the element if needed
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Position the popup
+                    positionPopup(element, step.position);
+                } else {
+                    console.warn('Tour element not found:', step.element);
+                    // Continue to next step if element doesn't exist
+                    if (stepIndex < tourSteps.length - 1) {
+                        currentStep++;
+                        showStep(currentStep);
+                        return;
+                    } else {
+                        closeTour();
+                        return;
+                    }
+                }
+                
+                // Update popup content
+                popupTitle.textContent = step.title;
+                popupContent.textContent = step.content;
+                tourProgress.textContent = `Step ${stepIndex + 1} of ${tourSteps.length}`;
+                
+                // Show backdrop and popup
+                backdrop.style.display = 'block';
+                popup.style.display = 'block';
+                
+                // Update button states
+                prevButton.disabled = stepIndex === 0;
+                nextButton.textContent = stepIndex === tourSteps.length - 1 ? 'Finish' : 'Next';
+            }
+            
+            function positionPopup(element, position) {
+                const rect = element.getBoundingClientRect();
+                
+                // Reset popup position
+                popup.style.top = '';
+                popup.style.bottom = '';
+                popup.style.left = '';
+                popup.style.right = '';
+                
+                switch(position) {
+                    case 'top':
+                        popup.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
+                        break;
+                    case 'bottom':
+                        popup.style.top = (rect.bottom + 20) + 'px';
+                        break;
+                    case 'left':
+                        popup.style.right = (window.innerWidth - rect.left + 20) + 'px';
+                        popup.style.top = (rect.top + (rect.height - popup.offsetHeight) / 2) + 'px';
+                        break;
+                    case 'right':
+                        popup.style.left = (rect.right + 20) + 'px';
+                        popup.style.top = (rect.top + (rect.height - popup.offsetHeight) / 2) + 'px';
+                        break;
+                    default:
+                        popup.style.top = (rect.bottom + 20) + 'px';
+                }
+                
+                // Center horizontally for top/bottom positions
+                if (position === 'top' || position === 'bottom') {
+                    popup.style.left = Math.max(20, rect.left + (rect.width - popup.offsetWidth) / 2) + 'px';
+                    
+                    // Ensure popup stays within viewport
+                    if (parseInt(popup.style.left) + popup.offsetWidth > window.innerWidth - 20) {
+                        popup.style.left = (window.innerWidth - popup.offsetWidth - 20) + 'px';
+                    }
+                }
+                
+                // Adjust for vertical positioning to ensure popup is visible
+                if (parseInt(popup.style.top) + popup.offsetHeight > window.innerHeight - 20) {
+                    popup.style.top = (window.innerHeight - popup.offsetHeight - 20) + 'px';
+                }
+            }
+            
+            function goToPrevStep() {
+                if (currentStep > 0) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            }
+            
+            function goToNextStep() {
+                if (currentStep < tourSteps.length - 1) {
+                    currentStep++;
+                    showStep(currentStep);
+                } else {
+                    closeTour();
+                }
+            }
+            
+            function closeTour() {
+                // Remove highlights
+                const highlightedElements = document.querySelectorAll('.tour-highlight');
+                highlightedElements.forEach(el => {
+                    el.classList.remove('tour-highlight');
+                });
+                
+                // Hide tour elements
+                backdrop.style.display = 'none';
+                popup.style.display = 'none';
+            }
+            
+            // Close tour when clicking on backdrop
+            backdrop.addEventListener('click', closeTour);
+            
+            // Close tour with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && backdrop.style.display === 'block') {
+                    closeTour();
+                }
+            });
+            
+            // Reposition popup on window resize
+            window.addEventListener('resize', function() {
+                if (backdrop.style.display === 'block') {
+                    const step = tourSteps[currentStep];
+                    const element = document.querySelector(step.element);
+                    if (element) {
+                        positionPopup(element, step.position);
+                    }
+                }
+            });
+        });
+    </script> -->
+
+
+
+
+</body>
+</html>
