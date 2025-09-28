@@ -1,0 +1,432 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="images/sugar.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarTrack</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="fontawesome-free-6.7.2-web/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                        <link rel="stylesheet" href="bottom bar/fonts/remixicon.css">
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"> -->
+       <link rel="stylesheet" href="bottom bar/css/styles.css">
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Add pdf-lib for better text handling -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1"></script>
+    <!-- Add jsPDF-AutoTable for table support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <!-- Add custom font support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPDF-CustomFonts-support/1.0.0/jspdf.customfonts.min.js"></script>
+<!-- put BEFORE your history.js -->
+<script src="https://cdn.jsdelivr.net/npm/arabic-shaping@1.0.3/dist/arabic-shaping.umd.min.js"></script>
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="assets/securityFlase.js"></script>
+</head>
+<body oncontextmenu="return false;">
+
+    <div class="app-container" id="appContainer" style="display: none;">
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger-btn mobile-only">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                
+               <a href="index.html"><div class="logo2">ST</div></a>
+                 <a href="index.html"><span class="app-name">SugarTrack V4</span></a>
+                
+                <button class="close-btn mobile-only">
+                    <i class="fas fa-times"></i>
+                </button>
+
+            </div>
+            <hr>
+            
+            <div class="sidebar-menu">
+                <a href="index.html" class="menu-item">
+                    <!-- <i class="fas fa-home"></i> -->
+                     <i class="ri-home-smile-2-line"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+                <a href="doctors.html" class="menu-item">
+                    <i class="fas fa-user-doctor"></i>
+                    <span class="menu-text">Doctors</span>
+                </a>
+                <a href="weather.html" class="menu-item">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span class="menu-text">Weather Forecast</span>
+                </a>
+                <a href="history.html" class="menu-item active">
+                    <i class="fas fa-history"></i>
+                    <span class="menu-text">History</span>
+                </a>
+                <a href="ai-insights.html" class="menu-item ">
+                    <i class="fas fa-brain"></i>
+                    <span class="menu-text">AI Insights</span>
+                </a>
+                <a href="analytics.html" class="menu-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="menu-text">Analytics</span>
+                </a>
+                <a href="inbox.html" class="menu-item">
+                    <i class="fas fa-inbox"></i>
+                    <span class="menu-text">Inbox & Updates</span>
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span class="menu-text">Settings</span>
+                </a>
+            </div>
+<div class="sidebar-footer">
+    <div class="user-badge" id="userBadge">
+        <img class="user-badge-avatar" id="userBadgeAvatar" src="images/user.png" alt="User Avatar">
+        <span class="user-badge-name" id="userBadgeName">Loading...</span>
+        <!-- <i class="fas fa-chevron-down user-badge-arrow"></i> -->
+    </div>
+    
+    <!-- Submenu Wrap -->
+    <div class="sub-menu-wrap">
+        <div class="sub-menu">
+            <div class="user-info">
+                <img id="submenuUserAvatar" src="images/user.png" alt="User">
+                <div>
+                    <h4 id="submenuUserName">User Name</h4>
+                    <p id="submenuUserEmail">user@example.com</p>
+                </div>
+            </div>
+            <hr>
+            <a href="profile.html" class="sub-menu-link">
+                <i class="fas fa-user"></i>
+                <p>My Profile</p>
+                <span>&gt;</span>
+            </a>
+            <a href="settings.html" class="sub-menu-link">
+                <i class="fas fa-cog"></i>
+                <p>Settings</p>
+                <span>&gt;</span>
+            </a>
+
+            <button class="sub-menubuttonlogout" id="logoutButton">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span >Logout</span>
+
+                </button> 
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <nav class="top-nav">
+                
+                <div class="nav-content">
+                    <div class="nav-left">
+<!-- In your index.html, keep the toggle button simple -->
+<button class="toggle-collapse desktop-only">
+    <i class="fas fa-chevron-left"></i>
+</button>
+                    <!-- <div class="logo mobile-only">ST</div> -->
+                                              <div class="user-badge2" id="userBadge2">
+        <img class="user-badge-nav" id="userBadgenav" src="images/user.png" alt="User Avatar" onclick="toggleMenu()">
+        <!-- <span class="user-badge-name" id="userBadgeName">Loading...</span> -->
+        <!-- <i class="fas fa-chevron-down user-badge-arrow"></i> -->
+    </div>
+        <!-- Submenu Wrap -->
+    <div class="sub-menu-wrap2" id="submenu2">
+        <div class="sub-menu2">
+            <div class="user-info">
+                <img id="submenuUserAvatar2" src="images/user.png" alt="User">
+                <div>
+                    <h4 id="submenuUserName2">User Name</h4>
+                    <p id="submenuUserEmail2">user@example.com</p>
+                </div>
+            </div>
+            <hr>
+            <a href="profile.html" class="sub-menu-link">
+                <i class="fas fa-user"></i>
+                <p>My Profile</p>
+                <span>&gt;</span>
+            </a>
+            <a href="settings.html" class="sub-menu-link">
+                <i class="fas fa-cog"></i>
+                <p>Settings</p>
+                <span>&gt;</span>
+            </a>
+            <!-- <button class="sub-menu-link" id="logoutButton">
+                <i class="fas fa-sign-out-alt"></i>
+                <p>Logout</p>
+                <span>&gt;</span>
+            </button> -->
+            <!-- <button class="buttonlogout" id="logoutButton"> -->
+            <button class="sub-menubuttonlogout" id="logoutButton">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span >Logout</span>
+                    <!-- <span class="menu-text">Logout</span> -->
+                </button> 
+        <!-- </div> -->
+    </div>
+</div>
+     <div class="user-welcome">Welcome, <span id="userWelcomeName"></span></div>  
+                                        <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
+
+    </div>
+                    <div class="nav-right">
+                        
+                        <!-- <span id="currentDateTime"></span> -->
+                        <!-- <span id="readingsCount">0 Readings</span> -->
+                    </div>
+                </div>
+            </nav>
+            <!-- <hr> -->
+            
+
+            <main>
+                <!-- <div class="content-card">
+                    <h3 style="color: red;">Note*</h3>
+                    
+<a href="settings.html"><h4>if you want to change your name go to <span style="color: #3b82f6;">Settings</span></h4></a>
+<h5>the name you change it will change in pdf and image export </h5>
+<h5>i hope you enjoy 😉</h5>
+</div> -->
+                                <div class="content-card">
+                    <h2>Glucose Readings</h2>
+                        <span id="currentDateTime"></span>
+                        <h2 id="readingsCount">0 Readings</h2>  
+                        <div id="trendsChart"></div>
+                </div>
+                <!-- <div class="content-card">
+    <h2>AI Glucose Suggestions</h2>
+    <p class="subtitle" id="trendsMessage">Add at least two readings for suggestions</p>
+    <div id="trendsChart"></div>
+</div> -->
+
+<!-- <div class="content-card">
+  <h2>AI Glucose Insights</h2>
+  <div id="trendsChart"></div>
+</div> -->
+
+     
+                <div class="content-card">
+                    <h2>Save History</h2>
+
+
+                    <p class="subtitle"></p>
+                    <!-- <div class="input-row"> -->
+                        <!-- <div class="input-group">
+                            <label>Date & Time</label>
+                            <div class="date-time-inputs">
+                                <input type="date" id="date">
+                                <input type="time" id="time">
+                            </div>
+                        </div> -->
+                        <!-- <div class="input-group">
+                            <label>Glucose Reading (mg/dL)</label>
+                            <div class="reading-input">
+                                <input type="number" max="-" id="glucose" placeholder="Enter glucose value">
+                                <button id="addReading">Add</button>
+                            </div>
+                        </div> -->
+                        <!-- <div class="input-group">
+                            <label>Comment (Optional)</label>
+                            <input class="comment" type="text" id="comment" placeholder="Add a comment or note">
+                        </div>
+                    </div> -->
+
+                    <div class="actions-row">
+                        <!-- <button id="resetButton" class="reset-button">
+                            <i class="fas fa-redo"></i> Reset
+                        </button> -->
+                                                <button id="resetButton" class="reset-button">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <div class="export-buttons">
+                            <button id="importButton" title="import Backup">
+                                <i class="fas fa-file-import"></i> Import
+                            </button>
+                            <input type="file" id="fileInput" accept=".diab" style="display: none;">
+                            <button id="saveButton" title="Save Backup">
+                                <i class="fas fa-save"></i> Save
+                            </button>
+                            <button id="exportImage" title="Export to Image">
+                                <i class="fas fa-image"></i> Image
+                            </button>
+                            <button id="exportPDF" title="Export to PDF">
+                                <i class="fas fa-file-pdf"></i> PDF
+                            </button>
+    <!-- Optional: CSV export -->
+    <button id="exportCSV" class="export-button" title="Export to Excel CSV">
+        <i class="fas fa-file-csv"></i> CSV
+    </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h2>Readings</h2>
+                     <button class="refreshbutton" id="refreshButton">Refresh</button>
+                     <br>
+                    <div class="readings-list" id="readingsList"></div>
+                </div>
+
+                <!-- <div class="content-card">
+                    <h2>Glucose Trends</h2>
+                    <p class="subtitle" id="trendsMessage">Add at least two readings to see your trends</p>
+                    <div id="trendsChart"></div>
+                </div> -->
+            </main>
+        </div>
+
+        <!-- Hidden export template -->
+        <div id="exportContent" class="export-template">
+            <h1 id="exportTitle"></h1>
+            <table id="exportTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Glucose (mg/dL)</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+<!-- <div id="mms-overlay">
+    <a href="https://mmssb.github.io/" target="_blank" rel="noopener noreferrer">
+      <img src="https://mmssb.github.io/assets/images/mmslogo.PNG" alt="MMS Logo" class="mms-logo">
+      <span>Made by MMS</span>
+    </a>
+  </div> -->
+            <!-- Overlay & Share Menu -->
+  <div id="shareOverlay" class="overlay hidden">
+    <div class="share-menu">
+      <span id="closeBtn" class="close-btn">x</span>
+      <h3>Share this page</h3>
+
+      <!-- Link Bar -->
+      <div class="link-bar">
+        <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com"/>
+        <button id="copyBtn">Copy</button>
+      </div>
+
+      <!-- Social Buttons -->
+      <div class="social-buttons">
+        <a href="#" onclick="shareTo('whatsapp')" class="social-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" onclick="shareTo('facebook')" class="social-icon facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" onclick="shareTo('twitter')" class="social-icon twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" onclick="shareTo('bluesky')" class="social-icon bluesky"><i class="fa-brands fa-bluesky"></i></a>
+        <a href="#" onclick="shareTo('email')" class="social-icon email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="#" onclick="shareTo('gmail')" class="social-icon gmail"><i class="fa-brands fa-google-plus-g"></i></a>
+      </div>
+    </div>
+  </div>
+    <script src="assets/history.js"></script>
+        <script src="assets/security.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="assets/suggesth.js"></script>
+        <script src="assets/sidebar.js"></script>
+                <script src="assets/accentcolor.js"></script>
+
+
+                <script src="assets/share.js"></script>
+        <script src="assets/menu.js"></script>
+        <script src="profile/user-badge.js"></script>
+<!-- Add these in the head section -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+            const refreshButton = document.getElementById('refreshButton');
+
+        refreshButton.addEventListener('click', () => {
+            location.reload();
+        });
+</script>
+
+      <!--=============== NAVBAR ===============-->
+      <nav class="nav">
+         <ul class="nav__list">
+            <!-- <li> -->
+               <a href="index.html" class="nav__link ">
+                  <i class="ri-home-smile-2-line"></i>
+                   <!-- <i class="ri-dashboard-fill"></i> -->
+                                  <!-- <p style="font-size: 8px;">Home</p> -->
+
+               </a>
+            </li>
+
+            <li>
+                              <a href="card.html" class="nav__link">
+               <!-- <a href="profile.html" class="nav__link"> -->
+                  <i class="ri-user-line"></i>
+               </a>
+            </li>
+
+            <!-- Expand list -->
+            <li>
+               <button class="nav__expand" id="nav-expand">
+                  <!-- <i class="ri-add-line nav__expand-icon" id="nav-expand-icon"></i> -->
+                  <i class="ri-shining-2-fill nav__expand-icon" id="nav-expand-icon" ></i>
+                  <!-- <i class="ri-sparkling-line nav__expand-icon" id="nav-expand-icon" ></i> -->
+               </button>
+
+               <ul class="nav__expand-list" id="nav-expand-list">
+                  <!-- <li> -->
+                     <a href="history.html" class="nav__expand-link active-link">
+                      <i class="ri-history-fill"></i>
+                      <!-- <i class="ri-history-line"></i> -->
+                        <span>History</span>
+                     </a>
+                  </li>
+      
+
+      
+                  <li>
+                     <a href="ai-insights.html" class="nav__expand-link">
+                        <!-- <i class="ri-bookmark-3-line"></i> -->
+                         <i class="ri-brain-2-line"></i>
+                        <span>Ai Insights</span>
+                     </a>
+                  </li>
+
+
+                  <li>
+                     <a href="analytics.html" class="nav__expand-link">
+                        <!-- <i class="ri-settings-3-line"></i> -->
+                         <i class="ri-line-chart-fill"></i>
+                        <span>Analytics</span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+         
+            <li>
+               <a href="inbox.html" class="nav__link">
+                  <!-- <i class="ri-briefcase-line"></i> -->
+                   <i class="ri-inbox-2-line"></i>
+               </a>
+            </li>
+
+            <li>
+               <a href="settings.html" class="nav__link">
+                  <i class="ri-settings-3-line"></i>
+               </a>
+            </li>
+         </ul>
+      </nav>
+<br>
+<br>
+<script src="bottom bar/js/main.js"></script>
+<script src="profile/user-profile.js"></script>
+
+</body>
+</html>

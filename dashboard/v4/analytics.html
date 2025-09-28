@@ -1,0 +1,392 @@
+<!-- analytics.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="images/sugar.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | SugarTrack</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="fontawesome-free-6.7.2-web/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+                                 <link rel="stylesheet" href="bottom bar/fonts/remixicon.css">
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"> -->
+       <link rel="stylesheet" href="bottom bar/css/styles.css">
+        <script src="assets/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="assets/securityFlase.js"></script>
+</head>
+<body oncontextmenu="return false;">
+    <div class="app-container" id="appContainer" style="display: none;">
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger-btn mobile-only">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html"><div class="logo2">ST</div></a>
+                <a href="index.html"><span class="app-name">SugarTrack V4</span></a>
+                <button class="close-btn mobile-only">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <hr>
+            
+            <div class="sidebar-menu">
+                <a href="index.html" class="menu-item">
+                    <!-- <i class="fas fa-home"></i> -->
+                     <i class="ri-home-smile-2-line"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+                <a href="doctors.html" class="menu-item">
+                    <i class="fas fa-user-doctor"></i>
+                    <span class="menu-text">Doctors</span>
+                </a>
+                <a href="weather.html" class="menu-item">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span class="menu-text">Weather Forecast</span>
+                </a>
+                <a href="history.html" class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span class="menu-text">History</span>
+                </a>
+                <a href="ai-insights.html" class="menu-item">
+                    <i class="fas fa-brain"></i>
+                    <span class="menu-text">AI Insights</span>
+                </a>
+                <a href="analytics.html" class="menu-item active">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="menu-text">Analytics</span>
+                </a>
+                <a href="inbox.html" class="menu-item">
+                    <i class="fas fa-inbox"></i>
+                    <span class="menu-text">Inbox & Updates</span>
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span class="menu-text">Settings</span>
+                </a>
+                <!-- <a href="#" class="menu-item">
+                    <i class="fas fa-clock"></i>
+                    <div id="MyClockDisplay" class="menu-text" onload="showTime()"></div>
+                </a> -->
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-badge" id="userBadge">
+                    <img class="user-badge-avatar" id="userBadgeAvatar" src="images/user.png" alt="User Avatar">
+                    <span class="user-badge-name" id="userBadgeName">Loading...</span>
+                </div>
+                
+                <div class="sub-menu-wrap">
+                    <div class="sub-menu">
+                        <div class="user-info">
+                            <img id="submenuUserAvatar" src="images/user.png" alt="User">
+                            <div>
+                                <h4 id="submenuUserName">User Name</h4>
+                                <p id="submenuUserEmail">user@example.com</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <a href="profile.html" class="sub-menu-link">
+                            <i class="fas fa-user"></i>
+                            <p>My Profile</p>
+                            <span>&gt;</span>
+                        </a>
+                        <a href="settings.html" class="sub-menu-link">
+                            <i class="fas fa-cog"></i>
+                            <p>Settings</p>
+                            <span>&gt;</span>
+                        </a>
+                        <button class="sub-menubuttonlogout" id="logoutButton">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <nav class="top-nav">
+                <div class="nav-content">
+                    <div class="nav-left">
+                        <button class="toggle-collapse desktop-only">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <!-- <div class="logo mobile-only">ST</div> -->
+                                                  <div class="user-badge2" id="userBadge2">
+        <img class="user-badge-nav" id="userBadgenav" src="images/user.png" alt="User Avatar" onclick="toggleMenu()">
+        <!-- <span class="user-badge-name" id="userBadgeName">Loading...</span> -->
+        <!-- <i class="fas fa-chevron-down user-badge-arrow"></i> -->
+    </div>
+        <!-- Submenu Wrap -->
+    <div class="sub-menu-wrap2" id="submenu2">
+        <div class="sub-menu2">
+            <div class="user-info">
+                <img id="submenuUserAvatar2" src="images/user.png" alt="User">
+                <div>
+                    <h4 id="submenuUserName2">User Name</h4>
+                    <p id="submenuUserEmail2">user@example.com</p>
+                </div>
+            </div>
+            <hr>
+            <a href="profile.html" class="sub-menu-link">
+                <i class="fas fa-user"></i>
+                <p>My Profile</p>
+                <span>&gt;</span>
+            </a>
+            <a href="settings.html" class="sub-menu-link">
+                <i class="fas fa-cog"></i>
+                <p>Settings</p>
+                <span>&gt;</span>
+            </a>
+            <!-- <button class="sub-menu-link" id="logoutButton">
+                <i class="fas fa-sign-out-alt"></i>
+                <p>Logout</p>
+                <span>&gt;</span>
+            </button> -->
+            <!-- <button class="buttonlogout" id="logoutButton"> -->
+            <!-- <button class="sub-menubuttonlogout" id="logoutButton">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span >Logout</span>
+                </button>  -->
+        <!-- </div> -->
+    </div>
+</div>
+
+                        <div class="user-welcome">Welcome, <a href="profile.html"><span id="userWelcomeName"></span></a></div>
+                        <i id="shareBtn" style="cursor: pointer;" class="fa-solid fa-share-nodes"></i>
+                    </div>
+                    <div class="nav-right">
+                        <span id="currentDateTime"></span>
+                    </div>
+                </div>
+            </nav>
+
+            <main>
+                <div class="content-card">
+                    <h2>Glucose Analytics Dashboard</h2>
+                    <p class="subtitle">Comprehensive analysis of your glucose data</p>
+                    
+                    <div class="time-period-selector">
+                        <select id="timePeriodSelect">
+                            <option value="7">Last 7 Days</option>
+                            <option value="14">Last 14 Days</option>
+                            <option value="30" selected>Last 30 Days</option>
+                            <option value="90">Last 3 Months</option>
+                            <option value="180">Last 6 Months</option>
+                            <option value="365">Last Year</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                        <div id="customDateRange" class="hidden">
+                            <input type="date" id="startDate">
+                            <span>to</span>
+                            <input type="date" id="endDate">
+                            <button id="applyDateRange">Apply</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>Key Metrics</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value" id="avgGlucose">--</div>
+                            <div class="metric-label">Average Glucose</div>
+                            <div class="metric-trend up"><i class="fas fa-arrow-up"></i> 5% from last period</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="timeInRange">--</div>
+                            <div class="metric-label">Time in Range</div>
+                            <div class="metric-trend down"><i class="fas fa-arrow-down"></i> 2% from last period</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="highReadings">--</div>
+                            <div class="metric-label">High Readings</div>
+                            <div class="metric-trend up"><i class="fas fa-arrow-up"></i> 3% from last period</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="lowReadings">--</div>
+                            <div class="metric-label">Low Readings</div>
+                            <div class="metric-trend down"><i class="fas fa-arrow-down"></i> 1% from last period</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>Glucose Trends Over Time</h3>
+                    <div class="chart-container">
+                        <canvas id="trendsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="chart-row">
+                        <div class="chart-half">
+                            <h3>Daily Patterns</h3>
+                            <div class="chart-container">
+                                <canvas id="dailyPatternsChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-half">
+                            <h3>Day of Week Analysis</h3>
+                            <div class="chart-container">
+                                <canvas id="dayOfWeekChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>Glucose Distribution</h3>
+                    <div class="chart-row">
+                        <div class="chart-half">
+                            <div class="chart-container">
+                                <canvas id="distributionChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-half">
+                            <div class="chart-container">
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>Export Analytics Report</h3>
+                    <p class="subtitle">Generate a comprehensive report of your analytics</p>
+                    <div class="export-options">
+                        <button id="exportPdfReport">
+                            <i class="fas fa-file-pdf"></i> PDF Report
+                        </button>
+                        <button id="exportImageReport">
+                            <i class="fas fa-image"></i> Image Report
+                        </button>
+                        <button id="exportDataReport">
+                            <i class="fas fa-file-csv"></i> CSV Data
+                        </button>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+        <!-- Share Overlay -->
+        <div id="shareOverlay" class="overlay hidden">
+            <div class="share-menu">
+                <span id="closeBtn" class="close-btn">x</span>
+                <h3>Share this page</h3>
+                <div class="link-bar">
+                    <input type="text" id="shareLink" readonly value="http://mmssb.github.io/sugartrack.com/"/>
+                    <button id="copyBtn">Copy</button>
+                </div>
+                <div class="social-buttons">
+                    <a href="#" onclick="shareTo('whatsapp')" class="social-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="#" onclick="shareTo('facebook')" class="social-icon facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" onclick="shareTo('twitter')" class="social-icon twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" onclick="shareTo('bluesky')" class="social-icon bluesky"><i class="fa-brands fa-bluesky"></i></a>
+                    <a href="#" onclick="shareTo('email')" class="social-icon email"><i class="fa-solid fa-envelope"></i></a>
+                    <a href="#" onclick="shareTo('gmail')" class="social-icon gmail"><i class="fa-brands fa-google-plus-g"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/security.js"></script>
+    <script src="assets/share.js"></script>
+    <script src="assets/profile/user-badge.js"></script>
+    <script src="assets/menu.js"></script>
+    <script src="assets/analytics.js"></script>
+    <script src="assets/sidebar.js"></script>
+    <script src="assets/accentcolor.js"></script>
+
+     
+
+      <!--=============== NAVBAR ===============-->
+      <nav class="nav">
+         <ul class="nav__list">
+            <!-- <li> -->
+               <a href="index.html" class="nav__link ">
+                  <i class="ri-home-smile-2-line"></i>
+                   <!-- <i class="ri-dashboard-fill"></i> -->
+                                  <!-- <p style="font-size: 8px;">Home</p> -->
+
+               </a>
+            </li>
+
+            <li>
+                              <a href="card.html" class="nav__link">
+               <!-- <a href="profile.html" class="nav__link"> -->
+                  <i class="ri-user-line"></i>
+               </a>
+            </li>
+
+            <!-- Expand list -->
+            <li>
+               <button class="nav__expand" id="nav-expand">
+                  <!-- <i class="ri-add-line nav__expand-icon" id="nav-expand-icon"></i> -->
+                  <i class="ri-shining-2-fill nav__expand-icon" id="nav-expand-icon" ></i>
+                  <!-- <i class="ri-sparkling-line nav__expand-icon" id="nav-expand-icon" ></i> -->
+               </button>
+
+               <ul class="nav__expand-list" id="nav-expand-list">
+                  <!-- <li> -->
+                     <a href="history.html" class="nav__expand-link">
+                      <i class="ri-history-line"></i>
+                        <span>History</span>
+                     </a>
+                  </li>
+      
+
+                  <li>
+                     <a href="ai-insights.html" class="nav__expand-link">
+                        <!-- <i class="ri-bookmark-3-line"></i> -->
+                         <i class="ri-brain-2-line"></i>
+                        <span>Ai Insights</span>
+                     </a>
+                  </li>
+
+
+                  <li>
+                     <a href="analytics.html" class="nav__expand-link active-link">
+                        <!-- <i class="ri-settings-3-line"></i> -->
+                         <i class="ri-line-chart-fill"></i>
+                        <span>Analytics</span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+         
+            <li>
+               <a href="inbox.html" class="nav__link">
+                  <!-- <i class="ri-briefcase-line"></i> -->
+                   <i class="ri-inbox-2-line"></i>
+               </a>
+            </li>
+
+            <li>
+               <a href="settings.html" class="nav__link">
+                  <i class="ri-settings-3-line"></i>
+               </a>
+            </li>
+         </ul>
+      </nav>
+<br>
+<br>
+<script src="bottom bar/js/main.js"></script>
+<script src="profile/user-profile.js"></script>
+
+</body>
+</html>
