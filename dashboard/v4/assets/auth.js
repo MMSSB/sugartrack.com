@@ -1,105 +1,105 @@
 // auth.js
 // import * as firebaseConfig from './firebase-config.js'
-document.addEventListener('DOMContentLoaded', function() {
-    // Login form
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Redirect to dashboard
-                    window.location.href = 'index.html';
-                })
-                .catch((error) => {
-                    // Handle specific error cases
-                    let errorMessage;
-                    switch (error.code) {
-                        case 'auth/user-not-found':
-                        case 'auth/wrong-password':
-                            errorMessage = 'Invalid email or password';
-                            break;
-                        case 'auth/invalid-email':
-                            errorMessage = 'Please enter a valid email address';
-                            break;
-                        case 'auth/too-many-requests':
-                            errorMessage = 'Too many failed attempts. Please try again later';
-                            break;
-                        default:
-                            errorMessage = 'An error occurred. Please try again';
-                    }
-                    document.getElementById('loginError').textContent = errorMessage;
-                });
-        });
-    }
 // document.addEventListener('DOMContentLoaded', function() {
 //     // Login form
 //     const loginForm = document.getElementById('loginForm');
 //     if (loginForm) {
-//         loginForm.addEventListener('submit', async (e) => {
+//         loginForm.addEventListener('submit', (e) => {
 //             e.preventDefault();
-            
-//             // Check reCAPTCHA first
-//             const recaptchaResponse = grecaptcha.getResponse();
-//             if (!recaptchaResponse) {
-//                 document.getElementById('loginError').textContent = 'Please complete the reCAPTCHA verification';
-//                 return;
-//             }
-            
 //             const email = document.getElementById('loginEmail').value;
 //             const password = document.getElementById('loginPassword').value;
             
-//             // Disable button during processing
-//             const loginButton = document.querySelector('#loginForm button[type="submit"]');
-//             loginButton.disabled = true;
-//             loginButton.textContent = 'Signing in...';
-            
-//             try {
-//                 // First verify reCAPTCHA with your backend (you'll need to implement this)
-//                 // const recaptchaVerified = await verifyRecaptcha(recaptchaResponse);
-//                 // if (!recaptchaVerified) {
-//                 //     throw new Error('reCAPTCHA verification failed');
-//                 // }
-                
-//                 // Then proceed with Firebase auth
-//                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
-                
-//                 // Reset reCAPTCHA
-//                 grecaptcha.reset();
-                
-//                 // Redirect to dashboard
-//                 window.location.href = 'index.html';
-//             } catch (error) {
-//                 // Reset reCAPTCHA on error
-//                 grecaptcha.reset();
-                
-//                 // Re-enable button
-//                 loginButton.disabled = false;
-//                 loginButton.textContent = 'Sign In';
-                
-//                 // Handle specific error cases
-//                 let errorMessage;
-//                 switch (error.code) {
-//                     case 'auth/user-not-found':
-//                     case 'auth/wrong-password':
-//                         errorMessage = 'Invalid email or password';
-//                         break;
-//                     case 'auth/invalid-email':
-//                         errorMessage = 'Please enter a valid email address';
-//                         break;
-//                     case 'auth/too-many-requests':
-//                         errorMessage = 'Too many failed attempts. Please try again later';
-//                         break;
-//                     default:
-//                         errorMessage = 'An error occurred. Please try again';
-//                 }
-//                 document.getElementById('loginError').textContent = errorMessage;
-//             }
+//             auth.signInWithEmailAndPassword(email, password)
+//                 .then((userCredential) => {
+//                     // Redirect to dashboard
+//                     window.location.href = 'index.html';
+//                 })
+//                 .catch((error) => {
+//                     // Handle specific error cases
+//                     let errorMessage;
+//                     switch (error.code) {
+//                         case 'auth/user-not-found':
+//                         case 'auth/wrong-password':
+//                             errorMessage = 'Invalid email or password';
+//                             break;
+//                         case 'auth/invalid-email':
+//                             errorMessage = 'Please enter a valid email address';
+//                             break;
+//                         case 'auth/too-many-requests':
+//                             errorMessage = 'Too many failed attempts. Please try again later';
+//                             break;
+//                         default:
+//                             errorMessage = 'An error occurred. Please try again';
+//                     }
+//                     document.getElementById('loginError').textContent = errorMessage;
+//                 });
 //         });
 //     }
+document.addEventListener('DOMContentLoaded', function() {
+    // Login form
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Check reCAPTCHA first
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse) {
+                document.getElementById('loginError').textContent = 'Please complete the reCAPTCHA verification';
+                return;
+            }
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Disable button during processing
+            const loginButton = document.querySelector('#loginForm button[type="submit"]');
+            loginButton.disabled = true;
+            loginButton.textContent = 'Signing in...';
+            
+            try {
+                // First verify reCAPTCHA with your backend (you'll need to implement this)
+                // const recaptchaVerified = await verifyRecaptcha(recaptchaResponse);
+                // if (!recaptchaVerified) {
+                //     throw new Error('reCAPTCHA verification failed');
+                // }
+                
+                // Then proceed with Firebase auth
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                
+                // Reset reCAPTCHA
+                grecaptcha.reset();
+                
+                // Redirect to dashboard
+                window.location.href = 'index.html';
+            } catch (error) {
+                // Reset reCAPTCHA on error
+                grecaptcha.reset();
+                
+                // Re-enable button
+                loginButton.disabled = false;
+                loginButton.textContent = 'Sign In';
+                
+                // Handle specific error cases
+                let errorMessage;
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                    case 'auth/wrong-password':
+                        errorMessage = 'Invalid email or password';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Please enter a valid email address';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = 'Too many failed attempts. Please try again later';
+                        break;
+                    default:
+                        errorMessage = 'An error occurred. Please try again';
+                }
+                document.getElementById('loginError').textContent = errorMessage;
+            }
+        });
+    }
 
     // ... rest of your auth.js code remains the same ...
 
@@ -508,3 +508,4 @@ function logoutUser() {
 //     // toggle the eye slash icon
 //     this.classList.toggle('fa-eye-slash');
 // });
+
