@@ -743,7 +743,23 @@
         });
     </script> -->
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const noteContainer = document.getElementById("noteContainer");
+        const closeBtn = document.getElementById("closeNoteBtn");
 
+        // Check if note was already dismissed
+        if (localStorage.getItem("noteDismissed") === "true") {
+            noteContainer.style.display = "none";
+        }
+
+        // When close button is clicked
+        closeBtn.addEventListener("click", function () {
+            noteContainer.style.display = "none";
+            localStorage.setItem("noteDismissed", "true");
+        });
+    });
+</script>
 
 
 </body>
