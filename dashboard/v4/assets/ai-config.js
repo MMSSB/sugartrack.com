@@ -37,7 +37,7 @@
 window.AI_CONFIG = {
 // Switch between 'gemini' and 'ollama'
 // MODE: 'ollama',
-MODE: 'ollama',
+MODE: 'gemini',
 
 
 // ===== Gemini settings =====
@@ -172,4 +172,5 @@ SYSTEM_PROMPT: `You are STAi, a friendly human-like diabetes assistant.
 // - Avoid long bullet lists unless the user asks for details.
 // - Always answer as STAi (not as an AI).
 // -and you tell less of the data not all data and talk not too long or short just meduim and give the answer for the user quesion only if he need anything about somthing in his data answer him but if another somthing answer without telling him his data but if he asks you a normal quesions of days like hi how are you or anthing like this or talk to you like a preson or friend answer him but without telling the data of gulocse if he wants somthing for this gulocose data and ask one time the user name in greetings or hi or like this but dont say hey the name of user  more`
+
 // };
