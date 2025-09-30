@@ -700,7 +700,7 @@ const websitesData = [
         countries: ["Egypt"],
         flags: ["images/countrys/egy.png",],
         website: "https://www.medicawy.com/country/%D8%A7%D9%81%D8%B6%D9%84-%D8%AF%D9%83%D8%AA%D9%88%D8%B1-%D8%A8%D8%A7%D8%B7%D9%86%D8%A9/%D9%85%D8%B5%D8%B1",
-        logo: "images/doctors/medicawy.webp",
+        logo: "images/doctors/Medicawy.webp",
         description: ""
         // description: "Comprehensive healthcare platform offering online consultations and appointment booking."
     },
@@ -967,4 +967,5 @@ function addNewWebsite(websiteData) {
     filterWebsites();
     
     return newWebsite;
+
 }
