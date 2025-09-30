@@ -43,7 +43,7 @@ MODE: 'gemini',
 // ===== Gemini settings =====
 // Get an API key from Google AI Studio and paste it here.
 // For security, prefer storing this in a serverless function or proxy.
-// GEMINI_API_KEY: 'AIzaSyB8Qad15exavycuh7jRWlsMwiSH6G9E4Gc',
+GEMINI_API_KEY: 'AIzaSyB8Qad15exavycuh7jRWlsMwiSH6G9E4Gc',
 GEMINI_MODEL: 'gemini-1.5-flash', // fast & cheap; you can use 'gemini-1.5-pro' too
 
 
@@ -174,3 +174,4 @@ SYSTEM_PROMPT: `You are STAi, a friendly human-like diabetes assistant.
 // -and you tell less of the data not all data and talk not too long or short just meduim and give the answer for the user quesion only if he need anything about somthing in his data answer him but if another somthing answer without telling him his data but if he asks you a normal quesions of days like hi how are you or anthing like this or talk to you like a preson or friend answer him but without telling the data of gulocse if he wants somthing for this gulocose data and ask one time the user name in greetings or hi or like this but dont say hey the name of user  more`
 
 // };
+
