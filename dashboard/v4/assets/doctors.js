@@ -620,7 +620,7 @@ const websitesData = [
         // category: "Medical Appointment Platform",
         countries: ["France", "Germany", "Italy"],
         flags: ["images/countrys/france.png", "images/countrys/germany.png", "images/countrys/italy.png"],
-        website: "https://www.doctolib.fr/",
+        website: "https://www.doctolib.fr/diabete",
         logo: "images/doctors/Doctolib.png",
         description: ""
         // description: "Europe's leading medical appointment booking platform. Manage your healthcare appointments online."
@@ -671,7 +671,7 @@ const websitesData = [
         // category: "Healthcare Platform",
         countries: ["India", "Singapore", "Saudi Arabia", "Philippines", "Mexico"],
         flags: ["images/countrys/india.png", "images/countrys/singapore.png", "images/countrys/sa.png", "images/countrys/philippines.png", "images/countrys/mexico.png"],
-        website: "https://www.practo.com/",
+        website: "https://www.practo.com/search/doctors?results_type=doctor&q=%5B%7B%22word%22%3A%22diabetologist%22%2C%22autocompleted%22%3Atrue%2C%22category%22%3A%22subspeciality%22%7D%5D&latitude=30.0223562&longitude=30.9933566&location_type=geo%20location&city=Near%20Me",
         logo: "images/doctors/practo.webp",
         description: ""
         // description: "Asia's leading healthcare platform connecting patients with healthcare providers."
@@ -687,6 +687,34 @@ const websitesData = [
         flags: ["images/countrys/egy.png",],
         website: "https://altibbi.com/",
         logo: "images/doctors/altibbi.svg",
+        description: ""
+        // description: "Comprehensive healthcare platform offering online consultations and appointment booking."
+    },
+        {
+        id: 7,
+        name: "Medicawy	",
+        category: "",
+        // category: "Healthcare Platform",
+        // countries: ["Spain", "Mexico", "Colombia"],
+        // flags: ["images/countrys/spain.png", "images/countrys/mexico.png", "images/countrys/colombia.png"],
+        countries: ["Egypt"],
+        flags: ["images/countrys/egy.png",],
+        website: "https://www.medicawy.com/country/%D8%A7%D9%81%D8%B6%D9%84-%D8%AF%D9%83%D8%AA%D9%88%D8%B1-%D8%A8%D8%A7%D8%B7%D9%86%D8%A9/%D9%85%D8%B5%D8%B1",
+        logo: "images/doctors/medicawy.webp",
+        description: ""
+        // description: "Comprehensive healthcare platform offering online consultations and appointment booking."
+    },
+        {
+        id: 8,
+        name: "Shefae",
+        category: "",
+        // category: "Healthcare Platform",
+        // countries: ["Spain", "Mexico", "Colombia"],
+        // flags: ["images/countrys/spain.png", "images/countrys/mexico.png", "images/countrys/colombia.png"],
+        countries: ["Egypt"],
+        flags: ["images/countrys/egy.png",],
+        website: "https://shefae.com/doctors",
+        logo: "images/doctors/Shefae.png",
         description: ""
         // description: "Comprehensive healthcare platform offering online consultations and appointment booking."
     }
