@@ -23,7 +23,8 @@
                     
                     // Hide loading
                     updateLoading.style.display = 'none';
-                    updateResult.style.display = 'block';
+                    updateResult.style.display = '';
+                    // updateResult.style.display = 'block';
                     
                     if (hasUpdate) {
                         updateResult.innerHTML = `
@@ -65,4 +66,5 @@
             window.downloadUpdate = function() {
                 alert('Update download would start here. In a real app, this would redirect to app store or download page.');
             };
+
         });
