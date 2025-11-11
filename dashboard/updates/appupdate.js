@@ -22,8 +22,7 @@
                     const hasUpdate = Math.random() > 0.7; // 30% chance of having update
                     
                     // Hide loading
-                    updateLoading.style.display = 'none';
-                    updateResult.style.display = '';
+                    // updateLoading.style.display = 'none';
                     // updateResult.style.display = 'block';
                     
                     if (hasUpdate) {
@@ -38,6 +37,8 @@
                             </div>
                         `;
                     } else {
+                updateLoading.style.display = 'none';
+                    updateResult.style.display = 'block';
                         updateResult.innerHTML = `
                             <div class="update-current">
                                 <i class="fas fa-check-circle"></i>
@@ -68,3 +69,4 @@
             };
 
         });
+
