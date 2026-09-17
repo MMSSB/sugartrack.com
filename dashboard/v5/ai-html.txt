@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAi  - SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css" />
+    <script src="Photophor/src/index.js"></script>
+    <script src="https://js.puter.com/v2/"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="main.js"></script>
+    <script src="script.js"></script>
+    <script type="module" src="profile/pload.js"></script>
+</head>
+
+<body style="overflow: hidden; background: var(--bg-body);">
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <div class="ai-app-layout">
+
+        <aside class="ai-sidebar" id="sidebar">
+            <div class="ai-sidebar-header">
+                <div class="ai-logo" >
+                <!-- <div class="ai-logo" onclick="window.location.href='dashboard.html'"> -->
+                    <div class="ai-logo-box">
+                        <div class="robot-avatar" style="width: 100%; height: 100%; border-radius: 12px;">
+                            <div class="eye" style="width: 3px; height: 5px;"></div>
+                            <div class="eye" style="width: 3px; height: 5px;"></div>
+                        </div>
+                    </div>
+                    <span class="ai-logo-text">STAi </span>
+                </div>
+                <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+            </div>
+
+            <div class="ai-sidebar-search">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" placeholder="Search history..." id="historySearch">
+            </div>
+
+            <div class="ai-sidebar-nav">
+                <a href="dashboard.html" class="ai-nav-link"><i class="ph ph-house"></i> Home</a>
+                <a href="#" class="ai-nav-link active" id="newChatBtn"><i class="ph ph-plus-circle"></i> New Chat</a>
+                <a href="analytics.html" class="ai-nav-link"><i class="ph ph-chart-line-up"></i> Analytics</a>
+            </div>
+
+            <div class="ai-history-section">
+                <div class="ai-history-label">RECENT CHATS</div>
+                <div class="ai-history-list" id="chatHistoryList">
+                </div>
+            </div>
+        </aside>
+
+        <main class="ai-main">
+            <header class="ai-top-header">
+                <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button>
+                <div class="ai-header-model-selector" id="modelSelector">
+                    <span id="currentModelDisplay">STAi Fast <i class="ph ph-caret-down"></i></span>
+                    <div class="ai-model-dropdown" id="modelDropdown">
+                        <div class="model-option active" data-model="fast">
+                            <i class="fa-solid fa-bolt" style="color: var(--warning);"></i>
+                            <div><strong>STAi Fast</strong>
+                                <p>Quick answers & basic analysis.</p>
+                            </div>
+                        </div>
+                        <div class="model-option" data-model="analyzer">
+                            <i class="fa-solid fa-microscope" style="color: var(--info, #3b82f6);"></i>
+                            <div><strong>STAi Analyzer</strong>
+                                <p>Deep medical data reasoning.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-header-actions">
+                    <!-- <button class="icon-btn-ghost" id="themeToggleBtn"><i class="ph ph-moon"></i></button> -->
+                    <!-- <div class="user-avatar-small"><img src="images/user.png" id="navProfilePhoto" alt="User"></div> -->
+                     <div class="user-profile-dropdown">
+    <div class="profile-trigger" id="profileDropdownTrigger">
+        <!-- <img src="images/user.png" alt="Profile" class="profile-img-small"> -->
+                         <div class="avatar"><img src="images/user.png" class="profile-img-small" id="navProfilePhoto" alt="Profile" ></div>
+
+        <!-- <i class="ph ph-caret-down"></i> -->
+    </div>
+    
+    <div class="dropdown-menu-custom" id="profileDropdownMenu">
+        <div class="dropdown-header">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+        </div>
+        <div class="dropdown-divider"></div>
+        <a href="profile.html" class="dropdown-item">
+            <i class="ph ph-user"></i> My Profile
+        </a>
+        <a href="settings.html" class="dropdown-item">
+            <i class="ph ph-gear"></i> Settings
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item text-danger" id="logoutBtn">
+            <i class="ph ph-sign-out"></i> Log Out
+        </a>
+    </div>
+</div>
+                </div>
+            </header>
+
+            <div class="ai-chat-scroll" id="chatScrollArea">
+
+                <div class="ai-empty-state" id="emptyStateHero">
+                    <div class="hero-ai-icon" style="background: transparent; box-shadow: none;">
+                        <div class="robot-avatar"
+                            style="width: 70px; height: 70px; border-radius: 30px; gap: 10px; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);">
+                            <div class="eye" style="width: 8px; height: 12px;"></div>
+                            <div class="eye" style="width: 8px; height: 12px;"></div>
+                        </div>
+                    </div>
+                    <br>
+                    <h1>Hey! I'm STAi</h1>
+                    <p>Tell me everything you need to know about your health.</p>
+                </div>
+
+                <div class="ai-messages-container" id="chatMessages">
+                </div>
+            </div>
+
+            <div class="ai-input-zone">
+                <div class="ai-input-wrapper">
+                    <textarea id="aiInput" placeholder="Ask anything about your glucose, diet, or trends..."
+                        rows="1"></textarea>
+
+                    <div class="ai-input-toolbar">
+                        <div class="toolbar-left">
+                            <!-- <button class="toolbar-btn" title="Attach Data"><i class="ph ph-paperclip"></i></button> -->
+                            <button class="toolbar-btn active" id="contextToggle" title="Use My Health Data">
+                                <i class="ph ph-database"></i> <span>Use My Data</span>
+                            </button>
+                        </div>
+                        <div class="toolbar-right">
+                            <!-- <button id="aiSendBtn" class="ai-send-btn" disabled><i -->
+                            <button id="aiSendBtn" class="ai-send-btn" disabled><i
+                                    class="fa-solid fa-arrow-up"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-quick-prompts" id="quickPrompts">
+                    <button class="quick-prompt-btn"><i class="fa-solid fa-bolt"></i> Analyze my latest reading</button>
+                    <button class="quick-prompt-btn"><i class="fa-solid fa-apple-whole"></i> Diet tips for high
+                        sugar</button>
+                    <button class="quick-prompt-btn"><i class="fa-solid fa-chart-line"></i> Why is my morning glucose
+                        high?</button>
+                </div>
+            </div>
+<br><br><br><br>
+        </main>
+    </div>
+
+    <style>
+        /* --- SQUARE AI LAYOUT CSS --- */
+        .ai-app-layout {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: var(--bg-body);
+        }
+
+        /* Sidebar */
+        .ai-sidebar {
+            width: 260px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .ai-sidebar-header {
+            padding: 1.5rem 1.25rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .ai-logo-box {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-logo-text {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .ai-sidebar-search {
+            margin: 0 1.25rem 1rem;
+            position: relative;
+        }
+
+        .ai-sidebar-search i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .ai-sidebar-search input {
+            width: 100%;
+            background: var(--bg-hover);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 10px 8px 32px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .ai-sidebar-search input:focus {
+            border-color: var(--info, #3b82f6);
+        }
+
+        .ai-sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            padding: 0 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .ai-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .ai-nav-link:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .ai-nav-link.active {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .ai-nav-link i {
+            font-size: 1.1rem;
+        }
+
+        .ai-history-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 0.75rem;
+        }
+
+        .ai-history-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            padding: 0 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        .ai-history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .history-item:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .history-item.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info, #3b82f6);
+            font-weight: 500;
+        }
+
+        /* Main Area */
+        .ai-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            position: relative;
+        }
+
+        .ai-top-header {
+            height: 60px;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .icon-btn-ghost {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn-ghost:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .user-avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .user-avatar-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ai-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Model Selector Dropdown */
+        .ai-header-model-selector {
+            position: relative;
+            z-index: 100;
+        }
+
+        #currentModelDisplay {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        #currentModelDisplay:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .ai-model-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            width: 260px;
+            padding: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.2s;
+        }
+
+        .ai-model-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(5px);
+        }
+
+        .model-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .model-option:hover {
+            background: var(--bg-hover);
+        }
+
+        .model-option.active {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .model-option i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .model-option strong {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .model-option p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Chat Scroll */
+        .ai-chat-scroll {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+        }
+
+        .ai-empty-state {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+            margin-top: -50px;
+        }
+
+        .ai-empty-state h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .ai-empty-state p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .ai-messages-container {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 850px;
+            margin: 0 auto;
+            width: 100%;
+            display: none;
+        }
+
+        .ai-messages-container.active {
+            display: flex;
+        }
+
+        /* Chat Bubbles */
+        .msg-row {
+            display: flex;
+            gap: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .msg-row.user {
+            flex-direction: row-reverse;
+        }
+
+        /* The bot avatar container */
+        .msg-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .msg-avatar.user {
+            border-radius: 50%;
+        }
+
+        .msg-avatar.user img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .msg-content {
+            max-width: 85%;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            padding-top: 6px;
+        }
+
+        .msg-row.user .msg-content {
+            background: var(--bg-hover);
+            padding: 12px 16px;
+            border-radius: 16px 16px 4px 16px;
+            padding-top: 12px;
+        }
+
+        .msg-row.bot .msg-content {
+            background: transparent;
+            padding-bottom: 1rem;
+        }
+
+        .msg-row.bot .msg-content p {
+            margin-bottom: 0.75rem;
+        }
+
+        .msg-row.bot .msg-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .msg-row.bot .msg-content strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .msg-row.bot .msg-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* --- THE BLINKING ROBOT ANIMATION --- */
+        .robot-avatar {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--info, #3b82f6) 0%, #2563eb 100%);
+            border-radius: inherit;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .eye {
+            width: 4px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            animation: blink 2.2s ease-in-out infinite;
+        }
+
+        .eye:last-child {
+            animation-delay: 0.1s;
+        }
+
+        @keyframes blink {
+
+            0%,
+            90%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            95% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        /* --- THE CUSTOM TEXT LOADER --- */
+        .loader-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            font-family: "Inter", sans-serif;
+            font-size: 0.7em;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-radius: 50%;
+            background-color: transparent;
+            user-select: none;
+            gap: 1px;
+        }
+
+        .loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            background-color: transparent;
+            animation: loader-rotate 2s linear infinite;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        @keyframes loader-rotate {
+            0% {
+                transform: rotate(90deg);
+                box-shadow: 0 4px 8px 0 var(--border) inset, 0 8px 12px 0 var(--info, #3b82f6) inset;
+            }
+
+            50% {
+                transform: rotate(270deg);
+                box-shadow: 0 4px 8px 0 var(--border) inset, 0 8px 4px 0 var(--info, #3b82f6) inset;
+            }
+
+            100% {
+                transform: rotate(450deg);
+                box-shadow: 0 4px 8px 0 var(--border) inset, 0 8px 12px 0 var(--info, #3b82f6) inset;
+            }
+        }
+
+        .loader-letter {
+            display: inline-block;
+            opacity: 0.4;
+            transform: translateY(0);
+            animation: loader-letter-anim 2s infinite;
+            z-index: 1;
+            border: none;
+        }
+
+        .loader-letter:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .loader-letter:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .loader-letter:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .loader-letter:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .loader-letter:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+
+        .loader-letter:nth-child(6) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes loader-letter-anim {
+
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: translateY(0);
+            }
+
+            20% {
+                opacity: 1;
+                transform: scale(1.15);
+                color: var(--info, #3b82f6);
+            }
+
+            40% {
+                opacity: 0.7;
+                transform: translateY(0);
+            }
+        }
+
+        /* Input Zone */
+        .ai-input-zone {
+            padding: 0 2rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .ai-input-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-input-wrapper:focus-within {
+            border-color: var(--text-secondary);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .ai-input-wrapper textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-size: 1rem;
+            line-height: 1.5;
+            resize: none;
+            max-height: 200px;
+            padding: 4px 8px;
+            font-family: inherit;
+        }
+
+        .ai-input-wrapper textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .ai-input-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .toolbar-left {
+            display: flex;
+            gap: 8px;
+        }
+
+        .toolbar-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+
+        .toolbar-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .toolbar-btn.active {
+            border-color: var(--border);
+            background: var(--bg-hover);
+            color: var(--info, #3b82f6);
+        }
+
+        .toolbar-btn.active i {
+            color: var(--info, #3b82f6);
+        }
+
+        .ai-send-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--text-primary);
+            color: var(--bg-body);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+
+        .ai-send-btn:disabled {
+            background: var(--bg-hover);
+            color: var(--border);
+            cursor: not-allowed;
+        }
+
+        .ai-send-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+
+        /* Quick Prompts */
+        .ai-quick-prompts {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .quick-prompt-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .quick-prompt-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            border-color: var(--text-secondary);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .ai-sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                z-index: 1000;
+                transform: translateX(-100%);
+                width: 280px;
+                box-shadow: 5px 0 25px rgba(0, 0, 0, 0.2);
+            }
+
+            .ai-sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .mobile-close {
+                display: block;
+            }
+
+            .ai-top-header {
+                padding: 0 1rem;
+            }
+
+            .ai-input-zone {
+                padding: 0 1rem 1rem;
+            }
+
+            .ai-messages-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .ai-quick-prompts {
+                display: none;
+            }
+        }
+
+        @media (min-width: 769px) {
+
+            .mobile-toggle,
+            .mobile-close {
+                display: none;
+            }
+        }
+    </style>
+
+    <script type="module" src="profile/pload.js"></script>
+    <script type="module" src="ai.js"></script>
+    <script src="accent.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const trigger = document.getElementById('profileDropdownTrigger');
+    const menu = document.getElementById('profileDropdownMenu');
+
+    if (trigger && menu) {
+        // Toggle dropdown on click
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target) && !trigger.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    }
+});
+    </script>
+</body>
+
+</html>

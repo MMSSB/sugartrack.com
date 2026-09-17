@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarTrack - Dashboard</title>
+    <link rel="shortcut icon" href="images/sugar.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+<script src="Photophor/src/index.js"></script>
+<link rel="stylesheet" href="Remix/fonts/remixicon.css">    <!-- <script src="https://unpkg.com/@phosphor-icons/web"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="main.js"></script>
+<script src="accent.js"></script>
+<script type="module" src="firebase-init.js"></script>
+<script src="stai-suggest.js"></script>
+<script type="module" src="dashboard.js"></script>
+<script type="module" src="profile/pload.js"></script>
+ <script src="Photophor/src/index.js"></script>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+
+
+    <!-- <script>
+        (function() {
+            // 1. Restore Theme immediately
+            const savedTheme = localStorage.getItem('theme') || 'system';
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (savedTheme === 'system' && systemDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+
+            // 2. Restore Sidebar State immediately
+            const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+            if (isCollapsed) {
+                document.documentElement.classList.add('sidebar-collapsed');
+            }
+        })();
+    </script> -->
+    <style>
+        
+    </style>
+</head>
+<body>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-box">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-content">
+                        <!-- <div class="project-card">
+                <div class="project-icon"><i class="ph ph-briefcase"></i></div>
+                <div class="project-details">
+                    <span class="p-title">Synclead</span>
+                    <span class="p-sub">16 Members</span>
+                </div>
+                <i class="ph ph-caret-up-down p-arrow"></i>
+            </div> -->
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link active">
+                    <i class="ph-fill ph-squares-four"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="readings.html" class="nav-link">
+                    <i class="ph ph-notebook"></i>
+                    <span>Readings</span>
+                    <!-- <span>Logbook</span> -->
+                </a>
+                <a href="search.html" class="nav-link">
+                    <!-- <i class="ph ph-magnifying-glass"></i> -->
+                     <i class="ri-search-ai-2-line"></i>
+                    <span>Search Ai</span>
+                </a>
+                <a href="weather.html" class="nav-link ">
+                    <i class="ph ph-cloud-sun"></i>
+                    <span>Weather</span>
+                </a>
+                <a href="inbox.html" class="nav-link">
+                    <i class="ph ph-tray"></i>
+                    <span>Inbox</span>
+                </a>
+                <a href="analytics.html" class="nav-link">
+                    <i class="ph ph-chart-line-up"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="export.html" class="nav-link">
+                    <i class="ph ph-file-pdf"></i>
+                    <span>Reports</span>
+                </a>
+                 <a  onclick="window.location.href='ai.html'" class="nav-link">
+                                            <div class="robot-avatar2" style="width: 25px; height: 25px; border-radius: 10px; background: linear-gradient(135deg, var(--info, #3b82f6) 0%, #2563eb 100%);">
+                            <div class="eye" style="width: 3px; height: 5px;"></div>
+                            <div class="eye" style="width: 3px; height: 5px;"></div>
+                        </div>
+
+
+                    <span style="font-weight: 900; color: var(--text-primary);" >Ask STAi</span>
+                </a>
+                 <!-- <a href="#" class="nav-link">
+                    <i class="ph ph-pill"></i>
+                    <span>Medication</span>
+                </a> -->
+            </nav>
+
+            <!-- <div class="nav-section">
+                <div class="section-label">
+                    <span>TOOLS</span>
+                </div>
+                                    <hr>
+
+                <nav class="nav-menu">
+                    <a href="#" class="nav-link">
+                        <i class="ph ph-calculator"></i>
+                        <span>Bolus Calc</span>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="ph ph-carrot"></i>
+                        <span>Food Database</span>
+                    </a>
+                </nav>
+            </div>
+        </div> -->
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+              <!-- <div class="avatar"><img src="images/user.png" class="profile-img-small" id="navProfilePhoto" alt="Profile" ></div> -->
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+
+                <!-- <div class="avatar">U</div> -->
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <!-- <a href="#" class="danger"><i class="ph ph-sign-out"></i> Log out</a> -->
+                 <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        
+        <header class="top-header">
+            <div class="header-left">
+                <button class="icon-btn mobile-toggle" id="mobileOpenBtn">
+                    <i class="ph ph-list"></i>
+                </button>
+                
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn">
+                    <i class="ph ph-sidebar-simple"></i>
+                </button>
+
+                <h2 class="page-title">Dashboard</h2>
+            </div>
+
+            <div class="header-right">
+                <div class="dropdown-wrapper" style="display: flex; gap: 10px; align-items: center;">
+                    
+                    <div style="position: relative;">
+                        <button title="Tour of how to use Dashboard" class="icon-btn"  onclick="window.location.href='tour'">
+                            <!-- <i class="fa-solid fa-handshake-angle"></i> -->
+                             <!-- <i class="fa-solid fa-chalkboard-user"></i> -->
+                             <!-- <i class="ri-guide-line"></i> -->
+                              <!-- <i class="ph ph-question"></i> -->
+                               <i class="fa-solid fa-compass"></i>
+                               <!-- <i class="fa-regular fa-compass"></i> -->
+                        </button>
+                        <!-- <button class="icon-btn" id="themeBtn">
+                            <i class="ph ph-moon" id="themeIcon"></i>
+                        </button> -->
+                        <!-- <div class="dropdown-menu right-aligned" id="themeMenu">
+                            <div class="menu-item" onclick="setTheme('light')"><i class="ph ph-sun"></i> Light</div>
+                            <div class="menu-item" onclick="setTheme('dark')"><i class="ph ph-moon"></i> Dark</div>
+                            <div class="menu-item" onclick="setTheme('system')"><i class="ph ph-desktop"></i> System</div>
+                        </div> -->
+                    </div>
+                    
+                    <button class="add-reading-btn" id="addReadingBtn">
+                        <i class="ph ph-plus"></i>
+                        <span class="btn-text">Add Reading</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            <div class="container">
+                
+                <div class="hero-section">
+                    <h1>Hello, User 👋</h1>
+                    <p id="currentDateDisplay">Loading date...</p>
+                    <div class="clock-container">
+        <div id="clock">
+            <span id="hour">00</span>
+            <span class="separator">:</span>
+            <span id="minutes">00</span>
+            <span class="separator">:</span>
+            <span id="seconds">00</span>
+            <span id="ampm">AM</span>
+        </div>
+    </div>
+                </div>
+                <!-- <div class="stai-promo-card" id="staiInsightCard">
+    <div class="stai-promo-content">
+        <h3>STAi Insights <i class="ph-fill ph-sparkle" style="color: gold;"></i></h3>
+        <p id="staiInsightText" style="line-height: 1.5; font-size: 0.95rem;">Analyzing your data...</p>
+        <button class="btn-stai" onclick="window.location.href='ai.html'">
+            <i class="ph-fill ph-chat-circle-dots"></i> Ask STAi
+        </button>
+    </div>
+    <div class="stai-promo-visual">
+        <div class="robot-avatar stai-robot-lg" style="width: 80px; height: 80px; border-radius: 25px;">
+            <div class="eye" style="width: 8px; height: 12px;"></div>
+            <div class="eye" style="width: 8px; height: 12px;"></div>
+        </div>
+    </div>
+</div> -->
+<div class="stai-promo-card" id="staiPromoCard" style="background: linear-gradient(135deg, var(--info, #3b82f6) 0%, #2563eb 100%);">
+                    <button class="stai-close-btn" id="closeStaiPromoBtn" title="Dismiss">
+                        <i class="ph ph-x"></i>
+                    </button>
+                    
+                    <div class="stai-promo-content">
+                        <h3>Meet STAi <i class="ri-bard-fill" style="color: gold;"></i></h3>
+                        <!-- <h3>Meet STAi ✨</h3> -->
+                        <p>Your personal diabetes assistant is here. Ask questions, analyze your glucose trends, and get smart recommendations instantly.</p>
+                        <button class="btn-stai" onclick="window.location.href='ai.html'">
+                            <i class="ph-fill ph-sparkle"></i> Try STAi Now
+                        </button>
+                    </div>
+                    <div class="stai-promo-visual">
+                        <div class="stai-robot-lg">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="card stat-card">
+                        <div class="stat-top">
+                            <span>Avg. Glucose (7d)</span>
+                            <i class="ph ph-drop-half" style="color: var(--info);"></i>
+                        </div>
+                        <div class="stat-val">0 <span style="font-size: 1rem; color: var(--text-secondary); font-weight:400;">mg/dL</span></div>
+                        <div class="stat-change positive">
+                            <!-- <i class="ph ph-trend-down"></i> 0% vs last week -->
+                        </div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-top">
+                            <span>Last Reading</span>
+                            <i class="ph ph-clock"></i>
+                        </div>
+                        <div class="stat-val">0 <span style="font-size: 1rem; color: var(--text-secondary); font-weight:400;">mg/dL</span></div>
+                        <div class="stat-change neutral">
+                            <!-- <span>2 hours ago</span> -->
+                        </div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-top">
+                            <span>Est. A1C</span>
+                            <i class="ph ph-calculator"></i>
+                        </div>
+                        <div class="stat-val">0 <span style="font-size: 1rem; color: var(--text-secondary); font-weight:400;">%</span></div>
+                        <div class="stat-change positive">
+                            <i class="ph ph-check-circle"></i> In Range
+                        </div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-top">
+                            <span>Readings Today</span>
+                            <i class="ph ph-list-numbers"></i>
+                        </div>
+                        <div class="stat-val">4</div>
+                        <div class="stat-change neutral">
+                            <span>Target: 6/day</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    
+                    <div class="card chart-box">
+                        <div class="card-header">
+                            <h3>Glucose Trends</h3>
+                            <button class="btn-outline">
+                                <i class="ph ph-calendar-blank"></i> 7 Days
+                            </button>
+                        </div>
+                        <div class="chart-canvas-wrapper">
+                            <canvas id="leadsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card list-box">
+                        <div class="card-header">
+                            <h3>Recent Readings</h3>
+                            <div style="display: flex; gap: 5px;">
+                                <!-- <button class="icon-btn-small" title="Export Image"><i class="ph ph-image"></i></button>
+                                <button class="icon-btn-small" title="Export PDF"><i class="ph ph-file-pdf"></i></button> -->
+                            </div>
+                        </div>
+                        
+                        <div class="readings-list">
+                            <div class="reading-header">
+                                <span>Level</span>
+                                <span>Time</span>
+                                <span>Context</span>
+                            </div>
+                            
+                            <!-- <div class="reading-item">
+                                <div class="r-val high">0</div>
+                                <div class="r-info">
+                                    <span class="r-time">0</span>
+                                    <span class="r-date"></span>
+                                </div>
+                                <div class="r-tag"></div>
+                            </div>
+
+                            <div class="reading-item">
+                                <div class="r-val normal">0</div>
+                                <div class="r-info">
+                                    <span class="r-time">8:00 AM</span>
+                                    <span class="r-date">Today</span>
+                                </div>
+                                <div class="r-tag">Fasting</div>
+                            </div>
+
+                            <div class="reading-item">
+                                <div class="r-val low">68</div>
+                                <div class="r-info">
+                                    <span class="r-time">11:15 PM</span>
+                                    <span class="r-date">Yesterday</span>
+                                </div>
+                                <div class="r-tag">Bedtime</div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+            </div>
+                                <br><br><br>
+
+        </div>
+    </main>
+
+    <div class="modal-backdrop" id="readingModal">
+        <div class="modal-container">
+            <div class="mobile-handle"></div> 
+            
+            <div class="modal-header">
+                <h3>Add Glucose Reading</h3>
+                <button class="icon-btn" id="closeModalBtn"><i class="ph ph-x"></i></button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="addReadingForm">
+                    <div class="input-row">
+                        <div class="form-group half">
+                            <label>Date</label>
+                            <input type="date" class="form-input" id="inputDate">
+                        </div>
+                        <div class="form-group half">
+                            <label>Time</label>
+                            <input type="time" class="form-input" id="inputTime">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Glucose (mg/dL)</label>
+                        <div class="glucose-input-wrapper">
+                            <input type="number" class="form-input large-input" placeholder="e.g.0" id="inputGlucose" required>
+                            <span class="unit-tag">mg/dL</span>
+                        </div>
+                    </div>
+<div class="form-group">
+                        <label>Context</label>
+                        <div class="tags-input">
+                            <input type="radio" name="context" id="ctx1" value="fasting">
+                            <label for="ctx1">Fasting</label>
+                            
+                            <input type="radio" name="context" id="ctx2" value="pre-meal" checked>
+                            <label for="ctx2">Pre-Meal</label>
+                            
+                            <input type="radio" name="context" id="ctx3" value="post-meal">
+                            <label for="ctx3">Post-Meal</label>
+                            
+                            <input type="radio" name="context" id="ctx4" value="bedtime">
+                            <label for="ctx4">Bedtime</label>
+                            <input type="radio" name="context" id="ctx5" value="manual">
+                            <label for="ctx5">Manual</label>
+                            <input type="radio" name="context" id="ctx6" value="">
+                            <label for="ctx6">None</label>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label>Context</label>
+                        <div class="tags-input">
+                            <input type="radio" name="context" id="ctx1" value="fasting"><label for="ctx1">Fasting</label>
+                            <input type="radio" name="context" id="ctx2" value="pre-meal" checked><label for="ctx2">Pre-Meal</label>
+                            <input type="radio" name="context" id="ctx3" value="post-meal"><label for="ctx3">Post-Meal</label>
+                            <input type="radio" name="context" id="ctx4" value="bedtime"><label for="ctx4">Bedtime</label>
+                        </div>
+                    </div> -->
+
+                    <div class="form-group">
+                        <label>Notes (Optional)</label>
+                        <textarea class="form-input" rows="2" placeholder="Carbs, meds, how you feel..."></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn-outline" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn-primary" style="flex: 1; justify-content: center;">Save Reading</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+<script>
+
+
+</script>
+    <script src="script.js"></script>
+    <!-- <script>
+    //     document.addEventListener("DOMContentLoaded", () => {
+    // auth.onAuthStateChanged((user) => {
+    //     if (user) {
+    //         currentUser = user;
+    //         initDashboard(user);
+    //         loadUserInfo(user);
+    //     } else {
+    //         window.location.href = 'login.html';
+    //     }
+    // });
+    // setupModalListeners();
+
+    // ==========================================
+    // NEW: STAi Promo Banner Dismissal Logic
+    // ==========================================
+    const staiPromoCard = document.getElementById('staiPromoCard');
+    const closeStaiPromoBtn = document.getElementById('closeStaiPromoBtn');
+    
+    if (staiPromoCard && closeStaiPromoBtn) {
+        // 1. Check if the user already dismissed it previously
+        if (localStorage.getItem('staiPromoDismissed') === 'true') {
+            staiPromoCard.style.display = 'none';
+        }
+        
+        // 2. Hide banner and save preference when X is clicked
+        closeStaiPromoBtn.addEventListener('click', () => {
+            // Add a fade out effect before hiding
+            staiPromoCard.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+            staiPromoCard.style.opacity = "0";
+            staiPromoCard.style.transform = "scale(0.95)";
+            
+            setTimeout(() => {
+                staiPromoCard.style.display = 'none';
+                localStorage.setItem('staiPromoDismissed', 'true');
+            }, 300); // Wait for the animation to finish
+        });
+    }
+// });
+    </script> -->
+<script>
+    function updateClock() {
+        let date = new Date();
+        let hh = date.getHours();
+        let mm = date.getMinutes();
+        let ss = date.getSeconds();
+        let session = "AM";
+        
+        // Check saved preferences
+        const timeFormat = localStorage.getItem('timeFormat') || '12h';
+        const lang = localStorage.getItem('app_lang') || 'en';
+
+        if (timeFormat === '12h') {
+            if (hh === 0) hh = 12;
+            if (hh > 12) {
+                hh = hh - 12;
+                session = "PM";
+            }
+            // Translate AM/PM if Arabic
+            if (lang === 'ar') {
+                session = session === "AM" ? "ص" : "م";
+            }
+        } else {
+            // 24-hour format
+            session = ""; // Hide AM/PM
+        }
+
+        // Add leading zeros
+        hh = (hh < 10) ? "0" + hh : hh;
+        mm = (mm < 10) ? "0" + mm : mm;
+        ss = (ss < 10) ? "0" + ss : ss;
+
+        // Update HTML
+        document.getElementById("hour").innerText = hh;
+        document.getElementById("minutes").innerText = mm;
+        document.getElementById("seconds").innerText = ss;
+        document.getElementById("ampm").innerText = session;
+
+        setTimeout(updateClock, 1000);
+    }
+    updateClock();
+</script>
+<!--Use latest version-->
+<!-- <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool@latest'></script> -->
+ <!-- <nav class="mobile-bottom-nav" id="mobileBottomNav">
+        <a href="dashboard.html" class="nav-item active">
+            <i class="ph-fill ph-squares-four"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="readings.html" class="nav-item">
+            <i class="ph ph-notebook"></i>
+            <span>Readings</span>
+        </a>
+        
+        <div class="nav-item center-action" id="mobileAddReadingBtn">
+            <button class="fab-btn">
+                <i class="ph ph-plus"></i>
+            </button>
+        </div>
+        
+        <a href="ai.html" class="nav-item">
+            <i class="ph ph-sparkle"></i>
+            <span>STAi</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item">
+            <i class="ph ph-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav> -->
+    <nav class="mobile-bottom-nav" id="mobileBottomNav">
+        <a href="dashboard.html" class="nav-item active">
+            <i class="ph-fill ph-squares-four"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="readings.html" class="nav-item">
+            <i class="ph ph-notebook"></i>
+            <span>Readings</span>
+        </a>
+        
+        <div class="nav-item center-action" id="mobileAddReadingBtn">
+            <button class="fab-btn">
+                <i class="ph ph-plus"></i>
+            </button>
+        </div>
+        
+        <!-- <a href="ai.html" class="nav-item">
+            <i class="ph ph-sparkle"></i>
+            <span>STAi</span>
+        </a> -->
+                <a href="inbox.html" class="nav-item">
+            <i class="ph ph-tray"></i>
+            <span>Inbox</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="ph ph-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+    <script>
+        
+    </script>
+</body>
+</html>

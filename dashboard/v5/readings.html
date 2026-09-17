@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarTrack - Readings</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css" />
+<link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module" src="readings.js"></script>
+    <script type="module" src="profile/pload.js"></script>
+    <script src="Photophor/src/index.js"></script>
+    <script src="main.js"></script>
+    <script src="accent.js"></script>
+    <script src="script.js"></script>
+
+
+    <style>
+        /* --- RESPONSIVE SWITCHER --- */
+        .mobile-only {
+            display: none;
+        }
+
+        .desktop-only {
+            display: block;
+        }
+
+        /* --- DESKTOP STYLES --- */
+        .readings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .readings-filters {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap; /* Prevent text wrap on mobile */
+        }
+
+        .filter-btn:hover {
+            border-color: var(--text-secondary);
+            background: var(--bg-hover);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: var(--accent-fg);
+            border-color: var(--accent);
+        }
+
+        .search-box {
+            position: relative;
+            min-width: 250px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.65rem 1rem 0.65rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        /* Stats Cards */
+        .readings-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card-sm {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 160px; /* Ensure width for scrolling */
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .stat-icon.green {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .stat-icon.blue {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .stat-icon.orange {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+
+        .stat-icon.red {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .stat-info h4 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-info .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Table */
+        .readings-table-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .readings-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .readings-table th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .readings-table td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .readings-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Badges */
+        .glucose-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .glucose-badge.low {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .glucose-badge.normal {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .glucose-badge.high {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        /* --- MOBILE STYLES --- */
+        .history-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .history-item2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .history-item2:active {
+            transform: scale(0.98);
+        }
+
+        .history-item2 .details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .history-item2 .time {
+            text-align: right;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* --- MOBILE MEDIA QUERY --- */
+        /* @media (max-width: 768px) { */
+        @media (max-width: 843px) {
+            .mobile-only {
+                display: block;
+            }
+
+            .desktop-only {
+                display: none;
+            }
+
+            .main-layout {
+                padding-bottom: 2rem;
+            }
+
+            .container {
+                padding: 1rem;
+                max-width: 100%;
+            }
+
+            .top-header {
+                display: flex;
+            }
+
+            /* HORIZONTAL SCROLL FOR STATS */
+            .mobile-scroll-container {
+                display: flex;
+                overflow-x: auto;
+                gap: 1rem;
+                padding-bottom: 10px;
+                margin-right: -1rem; /* Bleed to right edge */
+                padding-right: 1rem; 
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Firefox */
+            }
+            .mobile-scroll-container::-webkit-scrollbar {
+                display: none; /* Chrome/Safari */
+            }
+
+            /* Make stat cards smaller on mobile */
+            .mobile-scroll-container .stat-card-sm {
+                padding: 1rem;
+                min-width: 140px;
+            }
+
+            /* HORIZONTAL SCROLL FOR FILTERS */
+            .mobile-filters-scroll {
+                display: flex;
+                overflow-x: auto;
+                gap: 0.75rem;
+                padding-bottom: 5px;
+                margin-bottom: 1rem;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .mobile-filters-scroll::-webkit-scrollbar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-box">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+
+<div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link "><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="readings.html" class="nav-link active"><i class="ph-fill ph-notebook"></i><span>Readings</span></a>
+                <a href="search.html" class="nav-link"><i class="ri-search-ai-2-line"></i><span>Search Ai</span></a>
+                <a href="inbox.html" class="nav-link"><i class="ph ph-tray"></i><span>Inbox</span></a>
+                <a href="analytics.html" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="export.html" class="nav-link"><i class="ph ph-file-pdf"></i><span>Reports</span></a>
+                <a onclick="window.location.href='ai.html'" class="nav-link"><div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 8px;"><div class="eye" style="width: 3px; height: 5px;"></div><div class="eye" style="width: 3px; height: 5px;"></div></div><span style="font-weight: 900; color: var(--text-primary);">Ask STAi</span></a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="top-header">
+            <div class="header-left">
+                                <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button>
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button>
+                <h2 class="page-title">Readings</h2>
+            </div>
+            </header>
+
+        <div class="content-scroll">
+            <div class="container" style="max-width: 1400px;">
+
+                <div class="readings-stats desktop-only">
+                    <div class="stat-card-sm">
+                        <div class="stat-icon orange"><i class="fa-regular fa-clock"></i></div>
+                        <div class="stat-info">
+                            <h4>Latest</h4>
+                            <div class="stat-number" id="dt-latest">--</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-sm">
+                        <div class="stat-icon blue"><i class="fa-regular fa-chart-line"></i></div>
+                        <div class="stat-info">
+                            <h4>Avg (30d)</h4>
+                            <div class="stat-number" id="dt-avg">--</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-sm">
+                        <div class="stat-icon green"><i class="fa-regular fa-check-circle"></i></div>
+                        <div class="stat-info">
+                            <h4>In Range</h4>
+                            <div class="stat-number" id="dt-range">--%</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-sm">
+                        <div class="stat-icon red"><i class="fa-regular fa-list"></i></div>
+                        <div class="stat-info">
+                            <h4>Total</h4>
+                            <div class="stat-number" id="dt-total">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="desktop-only">
+                    <div class="readings-header">
+                        <div class="readings-filters">
+                            <button class="filter-btn active" onclick="setFilter('all')">All</button>
+                            <button class="filter-btn" onclick="setFilter('today')">Today</button>
+                            <button class="filter-btn" onclick="setFilter('high')">High</button>
+                            <button class="filter-btn" onclick="setFilter('low')">Low</button>
+                        </div>
+                        <div class="search-box">
+                            <i class="fa-regular fa-search"></i>
+                            <input type="text" id="dt-search" placeholder="Search readings...">
+                        </div>
+                    </div>
+
+                    <div class="readings-table-container">
+                        <table class="readings-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Glucose</th>
+                                    <th>Status</th>
+                                    <th>Context</th>
+                                    <th>Notes</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="desktopTableBody"></tbody>
+                        </table>
+                    </div>
+
+                    </div>
+
+                <div class="mobile-only">
+                    
+                    <div class="mobile-scroll-container" style="margin-bottom: 1.5rem;">
+                        <div class="stat-card-sm">
+                            <div class="stat-icon orange"><i class="fa-regular fa-clock"></i></div>
+                            <div class="stat-info">
+                                <h4>Latest</h4>
+                                <div class="stat-number" id="mb-latest">--</div> 
+                            </div>
+                        </div>
+                        <div class="stat-card-sm">
+                            <div class="stat-icon blue"><i class="fa-regular fa-chart-line"></i></div>
+                            <div class="stat-info">
+                                <h4>Avg</h4>
+                                <div class="stat-number" id="mb-avg">--</div> 
+                            </div>
+                        </div>
+                        <div class="stat-card-sm">
+                            <div class="stat-icon green"><i class="fa-regular fa-check-circle"></i></div>
+                            <div class="stat-info">
+                                <h4>Range</h4>
+                                <div class="stat-number" id="mb-range">--%</div>
+                            </div>
+                        </div>
+                        <div class="stat-card-sm">
+                            <div class="stat-icon red"><i class="fa-regular fa-list"></i></div>
+                            <div class="stat-info">
+                                <h4>Total</h4>
+                                <div class="stat-number" id="mb-total">--</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mobile-filters-scroll">
+                        <button class="filter-btn active" onclick="setFilter('all')">All</button>
+                        <button class="filter-btn" onclick="setFilter('today')">Today</button>
+                        <button class="filter-btn" onclick="setFilter('high')">High</button>
+                        <button class="filter-btn" onclick="setFilter('low')">Low</button>
+                    </div>
+
+                    <div class="search-box" style="margin-bottom: 1.5rem; width: 100%;">
+                        <i class="fa-regular fa-search"></i>
+                        <input type="text" id="mb-search" placeholder="Search..." style="width: 100%;">
+                    </div>
+
+                    <div class="history-list-container" id="mobileListBody">
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-backdrop" id="readingModal">
+        <div class="modal-container" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Reading</h3>
+                <button class="icon-btn close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="readingForm">
+                    <input type="hidden" id="readingId">
+                    <div style="display: flex; gap: 10px;">
+                        <div class="form-group" style="flex:1">
+                            <label>Date</label>
+                            <input type="date" class="form-input" id="readingDate" required>
+                        </div>
+                        <div class="form-group" style="flex:1">
+                            <label>Time</label>
+                            <input type="time" class="form-input" id="readingTime" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Glucose (mg/dL)</label>
+                        <input type="number" class="form-input" id="readingGlucose" placeholder="120" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Context</label>
+                        <select class="form-input" id="readingContext">
+                            <option value="Fasting">Fasting</option>
+                            <option value="Pre-Meal">Pre-Meal</option>
+                            <option value="Post-Meal">Post-Meal</option>
+                            <option value="Bedtime">Bedtime</option>
+                            <option value="Manual">Manual</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea class="form-input" id="readingNotes" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                        <button type="button" class="btn-outline" style="border-color: #ef4444; color: #ef4444;" 
+                                onclick="handleModalDelete()" id="modalDeleteBtn">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <button type="button" class="btn-outline" onclick="closeModal()">Cancel</button>
+                            <button type="submit" class="btn-primary" id="saveBtn">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="deleteModal">
+        <div class="modal-container" style="max-width: 350px; text-align: center;">
+            <div class="modal-body">
+                <i class="fa-solid fa-trash-can" style="font-size: 3rem; color: #ef4444; margin-bottom: 1rem;"></i>
+                <h3>Delete Reading?</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">This cannot be undone.</p>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button class="btn-outline" onclick="closeDeleteModal()">Cancel</button>
+                    <button class="btn-primary" style="background: #ef4444; border:none;" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Helper: Link mobile stats to desktop IDs so JS updates both
+        // Since IDs must be unique, we use classes or manual syncing. 
+        // For simplicity, I'll add a small observer to copy values from desktop stats to mobile stats
+        setInterval(() => {
+            if(document.getElementById('dt-avg')) {
+                document.getElementById('mb-avg').innerText = document.getElementById('dt-avg').innerText;
+                document.getElementById('mb-range').innerText = document.getElementById('dt-range').innerText;
+                document.getElementById('mb-total').innerText = document.getElementById('dt-total').innerText;
+                
+                // Keep the new latest card synced
+                if(document.getElementById('dt-latest')) {
+                    document.getElementById('mb-latest').innerText = document.getElementById('dt-latest').innerText;
+                }
+            }
+        }, 1000);
+
+        // Helper: Delete from inside the Edit Modal
+        function handleModalDelete() {
+            const id = document.getElementById('readingId').value;
+            if(id) {
+                closeModal();
+                if(window.openDeleteConfirm) {
+                    window.openDeleteConfirm(id);
+                }
+            }
+        }
+    </script>
+        <nav class="mobile-bottom-nav" id="mobileBottomNav">
+        <a href="dashboard.html" class="nav-item ">
+            <i class="ph ph-squares-four"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="readings.html" class="nav-item active">
+            <i class="ph-fill ph-notebook"></i>
+            <span>Readings</span>
+        </a>
+        
+        <!-- <div class="nav-item center-action" id="mobileAddReadingBtn"> -->
+        <div class="nav-item center-action" >
+            <button class="fab-btn">
+                                <a onclick="window.location.href='ai.html'" class=""><div class="robot-avatar" style="width: 40px; height: 40px; border-radius: 1rem;"><div class="eye" style="width: 6px; height: 8px;"></div><div class="eye" style="width: 6px; height: 8px;"></div></div></a>
+
+                <!-- <i class="ph ph-plus"></i> -->
+            </button>
+        </div>
+        
+        <a href="inbox.html" class="nav-item">
+            <i class="ph ph-tray"></i>
+            <span>Inbox</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item">
+            <i class="ph ph-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+</body>
+
+</html>

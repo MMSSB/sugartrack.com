@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tips & Insights - SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <script src="Photophor/src/index.js"></script>
+    <script src="main.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo" onclick="window.location.href='dashboard.html'">
+                <div class="logo-box" style="">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+<div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link "><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="readings.html" class="nav-link"><i class="ph ph-notebook"></i><span>Readings</span></a>
+                <a href="search.html" class="nav-link"><i class="ri-search-ai-2-line"></i><span>Search Ai</span></a>
+                <a href="inbox.html" class="nav-link"><i class="ph ph-tray"></i><span>Inbox</span></a>
+                <a href="analytics.html" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="export.html" class="nav-link"><i class="ph ph-file-pdf"></i><span>Reports</span></a>
+                <a onclick="window.location.href='ai.html'" class="nav-link"><div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 8px;"><div class="eye" style="width: 3px; height: 5px;"></div><div class="eye" style="width: 3px; height: 5px;"></div></div><span style="font-weight: 900; color: var(--text-primary);">Ask STAi</span></a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="top-header" style="border-bottom: 1px solid var(--border); box-shadow: none;">
+            <div class="header-left">
+                <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button>
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button>
+                <h2 class="page-title">Tips & Insights</h2>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            <div class="container" style="max-width: 900px; padding-top: 1rem;">
+                
+                <div style="margin-bottom: 2.5rem; text-align: center;">
+                    <div style="width: 70px; height: 70px; background: rgba(245, 158, 11, 0.15); color: var(--warning); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1rem auto;">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Daily Tips</h1>
+                    <p style="color: var(--text-secondary); font-size: 1rem;">Get the most out of SugarTrack and your health journey.</p>
+                </div>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-icon" style="color: var(--info); background: rgba(59, 130, 246, 0.1);"><i class="fa-solid fa-mobile-screen"></i></div>
+                        <h4>Swipe to Close</h4>
+                        <p>Reading a message on your phone? Just swipe down on the modal to instantly close it without reaching for the 'X' button.</p>
+                        <span class="tip-category">App Feature</span>
+                    </div>
+
+                    <div class="tip-card">
+                        <div class="tip-icon" style="color: var(--success); background: rgba(16, 185, 129, 0.1);"><i class="fa-solid fa-apple-whole"></i></div>
+                        <h4>Post-Meal Timing</h4>
+                        <p>For the most accurate post-meal readings, try to test exactly 2 hours after you take your first bite of food, not after you finish.</p>
+                        <span class="tip-category">Health Insight</span>
+                    </div>
+
+                    <div class="tip-card">
+                        <div class="tip-icon" style="color: #a855f7; background: rgba(168, 85, 247, 0.1);"><i class="fa-solid fa-palette"></i></div>
+                        <h4>Make It Yours</h4>
+                        <p>Head over to Settings > Display to inject your own custom accent color. The entire app will adapt to your favorite color instantly.</p>
+                        <span class="tip-category">Customization</span>
+                    </div>
+
+                    <div class="tip-card">
+                        <div class="tip-icon" style="color: var(--danger); background: rgba(239, 68, 68, 0.1);"><i class="fa-solid fa-droplet"></i></div>
+                        <h4>Stay Hydrated</h4>
+                        <p>Dehydration can concentrate your blood, leading to artificially higher glucose readings. Drink a glass of water before testing!</p>
+                        <span class="tip-category">Health Insight</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .tip-card {
+            background: var(--bg-card); border: 1px solid var(--border); padding: 1.5rem;
+            border-radius: 12px; transition: transform 0.2s, box-shadow 0.2s; position: relative;
+        }
+        .tip-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-color: var(--text-secondary); }
+        .tip-icon {
+            width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem; margin-bottom: 1rem;
+        }
+        .tip-card h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .tip-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; }
+        .tip-category {
+            position: absolute; bottom: 1.5rem; right: 1.5rem; font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; color: var(--text-secondary); background: var(--bg-hover); padding: 3px 8px; border-radius: 4px;
+        }
+    </style>
+    <script type="module" src="profile/pload.js"></script>
+    <script src="accent.js"></script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - SugarTrack</title>
+        <script type="module" src="profile/pload.js"></script>
+    <script type="module" src="profile/profile.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <script src="Photophor/src/index.js"></script>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+        <script src="main.js"></script>
+    <script src="accent.js"></script>
+    <script src="script.js"></script>
+
+</head>
+<body>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo" onclick="window.location.href='dashboard.html'">
+                <div class="logo-box">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+<div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link "><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="readings.html" class="nav-link"><i class="ph ph-notebook"></i><span>Readings</span></a>
+                <a href="search.html" class="nav-link"><i class="ri-search-ai-2-line"></i><span>Search Ai</span></a>
+                <a href="inbox.html" class="nav-link"><i class="ph ph-tray"></i><span>Inbox</span></a>
+                <a href="analytics.html" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="export.html" class="nav-link"><i class="ph ph-file-pdf"></i><span>Reports</span></a>
+                <a onclick="window.location.href='ai.html'" class="nav-link"><div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 8px;"><div class="eye" style="width: 3px; height: 5px;"></div><div class="eye" style="width: 3px; height: 5px;"></div></div><span style="font-weight: 900; color: var(--text-primary);">Ask STAi</span></a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style="border-radius: 50%;"></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+    <main class="main-layout">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button>
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <h2 class="page-title">My Profile</h2>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            
+            <div class="container" style="max-width: 800px; padding-bottom: 5rem;">
+                                <div class="">
+                    <h1 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Profile</h1>
+                    <p style="color: var(--text-secondary); font-size: 1rem;">Manage your Profile details.</p>
+                </div>
+                <br>
+                                <div class="scrolll" style="display: flex; gap: 10px; margin-bottom: 2rem; overflow-x: auto;  padding-bottom: 5px;">
+                    <a href="settings.html" class="btn-outline" style="text-decoration: none;">
+                        <i class="fa-solid fa-sliders"></i> General
+                    </a>
+                    <a href="settings-account.html" class="btn-outline" style="text-decoration: none;">
+                        <i class="fa-solid fa-shield-halved"></i> Account
+                    </a>
+                    <a href="profile.html" class="btn-primary" style="text-decoration: none;">
+                        <i class="fa-solid fa-user"></i> Profile
+                    </a>
+                </div>
+                <div class="card" style="margin-bottom: 2rem; position: relative; overflow: hidden; border:none; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                    <div class="profile-banner"></div>
+                    <div style="padding: 0 2rem 2rem 2rem; position: relative; text-align: center; margin-top: -55px;">
+                        
+                        <div class="avatar-edit-wrapper" id="openAvatarModalBtn">
+                            <img src="images/user.png" id="mainProfilePhoto" class="profile-img">
+                            <div class="avatar-overlay">
+                                <i class="fa-solid fa-camera"></i>
+                            </div>
+                        </div>
+                        
+                        <h2 id="displayNameLabel" style="font-size: 1.5rem; font-weight: 700; margin-top: 1rem;">User Name</h2>
+                        <br>
+                        <span class="r-tag" style="background: var(--bg-hover); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">SugarTrack Member</span>
+                    </div>
+                </div>
+
+                <div class="charts-grid" style="grid-template-columns: 1fr; gap: 2rem;">
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-address-card" style="color: var(--info, #3b82f6); margin-right: 8px;"></i> Personal Information</h3>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                         
+                            <form id="profileForm">
+                                <div class="input-row" style="margin-bottom: 1.25rem;">
+                                    <div class="form-group half" style="margin-bottom: 0;">
+                                        <label>First Name</label>
+                                        <div class="input-with-icon">
+                                            <i class="fa-solid fa-user"></i>
+                                            <input type="text" id="inputFirstName" class="form-input" placeholder="First Name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group half" style="margin-bottom: 0;">
+                                        <label>Last Name</label>
+                                        <div class="input-with-icon">
+                                            <i class="fa-solid fa-user"></i>
+                                            <input type="text" id="inputLastName" class="form-input" placeholder="Last Name">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-row" style="margin-bottom: 1.25rem;">
+                                    <div class="form-group half" style="margin-bottom: 0;">
+                                        <label>Email Address</label>
+                                        <div class="input-with-icon">
+                                            <i class="fa-solid fa-envelope"></i>
+                                            <input type="email" id="inputEmail" class="form-input" disabled style="background: var(--bg-hover); cursor: not-allowed;" placeholder="user@email.com">
+                                        </div>
+                                    </div>
+                                    <div class="form-group half" style="margin-bottom: 0;">
+                                        <label>Location</label>
+                                        <div class="input-with-icon">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                            <input type="text" id="inputLocation" class="form-input" placeholder="City, Country">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 1.25rem;">
+                                    <label>Bio / Health Goal</label>
+                                    <textarea id="inputBio" class="form-input" rows="3" placeholder="I am managing my sugar levels by..."></textarea>
+                                </div>
+<div class="input-row" style="margin-bottom: 1.25rem;">
+    <div class="form-group half" style="margin-bottom: 0;">
+        <label>Date of Birth</label>
+        <div class="input-with-icon">
+            <i class="fa-solid fa-calendar-days"></i>
+            <input type="date" id="inputDob" class="form-input">
+        </div>
+    </div>
+    <div class="form-group half" style="margin-bottom: 0;">
+        <label>Gender</label>
+        <select id="inputGender" class="form-input" style="width: 100%;">
+            <option value="none">Prefer not to say</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+    </div>
+</div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label>Diabetes Type</label>
+                                    <select id="inputType" class="form-input" style="width: 100%;">
+                                        <option value="none">Not Specified</option>
+                                        <option value="type1">Type 1</option>
+                                        <option value="type2">Type 2</option>
+                                        <option value="gestational">Gestational</option>
+                                        <option value="prediabetes">Pre-diabetes</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-backdrop" id="avatarModal">
+        <div class="modal-container">
+            <div class="mobile-handle"></div>
+            <div class="modal-header">
+                <h3>Choose Avatar</h3>
+                <button class="icon-btn-small" id="closeAvatarModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+                <div class="avatar-grid" id="modalAvatarGrid">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="save-bar" id="profileSaveBar">
+        <span class="save-msg">Unsaved changes</span>
+        <div style="display: flex; gap: 10px;">
+            <button type="button" id="profileDiscardBtn" class="btn-discard">Discard</button>
+            <button type="button" id="profileSaveBtn" class="btn-save">Save Profile</button>
+        </div>
+    </div>
+        <nav class="mobile-bottom-nav" id="mobileBottomNav">
+        <a href="dashboard.html" class="nav-item ">
+            <i class="ph ph-squares-four"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="readings.html" class="nav-item ">
+            <i class="ph ph-notebook"></i>
+            <span>Readings</span>
+        </a>
+        
+        <!-- <div class="nav-item center-action" id="mobileAddReadingBtn"> -->
+        <div class="nav-item center-action" >
+            <button class="fab-btn">
+                                <a onclick="window.location.href='ai.html'" class=""><div class="robot-avatar" style="width: 40px; height: 40px; border-radius: 1rem;"><div class="eye" style="width: 6px; height: 8px;"></div><div class="eye" style="width: 6px; height: 8px;"></div></div></a>
+
+                <!-- <i class="ph ph-plus"></i> -->
+            </button>
+        </div>
+        
+        <a href="inbox.html" class="nav-item">
+            <i class="ph ph-tray"></i>
+            <span>Inbox</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item active">
+            <i class="ph-fill ph-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+    <style>
+        /* Profile Specific Styles */
+        .profile-banner {
+            height: 120px;
+            background: linear-gradient(135deg, var(--info, #65a0ff) 0%, #3b82f6 100%);
+            border-radius: var(--radius) var(--radius) 0 0;
+            opacity: 0.85;
+        }
+
+        .avatar-edit-wrapper {
+            position: relative;
+            display: inline-block;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 5px;
+            background: var(--bg-card);
+            border: 5px solid var(--info);
+            /* border: 1px solid var(--border); */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .avatar-edit-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .avatar-overlay {
+            position: absolute;
+            inset: 5px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .avatar-edit-wrapper:hover .avatar-overlay {
+            opacity: 1;
+        }
+
+        /* Inputs with icons */
+        .input-with-icon {
+            position: relative;
+        }
+        .input-with-icon i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        .input-with-icon input {
+            padding-left: 2.5rem;
+        }
+
+        /* Modal Avatar Grid */
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        .avatar-item {
+            aspect-ratio: 1;
+            border-radius: 16px;
+            cursor: pointer;
+            overflow: hidden;
+            border: 3px solid transparent;
+            transition: 0.2s;
+            background: var(--bg-hover);
+        }
+
+        .avatar-item img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .avatar-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .avatar-item.active {
+            border-color: var(--info, #3b82f6);
+            transform: scale(1.05);
+            box-shadow: 0 0 0 4px var(--bg-card), 0 0 0 6px var(--info, #3b82f6);
+        }
+    </style>
+
+
+</body>
+</html>

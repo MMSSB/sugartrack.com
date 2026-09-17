@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updates & Changelog - SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <script src="Photophor/src/index.js"></script>
+    <script src="main.js"></script>
+    <script src="script.js"></script>
+        <script type="module" src="profile/pload.js"></script>
+    <script src="accent.js"></script>
+</head>
+<body>
+    <!-- <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo" onclick="window.location.href='dashboard.html'">
+                <div class="logo-box">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+<div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link "><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="readings.html" class="nav-link"><i class="ph ph-notebook"></i><span>Readings</span></a>
+                <a href="search.html" class="nav-link"><i class="ri-search-ai-2-line"></i><span>Search Ai</span></a>
+                <a href="inbox.html" class="nav-link"><i class="ph ph-tray"></i><span>Inbox</span></a>
+                <a href="analytics.html" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="export.html" class="nav-link"><i class="ph ph-file-pdf"></i><span>Reports</span></a>
+                <a onclick="window.location.href='ai.html'" class="nav-link"><div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 8px;"><div class="eye" style="width: 3px; height: 5px;"></div><div class="eye" style="width: 3px; height: 5px;"></div></div><span style="font-weight: 900; color: var(--text-primary);">Ask STAi</span></a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside> -->
+
+    <main class="main-layout">
+        <header class="top-header" style="border-bottom: 1px solid var(--border); box-shadow: none;">
+            <div class="header-left">
+                <!-- <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button>
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button> -->
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <a href="about.html" class="icon-btn" style="border:none; background:transparent;"><i class="fa-solid fa-arrow-left"></i></a>
+                    <h2 class="page-title">Release Notes</h2>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            <div class="container" style="max-width: 800px; padding-top: 1rem;">
+                
+                <div style="margin-bottom: 2.5rem;">
+                    <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Updates & Changelog</h1>
+                    <p style="color: var(--text-secondary); font-size: 1rem;">Keep track of new features, bug fixes, and visual improvements.</p>
+                </div>
+
+                <div class="timeline">
+                    
+                    <div class="timeline-item">
+                        <div class="t-dot active-dot"></div>
+                        <div class="t-content card" style="padding: 1.5rem;">
+                            <div class="t-header">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <strong style="font-size: 1.2rem;">V5.0</strong>
+                                    <span class="v-badge">Latest Release</span>
+                                </div>
+                                <span class="t-date">February 2026</span>
+                            </div>
+                            
+                            <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
+                                We've completely overhauled the Inbox and Dashboard experiences. The app now features a true native split-pane desktop view and intelligent trend tracking.
+                            </p>
+
+                            <div class="update-image-box">
+                                <a  data-fancybox="gallery" data-src="images/dashboard-screen.PNG" class="fancybox" data-caption="STV5.0 Dashboard">
+                                <img src="images/dashboard-screen.PNG" alt="Version 5.0 UI Update" onerror="this.src='images/dashboard-screen.PNG';"></a>
+                                <div class="image-caption">The new Dashboard Ui.</div>
+                            </div>
+                            <div class="update-image-box">
+                                    <a  data-fancybox="gallery" data-src="images/inbox-screen.PNG" class="fancybox" data-caption="STV5.0 Inbox">
+                                <img src="images/inbox-screen.PNG" alt="Version 5.0 UI Update" onerror="this.src='images/inbox-screen.PNG';"></a>
+                                <div class="image-caption">The new Split-Pane Inbox architecture.</div>
+                            </div>
+
+                            <ul class="t-list">
+                                <li><span class="feature-tag new">New</span> Implemented full-bleed Square UI desktop split-pane for the Inbox.</li>
+                                <li><span class="feature-tag improved">Improved</span> Added advanced touch-drag swipe-to-close physics for mobile modals.</li>
+                                <li><span class="feature-tag new">New</span> Introduced intelligent, time-weighted 7-day glucose averaging algorithm.</li>
+                                <li><span class="feature-tag fix">Fix</span> Resolved Chart.js container overflow bugs on mobile grid views.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="t-dot"></div>
+                        <div class="t-content card" style="padding: 1.5rem; background: var(--bg-hover); border-color: transparent;">
+                            <div class="t-header">
+                                <strong style="font-size: 1.1rem; color: var(--text-secondary);">V4.0</strong>
+                                <span class="t-date">January 2024</span>
+                            </div>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">Under-the-hood security upgrades and database migration.</p>
+                            <ul class="t-list text-muted">
+                                <li>Migrated codebase entirely to the Firebase v10.8 Modular SDK.</li>
+                                <li>Added secure account deletion modal requiring password re-authentication.</li>
+                                <li>Redesigned User Profile avatar selection utilizing Firebase paths.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" style="padding-bottom: 0;">
+                        <div class="t-dot"></div>
+                        <div class="t-content card" style="padding: 1.5rem; background: var(--bg-hover); border-color: transparent;">
+                            <div class="t-header">
+                                <strong style="font-size: 1.1rem; color: var(--text-secondary);">V3.0</strong>
+                                <span class="t-date">January 2023</span>
+                            </div>
+                            <ul class="t-list text-muted">
+                                <li>Initial deployment of the SugarTrack dashboard.</li>
+                                <li>Core glucose logging and tracking setup.</li>
+                                <li>Basic authentication implementation.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <style>
+        /* TIMELINE LAYOUT */
+        .timeline {
+            display: flex; flex-direction: column; gap: 1.5rem;
+            position: relative;
+            padding-left: 10px;
+        }
+        .timeline::before {
+            content: ''; position: absolute; left: 17px; top: 12px; bottom: 0;
+            width: 2px; background: var(--border); border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative; padding-left: 45px; padding-bottom: 1rem;
+        }
+        
+        .t-dot {
+            width: 16px; height: 16px; border-radius: 50%;
+            background: var(--border);
+            position: absolute; left: 10px; top: 24px; /* Aligned with card padding */
+            border: 3px solid var(--bg-body);
+            z-index: 2;
+        }
+        .active-dot {
+            background: var(--info, #3b82f6);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        /* UPDATE CARDS */
+        .t-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 0.75rem; flex-wrap: wrap; gap: 10px;
+        }
+        .t-header strong { color: var(--text-primary); }
+        .t-date { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; }
+
+        .v-badge {
+            background: rgba(16, 185, 129, 0.15); color: var(--success);
+            padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+        }
+
+        /* SHOWCASE IMAGE STYLES */
+        .update-image-box {
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--bg-hover);
+        }
+        .update-image-box img {
+            width: 100%;
+            height: auto;
+            max-height: 400px; /* Prevents image from getting too massive on desktop */
+            object-fit: cover;
+            object-position: top; /* Focuses on the top UI of the app */
+            display: block;
+        }
+        .image-caption {
+            padding: 0.75rem 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        /* LIST STYLES */
+        .t-list {
+            margin: 0; padding: 0; list-style: none;
+            color: var(--text-primary); font-size: 0.95rem; line-height: 1.6;
+        }
+        .t-list li { margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 10px; }
+        
+        .feature-tag {
+            font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+            padding: 2px 6px; border-radius: 4px; margin-top: 3px; flex-shrink: 0;
+        }
+        .feature-tag.new { background: rgba(59, 130, 246, 0.15); color: var(--info, #3b82f6); }
+        .feature-tag.improved { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .feature-tag.fix { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+        .text-muted { color: var(--text-secondary); }
+        .text-muted li { margin-bottom: 0.4rem; font-size: 0.9rem; }
+        .text-muted li::before {
+            content: '-'; margin-right: 5px; color: var(--border);
+        }
+
+        @media (max-width: 600px) {
+            .timeline-item { padding-left: 30px; }
+            .timeline::before { left: 7px; }
+            .t-dot { left: 0; }
+        }
+    </style>
+
+<script>
+    $('[data-fancybox="gallery"]').fancybox({
+  buttons: [
+    "slideShow",
+    "thumbs",
+    "zoom",
+    "fullScreen",
+    "share",
+    "close"
+  ],
+  loop: false,
+  protect: true
+});
+ const options = {
+  Carousel: {
+    Thumbs: true,
+    Toolbar: {
+      display: {
+        left: [],
+        middle: [],
+        right: ["close"],
+      },
+    },
+    Zoomable: {
+      Panzoom: {
+        maxScale: "cover",
+        panMode: "mousemove",
+        mouseMoveFactor: 1.1,
+      },
+    },
+  },
+};
+</script>
+    <script src="jquerey.js"></script>
+<link href="fancybox/dist/jquery.fancybox.min.css" rel="stylesheet" />
+<script src="fancybox/dist/jquery.fancybox.min.js"></script>
+</body>
+</html>

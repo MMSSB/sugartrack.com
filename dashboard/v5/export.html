@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarTrack - Export & Reports</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <script src="Photophor/src/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://js.puter.com/v2/"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module" src="export.js"></script>
+    <script type="module" src="profile/pload.js"></script>
+    <script src="main.js"></script>
+    <script src="script.js"></script>
+    <script src="accent.js"></script>
+
+    <style>
+        /* --- ENHANCED UI STYLES --- */
+        .page-header-content { margin-bottom: 2rem; }
+        .page-header-content h1 { font-size: 1.8rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .page-header-content p { color: var(--text-secondary); }
+
+        /* Filter Controls */
+        .export-controls {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 1.5rem; margin-bottom: 2rem; display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+        .control-group { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-width: 200px; }
+        .control-group label { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem; }
+        .control-group input {
+            padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--bg-body); color: var(--text-primary); font-family: inherit; transition: all 0.2s ease;
+        }
+        .control-group input:focus { border-color: var(--info); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .data-summary {
+            background: rgba(59, 130, 246, 0.1); color: var(--info); padding: 0.75rem 1rem;
+            border-radius: var(--radius); font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; height: fit-content;
+        }
+
+        /* Modern Grid */
+        .export-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .export-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 2rem 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center;
+            gap: 1rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; z-index: 1;
+        }
+        .export-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 70%);
+            opacity: 0; transition: opacity 0.3s ease; z-index: -1;
+        }
+        .export-card:hover { border-color: transparent; transform: translateY(-5px); box-shadow: 0 12px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.05); }
+        .export-card:hover::before { opacity: 0.1; }
+
+        /* Icon Styling */
+        .export-icon { width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; transition: transform 0.3s ease; }
+        .export-card:hover .export-icon { transform: scale(1.1) rotate(5deg); }
+
+        /* Gradients for icons */
+        .bg-pdf { background: linear-gradient(135deg, #ef4444, #b91c1c); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+        .bg-pdf-basic { background: linear-gradient(135deg, #64748b, #334155); box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3); }
+        .bg-excel { background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
+        .bg-image { background: linear-gradient(135deg, #3b82f6, #1d4ed8); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
+        .bg-json { background: linear-gradient(135deg, #f59e0b, #b45309); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        .bg-print { background: linear-gradient(135deg, #8b5cf6, #5b21b6); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3); }
+        
+        .export-title { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); }
+        .export-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; flex: 1; }
+        
+        /* Modernized Buttons */
+        .btn-export { width: 100%; padding: 0.75rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s ease; color: white; }
+        .btn-pdf { background: #ef4444; } .btn-pdf:hover { background: #dc2626; }
+        .btn-pdf-basic { background: #475569; } .btn-pdf-basic:hover { background: #334155; }
+        .btn-excel { background: #10b981; } .btn-excel:hover { background: #059669; }
+        .btn-image { background: #3b82f6; } .btn-image:hover { background: #2563eb; }
+        .btn-json { background: #f59e0b; } .btn-json:hover { background: #d97706; }
+        .btn-print { background: #8b5cf6; } .btn-print:hover { background: #7c3aed; }
+    </style>
+</head>
+<body>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-box">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+<div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link "><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="readings.html" class="nav-link"><i class="ph ph-notebook"></i><span>Readings</span></a>
+                <a href="search.html" class="nav-link"><i class="ri-search-ai-2-line"></i><span>Search Ai</span></a>
+                <a href="inbox.html" class="nav-link"><i class="ph ph-tray"></i><span>Inbox</span></a>
+                <a href="analytics.html" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="export.html" class="nav-link active"><i class="ph-fill ph-file-pdf"></i><span>Reports</span></a>
+                <a onclick="window.location.href='ai.html'" class="nav-link"><div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 8px;"><div class="eye" style="width: 3px; height: 5px;"></div><div class="eye" style="width: 3px; height: 5px;"></div></div><span style="font-weight: 900; color: var(--text-primary);">Ask STAi</span></a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button>
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button>
+                <h2 class="page-title">Export & Reports</h2>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            <div class="container" style="padding-top: 2rem;">
+                
+                <div class="page-header-content">
+                    <h1>Generate Reports</h1>
+                    <p>Filter your data by date range and select your preferred format for download or printing.</p>
+                </div>
+
+                <div class="export-controls">
+                    <!-- <div class="control-group">
+                        <label for="startDate"><i class="ph ph-calendar-blank"></i> Start Date</label>
+                        <input type="date" id="startDate">
+                    </div>
+                    <div class="control-group">
+                        <label for="endDate"><i class="ph ph-calendar-check"></i> End Date</label>
+                        <input type="date" id="endDate">
+                    </div> -->
+                    <div class="data-summary" id="dataSummary">
+                        <i class="ph ph-spinner-gap ph-spin"></i> Loading readings...
+                    </div>
+                </div>
+
+                <div class="export-grid">
+                    
+                    <div class="export-card">
+                        <div class="export-icon bg-pdf"><i class="ph ph-sparkle"></i></div>
+                        <div class="export-title">Smart PDF</div>
+                        <div class="export-desc">Includes AI analysis, recommendations, and a visual chart.</div>
+                        <button class="btn-export btn-pdf" id="exportPDFBtn"><i class="ph ph-download-simple"></i> Generate Smart PDF</button>
+                    </div>
+
+                    <div class="export-card">
+                        <div class="export-icon bg-pdf-basic"><i class="ph ph-file-pdf"></i></div>
+                        <div class="export-title">Basic PDF</div>
+                        <div class="export-desc">Standard table format with colors for high & low readings.</div>
+                        <button class="btn-export btn-pdf-basic" id="exportNormalPDFBtn"><i class="ph ph-download-simple"></i> Generate Basic PDF</button>
+                    </div>
+
+                    <div class="export-card">
+                        <div class="export-icon bg-excel"><i class="ph ph-file-xls"></i></div>
+                        <div class="export-title">Excel (CSV)</div>
+                        <div class="export-desc">Raw spreadsheet format for custom charts in Excel or Google Sheets.</div>
+                        <button class="btn-export btn-excel" id="exportExcelBtn"><i class="ph ph-download-simple"></i> Generate Excel</button>
+                    </div>
+
+                    <div class="export-card">
+                        <div class="export-icon bg-image"><i class="ph ph-image"></i></div>
+                        <div class="export-title">Image Snapshot</div>
+                        <div class="export-desc">A beautiful PNG snapshot of your data grid to share on WhatsApp.</div>
+                        <button class="btn-export btn-image" id="exportImageBtn"><i class="ph ph-download-simple"></i> Save Image</button>
+                    </div>
+
+                    <div class="export-card">
+                        <div class="export-icon bg-json"><i class="ph ph-brackets-curly"></i></div>
+                        <div class="export-title">Raw JSON</div>
+                        <div class="export-desc">Developer-friendly raw data format. Good for creating backups.</div>
+                        <button class="btn-export btn-json" id="exportJsonBtn"><i class="ph ph-download-simple"></i> Export JSON</button>
+                    </div>
+
+                    <div class="export-card">
+                        <div class="export-icon bg-print"><i class="ph ph-printer"></i></div>
+                        <div class="export-title">Direct Print</div>
+                        <div class="export-desc">Send the filtered data straight to your local printer neatly formatted.</div>
+                        <button class="btn-export btn-print" id="printBtn"><i class="ph ph-printer"></i> Print Now</button>
+                    </div>
+
+                </div>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

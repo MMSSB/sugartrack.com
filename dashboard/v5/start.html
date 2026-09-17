@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarTrack - Log In</title>
+    <link rel="shortcut icon" href="images/sugar.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="Photophor/src/index.js"></script>
+    <script src="main.js"></script>
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module" src="auth-logic.js"></script>
+    <style>
+        /* AUTH PAGE SPECIFIC STYLES */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: var(--bg-body);
+        }
+        
+        .auth-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 400px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .auth-header { text-align: center; margin-bottom: 2rem; }
+        .auth-logo { width: 48px; height: 48px; background: linear-gradient(135deg, var(--info) 0%, #2563eb 100%); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 1rem; }
+        .auth-title { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .auth-sub { color: var(--text-secondary); font-size: 0.95rem; }
+        
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
+        .form-input { width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-body); color: var(--text-primary); font-family: inherit; transition: all 0.2s; }
+        .form-input:focus { border-color: var(--info); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        
+        .btn-full { width: 100%; justify-content: center; padding: 0.85rem; font-size: 1rem; margin-bottom: 1rem; }
+        
+        .auth-footer { text-align: center; font-size: 0.9rem; color: var(--text-secondary); margin-top: 1.5rem; }
+        .link { color: var(--info); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+        .link:hover { color: #2563eb; }
+    </style>
+</head>
+<body>
+
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-logo">ST</div>
+            <h1 class="auth-title">Welcome</h1>
+            <!-- <p class="auth-sub">Log in to your account to continue.</p> -->
+        </div>
+
+        <form class="auth-form" >
+              <!-- <p class="auth-sub">Log in to your account to continue.</p> -->
+            <button  onclick="window.location.href='login.html'" class="btn-primary btn-full">Sign In</button>
+                        <button onclick="window.location.href='signup.html'" class="btn-primary btn-full">Create Account</button>
+
+        </form>
+
+        </div>
+    </div>
+<script type="module">
+        // Check if user is already logged in
+        import { auth } from './firebase-init.js';
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // If user IS logged in, redirect to Dashboard
+                window.location.href = 'dashboard.html';
+            }
+        });
+</script>
+</body>
+</html>

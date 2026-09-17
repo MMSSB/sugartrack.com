@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarTrack - Advanced Weather</title>
+    <script type="module" src="profile/pload.js"></script>
+    <link rel="shortcut icon" href="images/sugar.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script src="Photophor/src/index.js"></script>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+    <script src="weather.js"></script>
+    <script src="main.js"></script>
+    <script src="accent.js"></script>
+    
+    <style>
+        /* --- SEARCH SECTION UNDER NAV --- */
+        .search-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 100;
+        }
+        .search-bar-advanced {
+            flex: 1; /* Takes up all available space */
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 0.5rem 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .search-bar-advanced:focus-within {
+            border-color: var(--info);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .search-bar-advanced input {
+            flex: 1; border: none; background: transparent; padding: 0.5rem;
+            color: var(--text-primary); outline: none; font-size: 1rem;
+        }
+        .search-dropdown {
+            position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-height: 300px; overflow-y: auto;
+            display: none;
+        }
+        .search-dropdown.show { display: block; animation: slideDown 0.2s ease; }
+        .s-item { padding: 12px 15px; cursor: pointer; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+        .s-item:hover { background: var(--bg-hover); }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- SUPER RESPONSIVE BENTO GRID --- */
+        .weather-dashboard {
+            display: grid;
+            /* CRITICAL FIX: minmax(0, 1fr) prevents the grid from stretching infinitely */
+            grid-template-columns: minmax(0, 1fr) 350px; 
+            gap: 1.5rem;
+            align-items: start; /* Prevents columns from stretching to match each other's height */
+        }
+        
+        /* Tablet & Mobile Breakpoint */
+        @media (max-width: 1024px) {
+            .weather-dashboard { grid-template-columns: 1fr; }
+            .search-section { flex-direction: column; }
+            /* Removed full width btnGps style here to allow the add-reading-btn mobile styles to work */
+        }
+
+        .w-panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: 1.25rem; padding: 1.5rem; }
+        
+        /* Hero Widget */
+        .hero-widget {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white; border: none; position: relative; overflow: hidden;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .hero-widget::after {
+            content: ''; position: absolute; top: -20%; right: -10%; width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            border-radius: 50%; pointer-events: none;
+        }
+        .h-temp { font-size: clamp(3.5rem, 6vw, 5rem); font-weight: 800; line-height: 1; letter-spacing: -2px; }
+        .h-icon-img { width: clamp(100px, 15vw, 140px); height: clamp(100px, 15vw, 140px); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2)); }
+        
+        @media (max-width: 768px) {
+            .hero-widget { flex-direction: column-reverse; text-align: center; gap: 1rem; }
+        }
+
+        /* Metrics Mini-Grid */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .m-box { background: var(--bg-hover); border-radius: 1rem; padding: 1rem; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+        .m-head { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; }
+        .m-val { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); }
+
+        /* Hourly Strip */
+        .hourly-strip {
+            display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.75rem;
+            scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+        }
+        .hourly-strip::-webkit-scrollbar { height: 6px; }
+        .hourly-strip::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        .h-item { display: flex; flex-direction: column; align-items: center; min-width: 60px; padding: 10px; border-radius: 1rem; border: 1px solid transparent; }
+        .h-item.active { background: rgba(59, 130, 246, 0.1); border-color: var(--info); }
+        .h-item img { width: 40px; height: 40px; margin: 8px 0; }
+
+        /* 7-Day List */
+        .day-row { display: grid; grid-template-columns: 50px 1fr 80px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+        .day-row:last-child { border-bottom: none; }
+        .d-bar-wrap { height: 6px; background: var(--bg-hover); border-radius: 4px; overflow: hidden; position: relative; width: 100%; margin: 0 10px; }
+        .d-bar { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, #3b82f6, #ef4444); border-radius: 4px; }
+
+        /* Skeletons */
+        .skel { background: var(--bg-hover); position: relative; overflow: hidden; border-radius: 8px; }
+        .skel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); animation: load 1.2s infinite; }
+        @keyframes load { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .is-loaded .skel { display: none; }
+        .is-loaded .loaded { display: contents; }
+        .loaded { display: none; }
+        
+        .aqi-badge { padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo" onclick="window.location.href='dashboard.html'">
+                <div class="logo-box">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+
+        <div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link ">
+                    <i class="ph ph-squares-four"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="readings.html" class="nav-link">
+                    <i class="ph ph-notebook"></i>
+                    <span>Readings</span>
+                </a>
+                <a href="search.html" class="nav-link ">
+                     <i class="ri-search-ai-2-line"></i>
+                    <span>Search Ai</span>
+                </a>
+                <a href="weather.html" class="nav-link active">
+                    <i class="ph-fill ph-cloud-sun"></i>
+                    <span>Weather</span>
+                </a>
+                <a href="inbox.html" class="nav-link">
+                    <i class="ph ph-tray"></i>
+                    <span>Inbox</span>
+                </a>
+                <a href="analytics.html" class="nav-link">
+                    <i class="ph ph-chart-line-up"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="export.html" class="nav-link">
+                    <i class="ph ph-file-pdf"></i>
+                    <span>Reports</span>
+                </a>
+                 <a onclick="window.location.href='ai.html'" class="nav-link">
+                    <div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 10px;">
+                        <div class="eye" style="width: 3px; height: 5px;"></div>
+                        <div class="eye" style="width: 3px; height: 5px;"></div>
+                    </div>
+                    <span style="font-weight: 900; color: var(--text-primary);" >Ask STAi</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                 <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button>
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button>
+                <h2 class="page-title">Weather Center</h2>
+            </div>
+            
+            <div class="header-right">
+                <div class="dropdown-wrapper" style="display: flex; gap: 10px; align-items: center;">
+                    <button class="add-reading-btn" id="btnGps">
+                        <i class="ph ph-crosshair"></i>
+                        <span class="btn-text">Auto Locate</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            <div class="container" style="max-width: 1400px;">
+                
+                <div class="search-section">
+                    <div class="search-bar-advanced">
+                        <i class="ph ph-magnifying-glass" style="color: var(--text-secondary); margin-right: 10px; font-size: 1.2rem;"></i>
+                        <input type="text" id="locSearch" placeholder="Search for any city or country..." autocomplete="off">
+                        <div id="locDropdown" class="search-dropdown"></div>
+                    </div>
+                    </div>
+                
+                <div class="weather-dashboard" id="mainDashboard">
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem; min-width: 0;">
+                        
+                        <div class="w-panel hero-widget skel-container">
+                            <div class="skel" style="position: absolute; inset: 0; border-radius: 1.25rem;"></div>
+                            <div class="loaded" style="width: 100%; display: flex; justify-content: space-between; align-items: center; z-index: 2;">
+                                <div>
+                                    <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 5px;" id="cName">--</h1>
+                                    <div style="font-size: 1.1rem; opacity: 0.9; text-transform: capitalize; margin-bottom: 1rem;" id="cDesc">--</div>
+                                    <div class="h-temp" id="cTemp">--°</div>
+                                    <div style="margin-top: 10px; font-weight: 500; opacity: 0.9;">H: <span id="cHigh">--°</span> • L: <span id="cLow">--°</span></div>
+                                </div>
+                                <img id="cIcon" class="h-icon-img" src="" alt="icon">
+                            </div>
+                        </div>
+
+                        <div class="w-panel skel-container">
+                            <div class="skel" style="height: 140px; width: 100%;"></div>
+                            <div class="loaded">
+                                <h3 style="font-size: 1rem; margin-bottom: 1rem; font-weight: 600;"><i class="ph ph-clock"></i> 24-Hour Forecast</h3>
+                                <div class="hourly-strip" id="hourlyStrip"></div>
+                            </div>
+                        </div>
+
+                        <div class="metrics-grid skel-container">
+                            <div class="skel" style="height: 120px; grid-column: 1/-1;"></div>
+                            <div class="loaded" style="display: contents;">
+                                <div class="m-box">
+                                    <div class="m-head"><i class="ph ph-wind"></i> Wind</div>
+                                    <div class="m-val" id="mWind">--</div>
+                                </div>
+                                <div class="m-box">
+                                    <div class="m-head"><i class="ph ph-drop"></i> Humidity</div>
+                                    <div class="m-val" id="mHum">--</div>
+                                </div>
+                                <div class="m-box">
+                                    <div class="m-head"><i class="ph ph-sunglasses"></i> UV Index</div>
+                                    <div class="m-val" id="mUv">--</div>
+                                </div>
+                                <div class="m-box">
+                                    <div class="m-head"><i class="ph ph-leaf"></i> Air Quality</div>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span class="m-val" id="mAqi">--</span>
+                                        <span class="aqi-badge" id="mAqiBadge">--</span>
+                                    </div>
+                                </div>
+                                <div class="m-box">
+                                    <div class="m-head"><i class="ph ph-gauge"></i> Pressure</div>
+                                    <div class="m-val" id="mPres">-- hPa</div>
+                                </div>
+                                <div class="m-box">
+                                    <div class="m-head"><i class="ph ph-sun-horizon"></i> Sun</div>
+                                    <div style="font-size: 0.95rem; font-weight: 600;"><i class="ph-fill ph-arrow-up" style="color:#f59e0b"></i> <span id="mRise">--:--</span></div>
+                                    <div style="font-size: 0.95rem; font-weight: 600;"><i class="ph-fill ph-arrow-down" style="color:#f97316"></i> <span id="mSet">--:--</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem; min-width: 0;">
+                        
+                        <div class="w-panel skel-container">
+                            <div class="skel" style="height: 400px;"></div>
+                            <div class="loaded">
+                                <h3 style="font-size: 1rem; margin-bottom: 1rem; font-weight: 600;"><i class="ph ph-calendar-blank"></i> 7-Day Forecast</h3>
+                                <div id="dayList"></div>
+                            </div>
+                        </div>
+
+                        <div class="w-panel skel-container" style="padding-bottom: 1rem;">
+                            <div class="skel" style="height: 180px;"></div>
+                            <div class="loaded" style="display: flex; flex-direction: column; height: 100%;">
+                                <h3 style="font-size: 1rem; margin-bottom: 1rem; font-weight: 600;"><i class="ph ph-trend-up"></i> Temp Trend</h3>
+                                <div style="position: relative; height: 150px; width: 100%;">
+                                    <canvas id="miniChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="weather.js"></script>
+</body>
+</html>

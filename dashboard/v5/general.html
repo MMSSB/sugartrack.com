@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Settings - SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <script src="Photophor/src/index.js"></script>
+    <script src="main.js"></script>
+    <script src="accent.js"></script>
+    <script type="module" src="profile/pload.js"></script>
+</head>
+<body>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo" onclick="window.location.href='dashboard.html'">
+                <div class="logo-box">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+        <div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link "><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="readings.html" class="nav-link"><i class="ph ph-notebook"></i><span>Readings</span></a>
+                <a href="search.html" class="nav-link"><i class="ri-search-ai-2-line"></i><span>Search Ai</span></a>
+                <a href="inbox.html" class="nav-link"><i class="ph ph-tray"></i><span>Inbox</span></a>
+                <a href="analytics.html" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="export.html" class="nav-link"><i class="ph ph-file-pdf"></i><span>Reports</span></a>
+                <a onclick="window.location.href='ai.html'" class="nav-link"><div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 8px;"><div class="eye" style="width: 3px; height: 5px;"></div><div class="eye" style="width: 3px; height: 5px;"></div></div><span style="font-weight: 900; color: var(--text-primary);">Ask STAi</span></a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <a href="settings.html" class="icon-btn" style="border:none; background:transparent;"><i class="fa-solid fa-arrow-left"></i></a>
+                    <h2 class="page-title">General Settings</h2>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            <div class="container" style="max-width: 800px; padding-top: 1rem;">
+                
+                <form id="settingsForm">
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <div class="card-header"><h3><i class="ph ph-globe" style="margin-right: 8px; color: var(--info);"></i> Regional & Formatting</h3></div>
+                        <div style="padding: 1.5rem;">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="setting-label">Language</label>
+                                    <select class="form-select" name="language">
+                                        <option value="en">English (US)</option>
+                                        <option value="ar">العربية (Arabic)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="setting-label">Time Format</label>
+                                    <select class="form-select" name="timeFormat">
+                                        <option value="12h">12-hour (AM/PM)</option>
+                                        <option value="24h">24-hour</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 2rem; margin-bottom: 2rem; border-color: rgba(239, 68, 68, 0.4);">
+                        <div class="card-header" style="border-bottom-color: rgba(239, 68, 68, 0.1);">
+                            <h3 style="color: var(--danger);"><i class="ph-fill ph-warning-octagon" style="margin-right: 8px;"></i> Danger Zone</h3>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 0.95rem; color: var(--text-primary); margin-bottom: 4px;">Delete All Readings</div>
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; max-width: 400px;">
+                                        Permanently erase all your glucose logs, notes, and history. This action cannot be undone.
+                                    </div>
+                                </div>
+                                <button type="button" id="triggerDeleteBtn" style="background: var(--danger); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: var(--radius); font-weight: 600; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);">
+                                    Delete All Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div class="save-bar" id="saveBar">
+        <span class="save-msg">Unsaved changes</span>
+        <div style="display: flex; gap: 10px;">
+            <button type="button" id="discardBtn" class="btn-discard">Discard</button>
+            <button type="button" id="saveBtn" class="btn-save">Save Changes</button>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="deleteModal">
+        <div class="modal-container" style="max-width: 420px;">
+            <div class="modal-header">
+                <h3 style="color: var(--danger);">Confirm Deletion</h3>
+                <button type="button" class="icon-btn" id="closeDeleteModalBtn"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <i class="ph-fill ph-trash" style="font-size: 3rem; color: var(--danger); margin-bottom: 1rem; opacity: 0.8;"></i>
+                    <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5;">
+                        This will permanently delete <strong>ALL</strong> your logged glucose readings. To confirm, please type <strong>DELETE</strong> below:
+                    </p>
+                </div>
+                
+                <input type="text" id="deleteConfirmInput" class="form-input" placeholder="Type DELETE" style="width: 100%; margin-bottom: 1.5rem; text-align: center; font-weight: bold; letter-spacing: 2px;">
+                
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <button type="button" id="cancelDeleteBtn" class="btn-discard" style="flex: 1; border: 1px solid var(--border); padding: 0.75rem; border-radius: var(--radius); background: var(--bg-hover);">Cancel</button>
+                    <button type="button" id="confirmDeleteBtn" style="flex: 1; background: var(--danger); color: white; border: none; padding: 0.75rem; border-radius: var(--radius); font-weight: 600; opacity: 0.5; cursor: not-allowed; transition: 0.2s;" disabled>
+                        Delete Forever
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="modal-backdrop" id="deleteSuccessModal">
+        <div class="modal-container" style="max-width: 350px; text-align: center; padding: 2.5rem 1.5rem;">
+            <div style="animation: happy-bounce 1s ease;">
+                <i class="ph-fill ph-check-circle" style="font-size: 4.5rem; color: var(--success); margin-bottom: 1rem; display: inline-block; drop-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);"></i>
+            </div>
+            <h3 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.3rem;">Data Erased</h3>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.8rem; line-height: 1.5;">
+                All your glucose readings have been permanently removed from the system.
+            </p>
+            <button type="button" id="deleteSuccessOkBtn" style="background: var(--success); color: white; border: none; padding: 0.8rem 2rem; border-radius: 50px; font-weight: 600; cursor: pointer; width: 100%; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); transition: transform 0.2s;">
+                Continue
+            </button>
+        </div>
+    </div>
+    <style>
+        /* Form Grids */
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .form-group { margin-bottom: 0; }
+        .setting-label { display:block; margin-bottom:0.5rem; font-weight:600; color: var(--text-primary); }
+        .form-select {
+            width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border);
+            border-radius: var(--radius); background: var(--bg-body); color: var(--text-primary);
+            font-family: inherit; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2371717a' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 1rem center; background-size: 16px 12px;
+        }
+        .form-select:focus { border-color: var(--info); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .form-input {
+            padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--bg-body); color: var(--text-primary); font-family: inherit; transition: all 0.2s;
+        }
+        .form-input:focus { border-color: var(--info); outline: none; }
+
+        /* Save Bar */
+        .save-bar {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(200%);
+            background: #18181b; color: white; padding: 10px 10px 10px 20px;
+            border-radius: 100px; display: flex; align-items: center; justify-content: space-between; gap: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4); z-index: 2000;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 320px; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .save-bar.visible { transform: translateX(-50%) translateY(0); }
+        .btn-discard { background: transparent; border: none; color: #a1a1aa; cursor: pointer; font-weight: 500; font-size: 0.9rem;}
+        .btn-discard:hover { color: white; }
+        .btn-save { background: var(--info); border: none; color: white; padding: 8px 20px; border-radius: 50px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: background 0.2s;}
+        .btn-save:hover { background: #2563eb; }
+    </style>
+
+    <script type="module">
+        import { auth, db, collection, query, where, getDocs, deleteDoc, doc } from './firebase-init.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // ==========================================
+            // 1. SETTINGS FORM LOGIC
+            // ==========================================
+            const form = document.getElementById('settingsForm');
+            const saveBar = document.getElementById('saveBar');
+            const discardBtn = document.getElementById('discardBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            
+            const timeFormatSelect = form ? form.querySelector('select[name="timeFormat"]') : null;
+            const langSelect = form ? form.querySelector('select[name="language"]') : null;
+            const autoLocToggle = document.getElementById('autoLocationToggle');
+
+            // Load saved settings
+            if (timeFormatSelect) timeFormatSelect.value = localStorage.getItem('timeFormat') || '12h';
+            
+            if (langSelect) {
+                const savedLang = localStorage.getItem('app_lang') || 'en';
+                langSelect.value = savedLang;
+                for (let i = 0; i < langSelect.options.length; i++) {
+                    if (langSelect.options[i].value === savedLang) {
+                        langSelect.options[i].selected = true;
+                    }
+                }
+            }
+
+            // Safety check for location toggle (Prevents the null error)
+            if (autoLocToggle) {
+                if (localStorage.getItem('auto_location') === 'true') {
+                    autoLocToggle.checked = true;
+                }
+                autoLocToggle.addEventListener('change', () => {
+                    localStorage.setItem('auto_location', autoLocToggle.checked);
+                });
+            }
+
+            // Show save bar on any form change
+            if (form) {
+                form.addEventListener('input', () => {
+                    if (saveBar) saveBar.classList.add('visible');
+                });
+            }
+
+            // Discard changes
+            if (discardBtn) {
+                discardBtn.addEventListener('click', () => {
+                    if (form) form.reset();
+                    if (timeFormatSelect) timeFormatSelect.value = localStorage.getItem('timeFormat') || '12h';
+                    if (langSelect) langSelect.value = localStorage.getItem('app_lang') || 'en';
+                    if (autoLocToggle) autoLocToggle.checked = localStorage.getItem('auto_location') === 'true';
+                    if (saveBar) saveBar.classList.remove('visible');
+                });
+            }
+
+            // Save changes
+            if (saveBtn) {
+                saveBtn.addEventListener('click', () => {
+                    const originalText = saveBtn.innerText;
+                    saveBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Saving...';
+                    
+                    if (timeFormatSelect) localStorage.setItem('timeFormat', timeFormatSelect.value);
+                    
+                    if (langSelect) {
+                        const currentLang = localStorage.getItem('app_lang');
+                        localStorage.setItem('app_lang', langSelect.value);
+                        
+                        // If language changed, refresh to apply immediately
+                        if (currentLang !== langSelect.value) {
+                             setTimeout(() => window.location.reload(), 600);
+                             return;
+                        }
+                    }
+
+                    setTimeout(() => {
+                        saveBtn.innerText = originalText;
+                        if (saveBar) saveBar.classList.remove('visible');
+                    }, 800);
+                });
+            }
+
+            // ==========================================
+            // 2. DANGER ZONE: DELETE ALL DATA
+            // ==========================================
+            const triggerBtn = document.getElementById('triggerDeleteBtn');
+            const deleteModal = document.getElementById('deleteModal');
+            const closeBtn = document.getElementById('closeDeleteModalBtn');
+            const cancelBtn = document.getElementById('cancelDeleteBtn');
+            const confirmInput = document.getElementById('deleteConfirmInput');
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+
+            if (triggerBtn && deleteModal) {
+                // Open Modal
+                triggerBtn.addEventListener('click', () => {
+                    deleteModal.classList.add('active');
+                    if (confirmInput) {
+                        confirmInput.value = ''; 
+                        confirmInput.focus();
+                    }
+                    if (confirmBtn) {
+                        confirmBtn.disabled = true;
+                        confirmBtn.style.opacity = '0.5';
+                        confirmBtn.style.cursor = 'not-allowed';
+                    }
+                });
+
+                // Close Modal Functions
+                const closeModal = () => deleteModal.classList.remove('active');
+                if (closeBtn) closeBtn.addEventListener('click', closeModal);
+                if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+                // Security Check (Must type exactly 'DELETE')
+                if (confirmInput && confirmBtn) {
+                    confirmInput.addEventListener('input', (e) => {
+                        if (e.target.value === 'DELETE') {
+                            confirmBtn.disabled = false;
+                            confirmBtn.style.opacity = '1';
+                            confirmBtn.style.cursor = 'pointer';
+                        } else {
+                            confirmBtn.disabled = true;
+                            confirmBtn.style.opacity = '0.5';
+                            confirmBtn.style.cursor = 'not-allowed';
+                        }
+                    });
+                }
+// Floating Toast Notification System
+        function showNotification(message, type = 'success') {
+            const existingNotifications = document.querySelectorAll('.custom-notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `custom-notification ${type}`;
+            notification.innerHTML = `<div style="display: flex; align-items: center; gap: 8px;"><i class="ph-fill ph-${type === 'success' ? 'check-circle' : 'warning-circle'}" style="font-size: 1.2rem;"></i><span>${message}</span></div>`;
+            
+            notification.style.cssText = `
+                position: fixed; bottom: 20px; right: 20px;
+                background: ${type === 'success' ? '#10b981' : '#ef4444'}; color: white;
+                padding: 1rem 1.5rem; border-radius: 0.75rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000; max-width: 320px; font-weight: 500;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                transform: translateY(20px); opacity: 0;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate In
+            setTimeout(() => {
+                notification.style.transform = 'translateY(0)';
+                notification.style.opacity = '1';
+            }, 10);
+            
+            // Animate Out & Remove
+            setTimeout(() => {
+                notification.style.transform = 'translateY(20px)';
+                notification.style.opacity = '0';
+                setTimeout(() => { if (notification.parentNode) notification.parentNode.removeChild(notification); }, 300);
+            }, 3000);
+        }
+                // Execute Firebase Deletion
+                if (confirmBtn) {
+                    confirmBtn.addEventListener('click', async () => {
+                        const user = auth.currentUser;
+                        if (!user) {
+                            alert("You must be logged in to do this.");
+                            return;
+                        }
+
+                        // Visual loading state
+                        const originalText = confirmBtn.innerText;
+                        confirmBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Deleting...';
+                        confirmBtn.disabled = true;
+
+                        try {
+                            // Find all readings belonging strictly to this user
+                            const readingsRef = collection(db, "readings");
+                            const q = query(readingsRef, where("userId", "==", user.uid));
+                            const querySnapshot = await getDocs(q);
+
+                            // Batch all deletions to process simultaneously
+                            const deletePromises = [];
+                            querySnapshot.forEach((document) => {
+                                deletePromises.push(deleteDoc(doc(db, "readings", document.id)));
+                            });
+
+// Wipe the data
+                        await Promise.all(deletePromises);
+
+                        // 1. Hide the warning modal
+                        deleteModal.classList.remove('active');
+                        
+                        // 2. Wait for the slide-down animation, then show Success Modal
+                        setTimeout(() => {
+                            const successModal = document.getElementById('deleteSuccessModal');
+                            const successOkBtn = document.getElementById('deleteSuccessOkBtn');
+                            
+                            successModal.classList.add('active');
+
+                            // 3. Reload the page ONLY when they click "Continue"
+                            successOkBtn.addEventListener('click', () => {
+                                successOkBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Loading...';
+                                window.location.reload();
+                            });
+                        }, 300);
+
+                    } catch (error) {
+                            console.error("Error deleting documents: ", error);
+                            alert("An error occurred. Could not delete readings.");
+                            confirmBtn.innerHTML = originalText;
+                            confirmBtn.disabled = false;
+                            confirmBtn.style.opacity = '1';
+                            confirmBtn.style.cursor = 'pointer';
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

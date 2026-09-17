@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script type="module" src="profile/pload.js"></script>
+    <script src="Photophor/src/index.js"></script>
+    <script src="main.js"></script>
+    <script src="accent.js"></script>
+
+</head>
+<body>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo" onclick="window.location.href='dashboard.html'">
+                <div class="logo-box">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+<div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link "><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="readings.html" class="nav-link"><i class="ph ph-notebook"></i><span>Readings</span></a>
+                <a href="search.html" class="nav-link"><i class="ri-search-ai-2-line"></i><span>Search Ai</span></a>
+                <a href="inbox.html" class="nav-link"><i class="ph ph-tray"></i><span>Inbox</span></a>
+                <a href="analytics.html" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="export.html" class="nav-link"><i class="ph ph-file-pdf"></i><span>Reports</span></a>
+                <a onclick="window.location.href='ai.html'" class="nav-link"><div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 8px;"><div class="eye" style="width: 3px; height: 5px;"></div><div class="eye" style="width: 3px; height: 5px;"></div></div><span style="font-weight: 900; color: var(--text-primary);">Ask STAi</span></a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button>
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button>
+                <h2 class="page-title">Settings</h2>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            <div class="container" style="max-width: 800px;">
+                
+                <div class="hero-section2">
+                    <h1>Settings</h1>
+                    <p>Manage your account preferences and app configuration.</p>
+                </div>
+
+                <div class="card" style="overflow: hidden; padding: 0;">
+                    
+                    <a href="general.html" class="setting-link-row">
+                        <div class="icon-box" style="background: #3b82f6;"><i class="fa-solid fa-sliders"></i></div>
+                        <div class="link-text">
+                            <h3>General</h3>
+                            <p>Language & Time formatting</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right chevron"></i>
+                    </a>
+                    <a href="profile.html" class="setting-link-row" style="">
+                    <!-- <a href="profile.html" class="setting-link-row" style="border-bottom: none;"> -->
+                        <div class="icon-box" style="background: #f97316;"><i class="fa-solid fa-user"></i></div>
+                        <div class="link-text">
+                            <h3>My Profile</h3>
+                            <p>Personal details and avatar</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right chevron"></i>
+                    </a>
+
+                    <a href="appearance.html" class="setting-link-row">
+                        <div class="icon-box" style="background: #a855f7;"><i class="fa-solid fa-palette"></i></div>
+                        <div class="link-text">
+                            <h3>Appearance</h3>
+                            <p>Theme mode and accent colors</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right chevron"></i>
+                    </a>
+
+                    <a href="settings-account.html" class="setting-link-row">
+                        <div class="icon-box" style="background: #10b981;"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="link-text">
+                            <h3>Privacy & Security</h3>
+                            <p>Password and data management</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right chevron"></i>
+                    </a>
+
+
+                    <a href="about.html" class="setting-link-row" style="border-bottom: none;">
+                        <div class="icon-box" style="background: #8d8d8d;"><i class="fa-solid fa-circle-info"></i></div>
+                        <div class="link-text">
+                            <h3>About</h3>
+                            <p>Personal details and avatar</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right chevron"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .setting-link-row {
+            display: flex; align-items: center; padding: 1.25rem 1.5rem;
+            text-decoration: none; border-bottom: 1px solid var(--border);
+            transition: background 0.2s; cursor: pointer;
+        }
+        .setting-link-row:hover { background: var(--bg-hover); }
+        .icon-box {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.1rem; margin-right: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .link-text { flex: 1; }
+        .link-text h3 { color: var(--text-primary); font-size: 1rem; margin-bottom: 0.2rem; font-weight: 600; }
+        .link-text p { color: var(--text-secondary); font-size: 0.85rem; margin: 0; }
+        .chevron { color: var(--text-secondary); font-size: 0.9rem; }
+    </style>
+
+    <script src="profile/user-badge.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+/* =========================================
+   MOBILE BOTTOM NAVIGATION BAR (Classic)
+   ========================================= */
+.mobile-bottom-nav { 
+    display: none; 
+}
+
+@media (max-width: 768px) {
+    .content-scroll {
+        padding-bottom: 90px !important; 
+    }
+
+    .header-right .add-reading-btn {
+        /* display: none !important;  */
+    }
+
+    .mobile-bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        border-top: 1px solid var(--border);
+        
+        /* FIX: 900 shows OVER the sidebar (z-index: 50) 
+           but UNDER the Add Reading Modal (z-index: 1000) */
+        z-index: 10; 
+        
+        justify-content: space-around;
+        align-items: center;
+        height: 65px;
+        padding-bottom: env(safe-area-inset-bottom);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .mobile-bottom-nav .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        text-decoration: none;
+        color: var(--text-secondary);
+        gap: 4px;
+        height: 100%;
+        transition: color 0.2s ease;
+    }
+
+    .mobile-bottom-nav .nav-item:hover,
+    .mobile-bottom-nav .nav-item.active {
+        color: var(--text-primary);
+    }
+
+    .mobile-bottom-nav .nav-item i {
+        font-size: 1.5rem;
+        transition: transform 0.2s;
+    }
+
+    .mobile-bottom-nav .nav-item.active i {
+        transform: translateY(-2px);
+    }
+
+    .mobile-bottom-nav .nav-item span {
+        font-size: 0.65rem;
+        font-weight: 600;
+    }
+
+    .mobile-bottom-nav .center-action {
+        position: relative;
+        top: -20px; 
+    }
+
+    .mobile-bottom-nav .fab-btn {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        background-color: var(--info);
+        color: var(--bg-body);
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
+    }
+
+    .mobile-bottom-nav .fab-btn:active {
+        transform: scale(0.92);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <nav class="mobile-bottom-nav" id="mobileBottomNav">
+        <a href="dashboard.html" class="nav-item active">
+            <i class="ph-fill ph-squares-four"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="readings.html" class="nav-item">
+            <i class="ph ph-notebook"></i>
+            <span>Readings</span>
+        </a>
+        
+        <div class="nav-item center-action" id="mobileAddReadingBtn">
+            <button class="fab-btn">
+                <i class="ph ph-plus"></i>
+            </button>
+        </div>
+        
+        <a href="ai.html" class="nav-item">
+            <i class="ph ph-sparkle"></i>
+            <span>STAi</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item">
+            <i class="ph ph-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* =========================================
+   CLEAN PILL MOBILE NAV (IMAGE MATCH)
+   ========================================= */
+.clean-pill-nav { display: none; }
+
+@media (max-width: 768px) {
+    /* Ensure content scrolls past the floating bar */
+    .content-scroll {
+        padding-bottom: 110px !important; 
+    }
+    .header-right .add-reading-btn {
+        display: none !important; 
+    }
+
+    /* The Solid White Pill Container */
+    .clean-pill-nav {
+        display: flex;
+        position: fixed;
+        bottom: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 32px);
+        max-width: 420px;
+        height: 75px;
+        background: #ffffff;
+        border-radius: 40px; /* Fully rounded edges */
+        z-index: 900; /* Above sidebar, below add reading modal */
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Standard Nav Items (Gray) */
+    .clean-pill-nav .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        text-decoration: none;
+        color: #a1a1aa; /* Soft gray matching the image */
+        gap: 6px;
+        height: 100%;
+        transition: color 0.2s ease;
+    }
+
+    .clean-pill-nav .nav-item i {
+        font-size: 1.5rem;
+    }
+
+    .clean-pill-nav .nav-item span {
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.2px;
+    }
+
+    /* Active Nav Item (Solid Black) */
+    .clean-pill-nav .nav-item.active {
+        color: #000000;
+    }
+    
+    .clean-pill-nav .nav-item.active i {
+        /* Optional: active items can use filled icons automatically if configured */
+    }
+
+    .clean-pill-nav .nav-item.active span {
+        font-weight: 600; /* Bolder text for active state */
+    }
+
+    /* --- THE CENTER BLACK BUTTON --- */
+    .clean-pill-nav .center-fab-wrapper {
+        flex: 1.2;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        top: -15px; /* Pops out of the top of the pill slightly */
+    }
+
+    .clean-pill-nav .fab-btn {
+        width: 62px;
+        height: 62px;
+        border-radius: 50%;
+        background: #000000;
+        color: #ffffff;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Soft shadow below the black button */
+        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Button Click Animation */
+    .clean-pill-nav .fab-btn:active {
+        transform: scale(0.92);
+    }
+
+    /* -----------------------------------------
+       DARK MODE SUPPORT (Inverts the colors)
+       ----------------------------------------- */
+    [data-theme="dark"] .clean-pill-nav {
+        background: #18181b; /* Dark pill */
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+    }
+    [data-theme="dark"] .clean-pill-nav .nav-item.active {
+        color: #ffffff; /* Active text becomes white */
+    }
+    [data-theme="dark"] .clean-pill-nav .fab-btn {
+        background: #ffffff; /* Center button becomes white */
+        color: #000000; /* Plus icon becomes black */
+        box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="clean-pill-nav" id="cleanPillNav">
+        <a href="dashboard.html" class="nav-item">
+            <i class="ph ph-squares-four"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="readings.html" class="nav-item">
+            <i class="ph ph-notebook"></i>
+            <span>Readings</span>
+        </a>
+
+        <div class="center-fab-wrapper" id="mobileAddReadingBtn">
+            <button class="fab-btn">
+                <i class="ph ph-plus"></i>
+            </button>
+        </div>
+
+        <a href="ai.html" class="nav-item active">
+            <i class="ph-fill ph-sparkle"></i>
+            <span>STAi</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item">
+            <i class="ph ph-stack"></i>
+            <span>Profile</span>
+        </a>
+    </nav>

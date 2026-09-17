@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Tour - SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <script src="Photophor/src/index.js"></script>
+</head>
+<body class="tour-active" style="overflow: hidden; background: var(--bg-body);"> 
+    
+    <div id="tourSpotlight" class="tour-spotlight"></div>
+
+    <div id="tourDialog" class="tour-dialog">
+        <div class="tour-progress"><span id="tourStepCurrent">1</span> / <span id="tourStepTotal">6</span></div>
+        <h3 id="tourTitle">Welcome to SugarTrack</h3>
+        <p id="tourText">Let's take a quick tour to show you how to navigate your new dashboard.</p>
+        <div class="tour-buttons">
+            <button id="tourSkip" class="btn-outline" style="flex: 1; justify-content: center;">Skip Tour</button>
+            <button id="tourNext" class="btn-primary" style="flex: 1; justify-content: center;">Next <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><div class="logo-box" style="border-radius: 6px;">ST</div><span class="logo-text">SugarTrack</span></div>
+        </div>
+        <div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="#" id="navDash" class="nav-link active"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="#" id="navLog" class="nav-link"><i class="ph ph-notebook"></i><span>Logbook</span></a>
+                <a href="#" class="nav-link"><i class="ph ph-tray"></i><span>Inbox</span></a>
+                <a href="#" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="#" class="nav-link"><i class="ph ph-gear"></i><span>Settings</span></a>
+            </nav>
+        </div>
+        <div class="sidebar-footer">
+            <div class="user-trigger">
+                <div class="avatar"><img src="images/user.png" style="width:100%; height:100%; border-radius:6px; object-fit:cover;" onerror="this.style.display='none'"></div>
+                <div class="user-info"><span class="u-name">User</span></div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="top-header">
+            <div class="header-left">
+                <h2 class="page-title" id="tourPageTitle">Dashboard</h2>
+            </div>
+            <div class="header-right">
+                <button class="add-reading-btn" id="tourAddBtn" style="pointer-events: none;">
+                    <i class="ph ph-plus"></i><span class="btn-text">Add Reading</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            
+            <div class="container" id="viewDashboard" style="max-width: 1600px;">
+                <div class="hero-section">
+                    <h1>Hello, User 👋</h1>
+                    <p>Today is a great day to track your health.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="card stat-card">
+                        <div class="stat-top"><span>Avg. Glucose (7d)</span><i class="ph ph-drop-half" style="color: var(--info);"></i></div>
+                        <div class="stat-val">105 <span style="font-size: 1rem; color: var(--text-secondary); font-weight:400;">mg/dL</span></div>
+                        <div class="stat-change positive">↓ 5% vs last week</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-top"><span>Est. A1C</span><i class="ph ph-calculator"></i></div>
+                        <div class="stat-val">5.8 <span style="font-size: 1rem; color: var(--text-secondary); font-weight:400;">%</span></div>
+                        <div class="stat-change positive"><i class="ph ph-check-circle"></i> In Range</div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="card chart-box" style="height: 350px; display: flex; align-items: center; justify-content: center; background: var(--bg-hover);">
+                        <i class="ph ph-chart-line" style="font-size: 3rem; opacity: 0.2;"></i>
+                    </div>
+                    <div class="card list-box">
+                        <div class="card-header"><h3>Recent Readings</h3></div>
+                        <div class="readings-list">
+                            <div class="reading-header"><span>Level</span><span>Time</span><span>Context</span></div>
+                            <div class="reading-item">
+                                <div class="r-val normal">105</div>
+                                <div class="r-info"><span class="r-time">8:00 AM</span><span class="r-date">Today</span></div>
+                                <div class="r-tag" style="background: rgba(16, 185, 129, 0.15); color: var(--success);">Fasting</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container" id="viewLogbook" style="max-width: 1000px; display: none;">
+                <div class="card" style="margin-bottom: 2rem; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                    <div class="card-header" style="border-bottom: 1px solid var(--border);">
+                        <h3><i class="fa-solid fa-book-medical" style="color: var(--info, #3b82f6); margin-right: 8px;"></i> All Readings</h3>
+                    </div>
+                    <div style="padding: 0;">
+                        <div class="readings-list">
+                            <div class="reading-header" style="padding: 1rem 1.5rem;">
+                                <span style="width: 80px;">Glucose</span>
+                                <span style="width: 120px;">Date & Time</span>
+                                <span style="flex: 1;">Context & Notes</span>
+                            </div>
+                            
+                            <div class="reading-item" id="tourNewReading" style="padding: 1.25rem 1.5rem; background: var(--bg-card); display: none;">
+                                <div class="r-val normal" style="width: 80px; font-size: 1.25rem; font-weight: 700;">112</div>
+                                <div class="r-info" style="width: 120px;">
+                                    <span class="r-date" style="font-weight: 600; color: var(--text-primary);">Today</span>
+                                    <span class="r-time" style="font-size: 0.85rem; color: var(--text-secondary);">Just Now</span>
+                                </div>
+                                <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+                                    <div><span class="r-tag" style="background: rgba(16, 185, 129, 0.15); color: var(--success); display: inline-block;">Pre-Meal</span></div>
+                                </div>
+                            </div>
+
+                            <div class="reading-item" style="padding: 1.25rem 1.5rem;">
+                                <div class="r-val normal" style="width: 80px; font-size: 1.25rem; font-weight: 700;">105</div>
+                                <div class="r-info" style="width: 120px;">
+                                    <span class="r-date" style="font-weight: 600; color: var(--text-primary);">Today</span>
+                                    <span class="r-time" style="font-size: 0.85rem; color: var(--text-secondary);">8:00 AM</span>
+                                </div>
+                                <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+                                    <div><span class="r-tag" style="background: rgba(16, 185, 129, 0.15); color: var(--success); display: inline-block;">Fasting</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="modal-backdrop" id="tourModal" style="z-index: 9500; pointer-events: none;">
+        <div class="modal-container" style="pointer-events: auto; max-height: 85vh;">
+            <div class="modal-header">
+                <h3 style="font-weight: 600;">Add Glucose Reading</h3>
+                <button class="icon-btn" style="pointer-events: none; width: 30px; height: 30px;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="modal-body">
+                <form onsubmit="event.preventDefault();">
+                    <div class="input-row">
+                        <div class="form-group half"><label>Date</label><input type="text" class="form-input" disabled value="Today"></div>
+                        <div class="form-group half"><label>Time</label><input type="text" class="form-input" disabled value="Now"></div>
+                    </div>
+
+                    <div class="form-group" id="tourInputWrapper">
+                        <label>Glucose (mg/dL)</label>
+                        <div class="glucose-input-wrapper">
+                            <input type="text" class="form-input large-input" id="tourGlucoseInput" readonly style="background: var(--bg-hover); color: var(--text-primary); font-weight: bold; border: 1px solid var(--info, #3b82f6);">
+                            <span class="unit-tag">mg/dL</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea class="form-input" rows="2" disabled style="background: var(--bg-hover);"></textarea>
+                    </div>
+
+                    <div class="modal-footer" style="padding: 0; margin-top: 1.5rem;" id="tourFooterWrapper">
+                        <button type="button" class="btn-outline" disabled style="opacity: 0.5;">Cancel</button>
+                        <button type="button" class="btn-primary" style="flex: 1; justify-content: center; pointer-events: none;">Save Reading</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* ========================================================
+           ADVANCED SPOTLIGHT SYSTEM
+           ======================================================== */
+        
+        /* The transparent hole that casts a huge shadow */
+        .tour-spotlight {
+            position: fixed;
+            z-index: 9990; 
+            border-radius: 10px; 
+            
+            /* Casts a shadow larger than the screen */
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.75), 
+                        0 0 0 4px var(--info, #3b82f6),
+                        0 0 20px rgba(59, 130, 246, 0.5);
+            
+            pointer-events: none;
+            opacity: 0;
+            background: transparent;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+        }
+
+        .tour-spotlight.active {
+            opacity: 1;
+        }
+
+        /* The Dialog Box */
+        .tour-dialog {
+            position: fixed; 
+            background: var(--bg-card); 
+            border: 1px solid var(--border); 
+            border-radius: 14px;
+            padding: 1.5rem; 
+            width: 92%; 
+            max-width: 380px; 
+            z-index: 9999;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            
+            /* Start hidden */
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .tour-dialog.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .tour-progress { font-size: 0.75rem; font-weight: 700; color: var(--info, #3b82f6); margin-bottom: 0.5rem; text-transform: uppercase; }
+        .tour-dialog h3 { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .tour-dialog p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1.5rem; }
+        .tour-buttons { display: flex; justify-content: space-between; gap: 10px; }
+
+        .modal-backdrop.active { opacity: 1; }
+    </style>
+
+    <script src="tour.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Support - SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <script src="Photophor/src/index.js"></script>
+    <script src="main.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo" onclick="window.location.href='dashboard.html'"><div class="logo-box" style="">ST</div><span class="logo-text">SugarTrack</span></div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+        <!-- <div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="help.html" class="nav-link active"><i class="ph ph-question"></i><span>Help</span></a>
+            </nav>
+        </div>
+    </aside> -->
+<div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link "><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="readings.html" class="nav-link"><i class="ph ph-notebook"></i><span>Readings</span></a>
+                <a href="search.html" class="nav-link"><i class="ri-search-ai-2-line"></i><span>Search Ai</span></a>
+                <a href="inbox.html" class="nav-link"><i class="ph ph-tray"></i><span>Inbox</span></a>
+                <a href="analytics.html" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="export.html" class="nav-link"><i class="ph ph-file-pdf"></i><span>Reports</span></a>
+                <a onclick="window.location.href='ai.html'" class="nav-link"><div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 8px;"><div class="eye" style="width: 3px; height: 5px;"></div><div class="eye" style="width: 3px; height: 5px;"></div></div><span style="font-weight: 900; color: var(--text-primary);">Ask STAi</span></a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+    <main class="main-layout">
+        <header class="top-header" style="border-bottom: 1px solid var(--border); box-shadow: none;">
+            <div class="header-left">
+                <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button>
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button>
+                <h2 class="page-title">Help Center</h2>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            <div class="container" style="max-width: 800px; padding-top: 1rem;">
+                
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">How can we help?</h1>
+                    <p style="color: var(--text-secondary); font-size: 1rem;">Find answers to common questions or contact support.</p>
+                </div>
+
+                <div class="card" style="margin-bottom: 2rem; padding: 0.5rem;">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How do I edit or delete a reading?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Currently, you can view your recent readings on the dashboard. Full editing and deletion of past records will be available in the upcoming "Logbook" update. If you made a critical error, please contact support.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How does the Intelligent A1C calculation work?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We use a time-weighted algorithm. Instead of just a simple average, SugarTrack gives more weight to your most recent readings and accounts for the time gaps between your tests to give you a highly accurate estimate of your A1C.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How do I change my profile picture?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Go to your <strong>Profile</strong> page from the bottom-left menu. Click on your current avatar to open the icon selector modal. Choose your new icon, and a "Save" bar will appear at the bottom of your screen.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 2rem; text-align: center; background: var(--bg-hover); border-style: dashed;">
+                    <div style="width: 50px; height: 50px; background: var(--text-primary); color: var(--bg-card); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 1rem auto;">
+                        <i class="fa-regular fa-envelope"></i>
+                    </div>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Still need help?</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Our support team is here to assist you.</p>
+                    <a href="mailto:mmssbishady0@gmail.com" class="btn-primary" style="display: inline-flex; width: auto;">Contact Support</a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .faq-item { border-bottom: 1px solid var(--border); }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-question {
+            width: 100%; text-align: left; background: transparent; border: none; padding: 1.25rem 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 1rem; font-weight: 600; color: var(--text-primary); cursor: pointer; transition: 0.2s;
+        }
+        .faq-question:hover { background: var(--bg-hover); }
+        .faq-question i { color: var(--text-secondary); transition: transform 0.3s ease; }
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+            padding: 0 1rem;
+        }
+        .faq-answer p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; padding-bottom: 1.25rem; margin: 0; }
+        
+        /* Active State */
+        .faq-item.active .faq-question i { transform: rotate(180deg); color: var(--info); }
+        .faq-item.active .faq-answer { max-height: 200px; /* Adjust if answer is very long */ }
+    </style>
+
+    <script>
+        // Interactive FAQ Script
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                // Close others
+                document.querySelectorAll('.faq-item').forEach(other => {
+                    if(other !== item) other.classList.remove('active');
+                });
+                // Toggle clicked
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+    <script type="module" src="profile/pload.js"></script>
+    <script src="accent.js"></script>
+</body>
+</html>

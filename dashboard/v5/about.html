@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <script src="Photophor/src/index.js"></script>
+    <script src="main.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo" onclick="window.location.href='dashboard.html'">
+                <div class="logo-box" style="">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+<div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link "><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="readings.html" class="nav-link"><i class="ph ph-notebook"></i><span>Readings</span></a>
+                <a href="search.html" class="nav-link"><i class="ri-search-ai-2-line"></i><span>Search Ai</span></a>
+                <a href="inbox.html" class="nav-link"><i class="ph ph-tray"></i><span>Inbox</span></a>
+                <a href="analytics.html" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="export.html" class="nav-link"><i class="ph ph-file-pdf"></i><span>Reports</span></a>
+                <a onclick="window.location.href='ai.html'" class="nav-link"><div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 8px;"><div class="eye" style="width: 3px; height: 5px;"></div><div class="eye" style="width: 3px; height: 5px;"></div></div><span style="font-weight: 900; color: var(--text-primary);">Ask STAi</span></a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+    <main class="main-layout">
+        <header class="top-header" style="border-bottom: 1px solid var(--border); box-shadow: none;">
+            <div class="header-left">
+                <!-- <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button> -->
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <a href="settings.html" class="icon-btn" style="border:none; background:transparent;"><i class="fa-solid fa-arrow-left"></i></a>
+                    <h2 class="page-title">About SugarTrack</h2>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            <div class="container" style="max-width: 850px; padding-top: 1rem;">
+                
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <div class="about-logo">ST</div>
+                    <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.02em;">SugarTrack</h1>
+                    <p style="color: var(--info, #3b82f6); font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">Empowering Your Health Journey.</p>
+                </div>
+
+                <div class="card" style="margin-bottom: 3rem; background: var(--info, #3b82f6); border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onclick="window.location.href='updates.html'" id="updateBanner">
+                    <div style="padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; color: white;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 44px; height: 44px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
+                                <i class="fa-solid fa-rocket"></i>
+                            </div>
+                            <div>
+                                <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 2px;">What's New in v1.0.0</h3>
+                                <p style="font-size: 0.85rem; opacity: 0.9;">View the latest changelogs, features, and release notes.</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right" style="font-size: 1.2rem;"></i>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div style="padding: 2rem;">
+                        <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">What is SugarTrack?</h3>
+                        <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">
+                            SugarTrack is a comprehensive, privacy-first web application engineered to simplify blood glucose monitoring. Managing diabetes or tracking metabolic health shouldn't require clunky spreadsheets or outdated software. We built SugarTrack to bridge the gap between medical utility and modern software design.
+                        </p>
+                        <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">
+                            By combining an intuitive, flat "Square UI" aesthetic with powerful backend cloud syncing via Google Firebase, SugarTrack ensures your data is instantly accessible, beautifully visualized, and securely stored across all your devices.
+                        </p>
+                        
+                        <div style="background: var(--bg-hover); padding: 1.5rem; border-left: 4px solid var(--info, #3b82f6); border-radius: 0 8px 8px 0; margin-top: 2rem;">
+                            <h4 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Our Mission</h4>
+                            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+                                We believe that personal health tools should be as beautifully designed and fluid as the apps you use for entertainment. Our mission is to reduce the friction of daily medical logging through intelligent design, empowering users to make better data-driven decisions about their health.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary); margin-top: 3rem;">Platform Modules</h3>
+                <div class="feature-grid" style="margin-bottom: 3rem;">
+                    <div class="feature-box">
+                        <div class="f-icon" style="color: var(--info); background: rgba(59, 130, 246, 0.1);"><i class="fa-solid fa-objects-column"></i></div>
+                        <h4>The Dashboard</h4>
+                        <p>A high-level overview of your daily health. Features an intelligent time-weighted 7-day average, dynamic trend indicators, and a beautiful Chart.js visualization of your most recent readings.</p>
+                    </div>
+                    <div class="feature-box">
+                        <div class="f-icon" style="color: var(--success); background: rgba(16, 185, 129, 0.1);"><i class="fa-solid fa-book-medical"></i></div>
+                        <h4>The Logbook</h4>
+                        <p>Your complete historical database. Effortlessly log new readings with contextual tags (Fasting, Post-Meal, Bedtime) and optional notes to track carbohydrates or insulin doses.</p>
+                    </div>
+                    <div class="feature-box">
+                        <div class="f-icon" style="color: #a855f7; background: rgba(168, 85, 247, 0.1);"><i class="fa-solid fa-inbox"></i></div>
+                        <h4>System Inbox</h4>
+                        <p>A native-feeling split-pane messaging center. Receive system alerts, doctor communications, and health insights directly within the app.</p>
+                    </div>
+                    <div class="feature-box">
+                        <div class="f-icon" style="color: var(--warning); background: rgba(245, 158, 11, 0.1);"><i class="fa-solid fa-sliders"></i></div>
+                        <h4>Customization</h4>
+                        <p>Fully personalize your experience with dynamic Light/Dark modes, custom accent color injection, and customizable user avatars.</p>
+                    </div>
+                </div>
+
+                <div class="charts-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem;">
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-microchip" style="color: var(--text-secondary); margin-right: 8px;"></i> System Specs</h3>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <div class="specs-list">
+                                <div class="spec-row">
+                                    <span class="s-label">Web Client</span>
+                                    <span class="s-value" style="font-family: monospace; background: var(--bg-hover); padding: 2px 6px; border-radius: 4px;">v1.0.0 (Build 4052)</span>
+                                </div>
+                                <div class="spec-row">
+                                    <span class="s-label">Channel</span>
+                                    <span class="s-value"><span style="color: var(--success);">●</span> Stable Production</span>
+                                </div>
+                                <div class="spec-row">
+                                    <span class="s-label">Database</span>
+                                    <span class="s-value">Firestore (v10.8)</span>
+                                </div>
+                                <div class="spec-row">
+                                    <span class="s-label">Architecture</span>
+                                    <span class="s-value">Square Ui / MyUi V5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-code" style="color: var(--text-secondary); margin-right: 8px;"></i> Tech Stack</h3>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.5;">
+                                SugarTrack is proudly built utilizing these powerful open-source libraries and APIs:
+                            </p>
+                            <div class="tech-tags">
+                                <span class="tech-tag"><i class="fa-brands fa-html5"></i> HTML5 / CSS3</span>
+                                <span class="tech-tag"><i class="fa-brands fa-js"></i> Vanilla JS (ES6+)</span>
+                                <span class="tech-tag"><i class="fa-brands fa-google"></i> Firebase Auth</span>
+                                <span class="tech-tag"><i class="fa-solid fa-chart-line"></i> Chart.js</span>
+                                <span class="tech-tag"><i class="fa-brands fa-font-awesome"></i> FontAwesome 7</span>
+                                <span class="tech-tag"><i class="fa-solid fa-icons"></i> Phosphor Icons</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+     <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="setting-link-row" style="cursor: default; border-bottom: none;">
+                        <div class="icon-box" style="background: var(--bg-hover); color: var(--text-primary);">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <div class="link-text">
+                            <h3>Version</h3>
+                            <p>Build 5.0.0 (Release)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <a href="#" class="setting-link-row">
+                        <div class="icon-box" style="background: var(--bg-hover); color: var(--text-primary);">
+                            <i class="fa-brands fa-github"></i>
+                        </div>
+                        <div class="link-text">
+                            <h3>Developer Repository</h3>
+                            <p>View source code and architecture</p>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square chevron" style="color: var(--text-secondary); font-size: 0.8rem;"></i>
+                    </a>
+                    <a href="mailto:mmssbishady0@gmail.com" class="setting-link-row" style="border-bottom: none;">
+                        <div class="icon-box" style="background: var(--bg-hover); color: var(--text-primary);">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div class="link-text">
+                            <h3>Contact Developer</h3>
+                            <p>mmssbishady0@gmail.com</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right chevron" style="color: var(--text-secondary);"></i>
+                    </a>
+                </div>
+
+                <div style="text-align: center; margin-top: 4rem; margin-bottom: 4rem; color: var(--text-secondary); font-size: 0.85rem;">
+                    <p>SugarTrack &copy; 2023. All rights reserved.</p>
+                    <p>Powered by open-source technologies and built with care by a passionate developer.</p>
+                    <P>Made By <span style="color: #3b82f6; font-weight: 900;">MMS</span></P>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .about-logo {
+            width: 90px; height: 90px;
+            background: var(--info, #3b82f6);
+            color: white; border-radius: 24px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; font-weight: 750;
+            margin: 0 auto 1.25rem auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        #updateBanner:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(59, 130, 246, 0.3); }
+        
+        .setting-link-row {
+            display: flex; align-items: center; padding: 1.25rem 1.5rem;
+            text-decoration: none; border-bottom: 1px solid var(--border);
+            transition: background 0.2s; cursor: pointer;
+        }
+        .setting-link-row:hover { background: var(--bg-hover); }
+        .icon-box {
+            width: 42px; height: 42px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; margin-right: 1rem;
+        }
+        .link-text { flex: 1; }
+        .link-text h3 { color: var(--text-primary); font-size: 1rem; margin-bottom: 0.2rem; font-weight: 600; }
+        .link-text p { color: var(--text-secondary); font-size: 0.85rem; margin: 0; }
+
+        /* FEATURE GRID */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature-box {
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: 0.2s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        .feature-box:hover { border-color: var(--text-secondary); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        .f-icon {
+            width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; margin-bottom: 1.25rem;
+        }
+        .feature-box h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .feature-box p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+        /* SPECS LIST */
+        .specs-list { display: flex; flex-direction: column; }
+        .spec-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.85rem 0; border-bottom: 1px dashed var(--border);
+        }
+        .spec-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .s-label { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; }
+        .s-value { color: var(--text-primary); font-size: 0.9rem; font-weight: 600; }
+
+        /* TECH TAGS */
+        .tech-tags {
+            display: flex; flex-wrap: wrap; gap: 8px;
+        }
+        .tech-tag {
+            padding: 6px 12px; background: var(--bg-hover); border: 1px solid var(--border);
+            border-radius: 20px; font-size: 0.8rem; font-weight: 500; color: var(--text-primary);
+            display: flex; align-items: center; gap: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid { grid-template-columns: 1fr !important; }
+            .spec-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+
+    <script type="module" src="profile/pload.js"></script>
+    <script src="accent.js"></script>
+</body>
+</html>

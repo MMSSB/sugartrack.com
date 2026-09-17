@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appearance - SugarTrack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <script src="Photophor/src/index.js"></script>
+    <script src="main.js"></script>
+    <script src="script.js"></script>
+    <script src="accent.js"></script>
+    <script type="module" src="profile/pload.js"></script>
+</head>
+<body>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo" onclick="window.location.href='dashboard.html'">
+                <div class="logo-box">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+<div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link "><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="readings.html" class="nav-link"><i class="ph ph-notebook"></i><span>Readings</span></a>
+                <a href="search.html" class="nav-link"><i class="ri-search-ai-2-line"></i><span>Search Ai</span></a>
+                <a href="inbox.html" class="nav-link"><i class="ph ph-tray"></i><span>Inbox</span></a>
+                <a href="analytics.html" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="export.html" class="nav-link"><i class="ph ph-file-pdf"></i><span>Reports</span></a>
+                <a onclick="window.location.href='ai.html'" class="nav-link"><div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 8px;"><div class="eye" style="width: 3px; height: 5px;"></div><div class="eye" style="width: 3px; height: 5px;"></div></div><span style="font-weight: 900; color: var(--text-primary);">Ask STAi</span></a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="top-header">
+            <div class="header-left">
+                <!-- <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button> -->
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <a href="settings.html" class="icon-btn" style="border:none; background:transparent;"><i class="fa-solid fa-arrow-left"></i></a>
+                    <h2 class="page-title">Appearance</h2>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            <div class="container" style="max-width: 800px; padding-bottom: 4rem;">
+                
+                <form id="settingsForm">
+                    
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <div class="card-header">
+                            <h3>Theme Mode</h3>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.9rem;">Select how the app looks.</p>
+                            
+                            <div class="segmented-control" style="background: var(--bg-hover); padding: 6px; border-radius: 12px; display: flex; gap: 6px;">
+                                <div class="seg-item" style="flex:1;">
+                                    <input type="radio" name="theme" id="t-light" value="light" style="display:none;">
+                                    <label for="t-light" class="btn-theme-opt">
+                                        <i class="fa-solid fa-sun"></i> Light
+                                    </label>
+                                </div>
+                                <div class="seg-item" style="flex:1;">
+                                    <input type="radio" name="theme" id="t-dark" value="dark" style="display:none;">
+                                    <label for="t-dark" class="btn-theme-opt">
+                                        <i class="fa-solid fa-moon"></i> Dark
+                                    </label>
+                                </div>
+                                <div class="seg-item" style="flex:1;">
+                                    <input type="radio" name="theme" id="t-system" value="system" style="display:none;">
+                                    <label for="t-system" class="btn-theme-opt">
+                                        <i class="fa-solid fa-desktop"></i> System
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <div class="card-header">
+                            <h3>Accent Color</h3>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.9rem;">Choose a color for buttons and highlights.</p>
+                            
+                            <div class="color-grid" style="display: flex; gap: 18px; flex-wrap: wrap; align-items: center;">
+                                <label class="color-option">
+                                    <input type="radio" name="accentColor" value="#3b82f6">
+                                    <span class="color-circle" style="background: #3b82f6;"></span>
+                                </label>
+                                <label class="color-option">
+                                    <input type="radio" name="accentColor" value="#10b981">
+                                    <span class="color-circle" style="background: #10b981;"></span>
+                                </label>
+                                <label class="color-option">
+                                    <input type="radio" name="accentColor" value="#a855f7">
+                                    <span class="color-circle" style="background: #a855f7;"></span>
+                                </label>
+                                <label class="color-option">
+                                    <input type="radio" name="accentColor" value="#f97316">
+                                    <span class="color-circle" style="background: #f97316;"></span>
+                                </label>
+                                <label class="color-option">
+                                    <input type="radio" name="accentColor" value="#ef4444">
+                                    <span class="color-circle" style="background: #ef4444;"></span>
+                                </label>
+                                <label class="color-option">
+                                    <input type="radio" name="accentColor" value="#b6b6b6">
+                                    <span class="color-circle" style="background: #b6b6b6;"></span>
+                                </label>
+                                <label class="color-option">
+                                    <input type="radio" name="accentColor" value="#09090b">
+                                    <span class="color-circle" style="background: #09090b; border: 1px solid var(--border);"></span>
+                                </label>
+                                
+                                <div class="custom-color-wrapper">
+                                    <input type="color" id="customColorPicker" value="#00d2ff">
+                                    <div class="custom-color-display" id="customColorDisplay">
+                                        <i class="fa-solid fa-eye-dropper"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <div class="card-header">
+                            <h3>Dashboard Greetings</h3>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary);">Smart Greetings</div>
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Personalize your dashboard welcome message.</div>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="greetingToggle">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            
+                            <div id="greetingOptions" style="background: var(--bg-hover); padding: 1.25rem; border-radius: 12px; border: 1px solid var(--border); transition: 0.3s;">
+                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">Greeting Style</div>
+                                <div class="radio-group" style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                                    <label class="radio-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem; color: var(--text-primary); font-weight: 500;">
+                                        <input type="radio" name="greetingStyle" value="time">
+                                        <span style="display: flex; align-items: center; gap: 6px;"><i class="ph ph-sun" style="color: var(--warning);"></i> Time of Day</span>
+                                    </label>
+                                    <label class="radio-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem; color: var(--text-primary); font-weight: 500;">
+                                        <input type="radio" name="greetingStyle" value="friendly">
+                                        <span style="display: flex; align-items: center; gap: 6px;"><i class="ph ph-hand-waving" style="color: var(--info, #3b82f6);"></i> Friendly</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div class="save-bar" id="saveBar">
+        <span class="save-msg">Unsaved changes</span>
+        <div style="display: flex; gap: 10px;">
+            <button type="button" id="discardBtn" class="btn-discard">Discard</button>
+            <button type="button" id="saveBtn" class="btn-save">Save Changes</button>
+        </div>
+    </div>
+
+    <style>
+        /* Theme Options */
+        .btn-theme-opt {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 10px; border-radius: 10px; cursor: pointer;
+            color: var(--text-secondary); transition: 0.2s; font-weight: 500;
+        }
+        .seg-item input:checked + label {
+            background: var(--bg-card); color: var(--text-primary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-weight: 600;
+        }
+
+        /* Color Circles */
+        .color-option input { display: none; }
+        .color-circle {
+            width: 44px; height: 44px; border-radius: 50%; display: block;
+            cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .color-option input:checked + .color-circle {
+            transform: scale(1.15);
+            box-shadow: 0 0 0 3px var(--bg-card), 0 0 0 5px var(--text-primary);
+        }
+        .color-circle:hover { transform: scale(1.1); }
+
+        /* Custom Color Picker Styling */
+        .custom-color-wrapper {
+            position: relative; width: 44px; height: 44px; border-radius: 50%;
+            cursor: pointer; transition: transform 0.2s;
+        }
+        .custom-color-wrapper:hover { transform: scale(1.1); }
+        .custom-color-wrapper.active {
+            transform: scale(1.15); box-shadow: 0 0 0 3px var(--bg-card), 0 0 0 5px var(--text-primary);
+        }
+        .custom-color-wrapper input[type="color"] {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            opacity: 0; cursor: pointer; z-index: 2;
+        }
+        .custom-color-display {
+            position: absolute; inset: 0; border-radius: 50%;
+            background: conic-gradient(from 90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1rem; box-shadow: inset 0 0 0 2px rgba(0,0,0,0.1);
+            z-index: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+
+        /* Save Bar */
+        .save-bar {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(200%);
+            background: #18181b; color: white; padding: 10px 10px 10px 20px;
+            border-radius: 100px; display: flex; align-items: center; justify-content: space-between; gap: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4); z-index: 2000;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 320px; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .save-bar.visible { transform: translateX(-50%) translateY(0); }
+        .btn-discard { background: transparent; border: none; color: #a1a1aa; cursor: pointer; font-weight: 500; }
+        .btn-discard:hover { color: white; }
+        .btn-save { background: var(--info, #3b82f6); border: none; color: white; padding: 8px 20px; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.3s;}
+
+        /* Toggle Switch */
+        .switch { position: relative; display: inline-block; width: 46px; height: 24px; flex-shrink: 0; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border); transition: .3s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: var(--info, #3b82f6); }
+        input:checked + .slider:before { transform: translateX(22px); }
+        
+        .radio-label input[type="radio"] { accent-color: var(--info, #3b82f6); width: 16px; height: 16px; }
+    </style>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const customPicker = document.getElementById('customColorPicker');
+            const customWrapper = document.querySelector('.custom-color-wrapper');
+            const colorRadios = document.querySelectorAll('input[name="accentColor"]');
+            const themeRadios = document.querySelectorAll('input[name="theme"]');
+            
+            // Greetings Elements
+            const gToggle = document.getElementById('greetingToggle');
+            const gOptions = document.getElementById('greetingOptions');
+            const gRadios = document.querySelectorAll('input[name="greetingStyle"]');
+
+            const saveBar = document.getElementById('saveBar');
+            const saveBtn = document.getElementById('saveBtn');
+            const discardBtn = document.getElementById('discardBtn');
+            
+            // 1. Get saved values on page load
+            let currentSavedColor = localStorage.getItem('accent_color') || '#3b82f6';
+            let currentSavedTheme = localStorage.getItem('theme') || 'system';
+            let currentGreetingEnabled = localStorage.getItem('smart_greeting_enabled') !== 'false';
+            let currentGreetingStyle = localStorage.getItem('smart_greeting_style') || 'time';
+
+            // 2. Initialize UI 
+            // Theme setup
+            const activeTheme = document.querySelector(`input[name="theme"][value="${currentSavedTheme}"]`);
+            if(activeTheme) activeTheme.checked = true;
+
+            // Color setup
+            let isStandard = false;
+            colorRadios.forEach(r => {
+                if(r.value.toLowerCase() === currentSavedColor.toLowerCase()) {
+                    r.checked = true;
+                    isStandard = true;
+                }
+            });
+            if(!isStandard) {
+                colorRadios.forEach(r => r.checked = false);
+                customWrapper.classList.add('active');
+                customPicker.value = currentSavedColor;
+            }
+
+            // Greetings setup
+            gToggle.checked = currentGreetingEnabled;
+            if(!currentGreetingEnabled) {
+                gOptions.style.opacity = '0.5';
+                gOptions.style.pointerEvents = 'none';
+            }
+            gRadios.forEach(r => {
+                if (r.value === currentGreetingStyle) r.checked = true;
+            });
+
+            // 3. Live UI Previews & Event Listeners
+            themeRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    applyThemePreview(e.target.value);
+                    saveBar.classList.add('visible');
+                });
+            });
+
+            colorRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    customWrapper.classList.remove('active');
+                    if(window.applyAccent) window.applyAccent(e.target.value);
+                    saveBar.classList.add('visible');
+                });
+            });
+
+            customPicker.addEventListener('input', (e) => {
+                colorRadios.forEach(r => r.checked = false);
+                customWrapper.classList.add('active');
+                if(window.applyAccent) window.applyAccent(e.target.value);
+                saveBar.classList.add('visible');
+            });
+
+            gToggle.addEventListener('change', (e) => {
+                gOptions.style.opacity = e.target.checked ? '1' : '0.5';
+                gOptions.style.pointerEvents = e.target.checked ? 'auto' : 'none';
+                saveBar.classList.add('visible');
+            });
+
+            gRadios.forEach(r => r.addEventListener('change', () => saveBar.classList.add('visible')));
+
+            function applyThemePreview(theme) {
+                if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            }
+
+            // 4. Save Logic (Locks it securely into localStorage)
+            saveBtn.addEventListener('click', () => {
+                // Save Theme
+                const selectedTheme = document.querySelector('input[name="theme"]:checked').value;
+                localStorage.setItem('theme', selectedTheme);
+                currentSavedTheme = selectedTheme;
+
+                // Save Color
+                let selectedColor = currentSavedColor;
+                const checkedColor = document.querySelector('input[name="accentColor"]:checked');
+                if (checkedColor) selectedColor = checkedColor.value;
+                else if (customWrapper.classList.contains('active')) selectedColor = customPicker.value;
+                
+                const colorChanged = (selectedColor.toLowerCase() !== currentSavedColor.toLowerCase());
+                localStorage.setItem('accent_color', selectedColor);
+                if(window.applyAccent) window.applyAccent(selectedColor);
+                currentSavedColor = selectedColor;
+
+                // Save Greetings
+                localStorage.setItem('smart_greeting_enabled', gToggle.checked);
+                const selectedGStyle = document.querySelector('input[name="greetingStyle"]:checked').value;
+                localStorage.setItem('smart_greeting_style', selectedGStyle);
+                currentGreetingEnabled = gToggle.checked;
+                currentGreetingStyle = selectedGStyle;
+
+                // Smooth Button Feedback
+                const originalText = saveBtn.innerText;
+                saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> Saved';
+                saveBtn.style.background = 'var(--success)';
+
+                setTimeout(() => {
+                    saveBtn.innerText = originalText;
+                    saveBtn.style.background = '';
+                    saveBar.classList.remove('visible');
+                    
+                    if (colorChanged) window.location.reload();
+                }, 1000); 
+            });
+
+            // 5. Discard Logic
+            discardBtn.addEventListener('click', () => {
+                // Revert Theme
+                const revertTheme = document.querySelector(`input[name="theme"][value="${currentSavedTheme}"]`);
+                if(revertTheme) revertTheme.checked = true;
+                applyThemePreview(currentSavedTheme);
+
+                // Revert Color UI
+                let isStd = false;
+                colorRadios.forEach(r => {
+                    if(r.value.toLowerCase() === currentSavedColor.toLowerCase()) {
+                        r.checked = true;
+                        isStd = true;
+                    } else r.checked = false;
+                });
+                if(!isStd) {
+                    customWrapper.classList.add('active');
+                    customPicker.value = currentSavedColor;
+                } else customWrapper.classList.remove('active');
+                if(window.applyAccent) window.applyAccent(currentSavedColor);
+
+                // Revert Greetings
+                gToggle.checked = currentGreetingEnabled;
+                gOptions.style.opacity = currentGreetingEnabled ? '1' : '0.5';
+                gOptions.style.pointerEvents = currentGreetingEnabled ? 'auto' : 'none';
+                gRadios.forEach(r => {
+                    if (r.value === currentGreetingStyle) r.checked = true;
+                });
+
+                saveBar.classList.remove('visible');
+            });
+        });
+//         document.addEventListener("DOMContentLoaded", () => {
+//     auth.onAuthStateChanged((user) => {
+//         if (user) {
+//             currentUser = user;
+//             initDashboard(user);
+//             loadUserInfo(user);
+//         } else {
+//             window.location.href = 'login.html';
+//         }
+//     });
+//     setupModalListeners();
+// });
+    </script>
+</body>
+</html>

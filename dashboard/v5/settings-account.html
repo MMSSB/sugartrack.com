@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarTrack - Account Security</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+
+    <script src="Photophor/src/index.js"></script>
+    <script src="main.js"></script>
+    <script src="accent.js"></script>
+    <script src="script.js"></script>
+    <script type="module" src="settings-account.js"></script>
+    <script type="module" src="profile/pload.js"></script>
+
+</head>
+<body>
+       <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-box">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-content">
+                        <!-- <div class="project-card">
+                <div class="project-icon"><i class="ph ph-briefcase"></i></div>
+                <div class="project-details">
+                    <span class="p-title">Synclead</span>
+                    <span class="p-sub">16 Members</span>
+                </div>
+                <i class="ph ph-caret-up-down p-arrow"></i>
+            </div> -->
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link ">
+                    <i class="ph ph-squares-four"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="readings.html" class="nav-link">
+                    <i class="ph ph-notebook"></i>
+                    <span>Readings</span>
+                    <!-- <span>Logbook</span> -->
+                </a>
+                <a href="search.html" class="nav-link">
+                    <!-- <i class="ph ph-magnifying-glass"></i> -->
+                     <i class="ri-search-ai-2-line"></i>
+                    <span>Search Ai</span>
+                </a>
+                <a href="inbox.html" class="nav-link">
+                    <i class="ph ph-tray"></i>
+                    <span>Inbox</span>
+                </a>
+                <a href="analytics.html" class="nav-link">
+                    <i class="ph ph-chart-line-up"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="export.html" class="nav-link">
+                    <i class="ph ph-file-pdf"></i>
+                    <span>Reports</span>
+                </a>
+                 <a  onclick="window.location.href='ai.html'" class="nav-link">
+                                            <div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 10px;">
+                            <div class="eye" style="width: 3px; height: 5px;"></div>
+                            <div class="eye" style="width: 3px; height: 5px;"></div>
+                        </div>
+
+
+                    <span style="font-weight: 900; color: var(--text-primary);" >Ask STAi</span>
+                </a>
+                 <!-- <a href="#" class="nav-link">
+                    <i class="ph ph-pill"></i>
+                    <span>Medication</span>
+                </a> -->
+            </nav>
+
+            <!-- <div class="nav-section">
+                <div class="section-label">
+                    <span>TOOLS</span>
+                </div>
+                                    <hr>
+
+                <nav class="nav-menu">
+                    <a href="#" class="nav-link">
+                        <i class="ph ph-calculator"></i>
+                        <span>Bolus Calc</span>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="ph ph-carrot"></i>
+                        <span>Food Database</span>
+                    </a>
+                </nav>
+            </div>
+        </div> -->
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+              <!-- <div class="avatar"><img src="images/user.png" class="profile-img-small" id="navProfilePhoto" alt="Profile" ></div> -->
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+
+                <!-- <div class="avatar">U</div> -->
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <!-- <a href="#" class="danger"><i class="ph ph-sign-out"></i> Log out</a> -->
+                 <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+        <!-- <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar">U</div>
+                <div class="user-info"><span class="u-name" id="userBadgeName">User</span></div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" class="danger" id="logoutButton"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside> -->
+
+    <main class="main-layout">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="icon-btn mobile-toggle" id="mobileOpenBtn"><i class="ph ph-list"></i></button>
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn"><i class="ph ph-sidebar-simple"></i></button>
+                <h2 class="page-title">Settings</h2>
+            </div>
+        </header>
+
+        <div class="content-scroll">
+            <div class="container" style="max-width: 900px;">
+                
+                <div style="margin-bottom: 2.5rem;">
+                    <h1 style="    font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Account Security</h1>
+                    <p style="color: var(--text-secondary); font-size: 1rem;">Manage your login details and account data.</p>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 2rem; overflow-x: auto; padding-bottom: 5px;">
+                    <a href="settings.html" class="btn-outline" style="text-decoration: none;">
+                        <i class="fa-solid fa-sliders"></i> General
+                    </a>
+                    <a href="settings-account.html" class="btn-primary" style="text-decoration: none;">
+                        <i class="fa-solid fa-shield-halved"></i> Account
+                    </a>
+                    <a href="profile.html" class="btn-outline" style="text-decoration: none;">
+                        <i class="fa-solid fa-user"></i> Profile
+                    </a>
+                </div>
+
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div class="card-header">
+                        <h3>Account Information</h3>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <div class="input-with-icon" style="position: relative;">
+                                <input type="email" id="userEmail" class="form-input" value="user@example.com" disabled style="opacity: 0.7; padding-left: 2.5rem;">
+                                <i class="fa-solid fa-envelope" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+                            </div>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                                <i class="fa-solid fa-circle-info"></i> To change your email, please contact support.
+                            </p>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label>User ID</label>
+                            <input type="text" class="form-input" value="UID-8829-XJ2" disabled style="font-family: monospace; opacity: 0.7;">
+                        </div> -->
+                        <div class="form-group">
+    <label>User ID</label>
+    <input type="text" id="userIdInput" class="form-input" placeholder="Loading..." disabled style="font-family: monospace; opacity: 0.7;">
+</div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div class="card-header">
+                        <h3>Change Password</h3>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" id="currentPassword" class="form-input" placeholder="••••••••">
+                        </div>
+                        <div class="input-row">
+                            <div class="form-group half">
+                                <label>New Password</label>
+                                <input type="password" id="newPassword" class="form-input" placeholder="New Password">
+                            </div>
+                            <div class="form-group half">
+                                <label>Confirm Password</label>
+                                <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm Password">
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: flex-end;">
+                            <button id="changePasswordButton" class="btn-outline">
+                                <i class="fas fa-key"></i> Update Password
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="border-color: rgba(239, 68, 68, 0.3);">
+                    <div class="card-header" style="color: var(--danger);">
+                        <h3>Danger Zone</h3>
+                    </div>
+                    <div style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                        <div>
+                            <div style="font-weight: 600;">Delete Account</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary);">Permanently remove your account and all data.</div>
+                        </div>
+                        <button id="deleteAccountButton" class="btn-outline" style="color: var(--danger); border-color: var(--danger);">
+                            <i class="fas fa-trash-alt"></i> Delete Account
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <br><br>
+        </div>
+    </main>
+
+    <!-- <div id="notification" class="notification hidden" style="position: fixed; bottom: 20px; right: 20px; background: var(--text-primary); color: var(--bg-body); padding: 1rem; border-radius: var(--radius); z-index: 2000;">
+        <div class="notification-content">
+            <span id="notification-message"></span>
+        </div>
+    </div> -->
+<div class="modal-backdrop" id="deleteModal">
+        <div class="modal-container" style="max-width: 450px;">
+            <div class="mobile-handle"></div>
+            <div class="modal-header">
+                <h3 style="color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> Delete Account</h3>
+                <button class="icon-btn-small" id="closeDeleteModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem;">
+                    <strong style="color: var(--danger); display: block; margin-bottom: 0.25rem;">Warning: This action is irreversible.</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">All your readings, settings, and personal data will be permanently erased.</span>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-weight: 600;">Verify your identity</label>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Please enter your current password to confirm deletion.</p>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="deletePasswordInput" class="form-input" placeholder="Current Password">
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="padding: 0; margin-top: 1.5rem; justify-content: flex-end; gap: 10px;">
+                    <button class="btn-outline" id="cancelDeleteBtn">Cancel</button>
+                    <button class="btn-primary" id="confirmDeleteBtn" style="background: var(--danger); border-color: var(--danger);">
+                        Delete Forever
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+             // If you have a global user object or stored email, fill it here
+             const storedEmail = localStorage.getItem('user_email'); // Example
+             if(storedEmail) document.getElementById('userEmail').value = storedEmail;
+        });
+    </script>
+</body>
+</html>

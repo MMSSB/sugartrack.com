@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox - SugarTrack</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <script src="Photophor/src/index.js"></script>
+    <link rel="stylesheet" href="Remix/fonts/remixicon.css">
+        <script src="main.js"></script>
+    <script src="accent.js"></script>
+    <script src="script.js"></script>
+    <script type="module" src="inbox.js"></script>
+    <script type="module" src="profile/pload.js"></script>
+</head>
+<body style="overflow: hidden;"> <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo" onclick="window.location.href='dashboard.html'">
+                <div class="logo-box" style="">ST</div>
+                <span class="logo-text">SugarTrack V5</span>
+            </div>
+            <button class="icon-btn mobile-close" id="mobileCloseBtn"><i class="ph ph-x"></i></button>
+        </div>
+<div class="sidebar-content">
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link "><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="readings.html" class="nav-link"><i class="ph ph-notebook"></i><span>Readings</span></a>
+                <a href="search.html" class="nav-link"><i class="ri-search-ai-2-line"></i><span>Search Ai</span></a>
+                <a href="inbox.html" class="nav-link active"><i class="ph-fill ph-tray"></i><span>Inbox</span></a>
+                <a href="analytics.html" class="nav-link"><i class="ph ph-chart-line-up"></i><span>Analytics</span></a>
+                <a href="export.html" class="nav-link"><i class="ph ph-file-pdf"></i><span>Reports</span></a>
+                <a onclick="window.location.href='ai.html'" class="nav-link"><div class="robot-avatar" style="width: 25px; height: 25px; border-radius: 8px;"><div class="eye" style="width: 3px; height: 5px;"></div><div class="eye" style="width: 3px; height: 5px;"></div></div><span style="font-weight: 900; color: var(--text-primary);">Ask STAi</span></a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-trigger" id="userMenuBtn">
+                <div class="avatar"><img src="images/user.png" id="navProfilePhoto" class="navProfilePhoto" style=""></div>
+                <div class="user-info">
+                    <span class="u-name">User</span>
+                    <span class="u-mail">user@mail.com</span>
+                </div>
+                <i class="ph ph-caret-up"></i>
+            </div>
+            
+            <div class="dropdown-menu bottom-up" id="userDropdown">
+                <a href="profile.html"><i class="ph ph-user"></i> Profile</a>
+                <a href="settings.html"><i class="ph ph-gear"></i> Settings</a>
+                <div class="divider"></div>
+                <a href="#" onclick="logoutUser()" class="danger"><i class="ph ph-sign-out"></i> Log out</a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-layout app-layout">
+        
+        <header class="top-header clean-header">
+            <div class="header-left">
+                <button class="icon-btn mobile-toggle" id="mobileOpenBtn" style="margin-left: -10px;"><i class="ph ph-list"></i></button>
+                <button class="icon-btn desktop-toggle" id="desktopCollapseBtn" style="margin-left: -10px;"><i class="ph ph-sidebar-simple"></i></button>
+                <h2 class="page-title" style="font-weight: 600; font-size: 1.15rem;">Inbox</h2>
+            </div>
+            <div class="header-right" style="display: flex; gap: 8px;">
+                <button class="square-btn" id="refreshInbox" title="Refresh"><i class="fa-solid fa-arrow-rotate-right"></i></button>
+                <button class="square-btn" id="markAllRead" title="Mark all as read"><i class="fa-solid fa-check-double"></i></button>
+            </div>
+        </header>
+
+        <div class="split-view-container">
+            
+            <div class="list-pane">
+                <div class="list-header mobile-hidden">
+                    <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.05em;">Messages</span>
+                </div>
+                
+                <div class="list-scroll" id="messagesContainer">
+                    <div style="padding: 4rem 2rem; text-align: center; color: var(--text-secondary);">
+                        <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.5rem; margin-bottom: 1rem;"></i>
+                        <p style="font-size: 0.9rem;">Syncing inbox...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reader-pane desktop-only">
+                
+                <div id="readerEmpty" class="reader-empty-state">
+                    <i class="fa-solid fa-envelope-open" style="font-size: 3rem; margin-bottom: 1rem; color: var(--border);"></i>
+                    <h3 style="font-weight: 600; color: var(--text-primary); margin-bottom: 5px;">No message selected</h3>
+                    <p>Select a message from the list to read it.</p>
+                </div>
+
+                <div id="readerContent" class="reader-content-state" style="display: none;">
+                    <div class="reader-header">
+                        <h2 id="readerSubject" class="reader-title">Subject</h2>
+                        
+                        <div class="reader-meta-box">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div class="sender-avatar" id="readerAvatar">ST</div>
+                                <!-- <div class="sender-avatar" id="readerAvatar">S</div> -->
+                                <div>
+                                    <div id="readerSender" style="font-weight: 600; font-size: 0.95rem; color: var(--text-primary);">Sender Name</div>
+                                    <div id="readerEmail" style="color: var(--text-secondary); font-size: 0.85rem;">email@domain.com</div>
+                                </div>
+                            </div>
+                            <div id="readerDate" style="color: var(--text-secondary); font-size: 0.85rem;">Date</div>
+                        </div>
+                    </div>
+                    
+                    <div class="reader-body-scroll">
+                        <div id="readerBody" class="clean-message-body">
+                            Message content...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="modal-backdrop" id="messageModal">
+        <div class="modal-container square-modal">
+            <div class="mobile-handle"></div>
+            
+            <div class="modal-header square-modal-header">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
+                    <div>
+                        <h3 id="modalSubject" class="modal-title-clean">Subject</h3>
+                        <div class="modal-meta">
+                            <span id="modalSender" style="font-weight: 600; color: var(--text-primary);">Sender</span>
+                            <span style="color: var(--text-secondary); margin: 0 6px;">·</span>
+                            <span id="modalEmail" style="color: var(--text-secondary);">email@domain.com</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
+                        <button class="icon-btn-small close-modal" style="background: var(--bg-hover); border-radius: 6px;"><i class="fa-solid fa-xmark"></i></button>
+                        <span id="modalDate" style="color: var(--text-secondary); font-size: 0.8rem;">Date</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-body" style="padding: 2rem 1.5rem; overflow-y: auto; max-height: 70vh;">
+                <div id="modalBody" class="clean-message-body">
+                    Message content goes here...
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="mobile-bottom-nav" id="mobileBottomNav">
+        <a href="dashboard.html" class="nav-item ">
+            <i class="ph ph-squares-four"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="readings.html" class="nav-item ">
+            <i class="ph ph-notebook"></i>
+            <span>Readings</span>
+        </a>
+        
+        <!-- <div class="nav-item center-action" id="mobileAddReadingBtn"> -->
+        <div class="nav-item center-action" >
+            <button class="fab-btn">
+                                <a onclick="window.location.href='ai.html'" class=""><div class="robot-avatar" style="width: 40px; height: 40px; border-radius: 1rem;"><div class="eye" style="width: 6px; height: 8px;"></div><div class="eye" style="width: 6px; height: 8px;"></div></div></a>
+
+                <!-- <i class="ph ph-plus"></i> -->
+            </button>
+        </div>
+        
+        <a href="inbox.html" class="nav-item active">
+            <i class="ph-fill ph-tray"></i>
+            <span>Inbox</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item">
+            <i class="ph ph-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+    <style>
+        /* --- HIGH PERFORMANCE APP LAYOUT --- */
+        .app-layout {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevents whole page from scrolling */
+            background: var(--bg-body);
+        }
+
+        .clean-header {
+            border-bottom: 1px solid var(--border);
+            box-shadow: none;
+            flex-shrink: 0; /* Header never shrinks */
+            padding: 0 24px;
+            background: var(--bg-card);
+        }
+
+        .split-view-container {
+            flex: 1; /* Takes remaining height */
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* --- LEFT PANE (LIST) --- */
+        .list-pane {
+            width: 420px;
+            flex-shrink: 0;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-card);
+        }
+
+        .list-header {
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-hover);
+        }
+
+        .list-scroll {
+            flex: 1;
+            overflow-y: auto; /* Independent scrolling */
+        }
+
+        /* --- RIGHT PANE (READER) --- */
+        .reader-pane {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-body);
+        }
+
+        .reader-empty-state {
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        .reader-content-state {
+            flex: 1; display: flex; flex-direction: column; overflow: hidden;
+        }
+
+        .reader-header {
+            padding: 32px 40px 24px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-card);
+            flex-shrink: 0;
+        }
+
+        .reader-title {
+            font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.3;
+        }
+
+        .reader-meta-box {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .reader-body-scroll {
+            flex: 1;
+            overflow-y: auto; /* Independent scrolling */
+            padding: 40px;
+            background: var(--bg-card);
+        }
+
+        .clean-message-body {
+            font-size: 1rem; line-height: 1.7; color: var(--text-primary); white-space: pre-wrap;
+            max-width: 800px;
+        }
+
+        /* --- LIST ITEM UI --- */
+        .email-item {
+            display: flex; gap: 14px; padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer; transition: background 0.15s;
+        }
+        .email-item:hover { background: var(--bg-hover); }
+        .email-item.selected { background: var(--bg-hover); box-shadow: inset 3px 0 0 var(--text-primary); }
+
+        .mail-icon-box {
+            width: 38px; height: 38px; border-radius: 8px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; color: var(--text-secondary); background: var(--bg-body);
+        }
+
+        .e-content-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+        .e-top-row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+        
+        .e-name { font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .e-time { font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap; flex-shrink: 0; }
+        .e-subject { font-size: 0.95rem; font-weight: 500; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .e-preview { font-size: 0.85rem; color: var(--text-secondary); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
+        
+        /* Unread Styles */
+        .email-item.unread .mail-icon-box { background: var(--text-primary); color: var(--bg-card); }
+        .email-item.unread .e-name { font-weight: 700; color: var(--text-primary); }
+        .email-item.unread .e-subject { font-weight: 700; color: var(--text-primary); }
+        .email-item.unread .e-time { font-weight: 600; color: var(--text-primary); }
+
+        /* Buttons & Avatars */
+        .square-btn {
+            background: transparent; border: 1px solid var(--border); border-radius: 6px;
+            color: var(--text-primary); width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;
+        }
+        .square-btn:hover { background: var(--bg-hover); }
+
+        .sender-avatar {
+            width: 44px; height: 44px; border-radius: 8px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.2rem; background: var(--bg-body); color: var(--text-primary);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 992px) {
+            .list-pane { width: 100%; border-right: none; }
+            .desktop-only { display: none !important; }
+            .mobile-hidden { display: none !important; }
+            
+            /* Modal Styles */
+            .square-modal { max-width: 700px; padding: 0; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+            .square-modal-header { padding: 1.5rem 1.5rem 1rem; border-bottom: 1px solid var(--border); background: var(--bg-card); }
+            .modal-title-clean { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+            .modal-meta { font-size: 0.85rem; display: flex; align-items: center; }
+        }
+    </style>
+
+
+</body>
+</html>
