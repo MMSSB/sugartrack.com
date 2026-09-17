@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarTrack | Smart Diabetes Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="images/logo (15).ico" type="image/x-icon">
+    <link rel="stylesheet" href="fontawesome-free-6.7.2-web/css/all.css">
+    
+    <style>
+        /* --- Orbital Animation adapted for Light Theme --- */
+        .hero-visuals {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .orbit-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .center-hub h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1d4ed8;
+            margin-bottom: 0.25rem;
+            text-align: center;
+        }
+
+        .center-hub p {
+            color: #3b82f6;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .orbit {
+            position: absolute;
+            border: 1px dashed rgba(59, 130, 246, 0.4);
+            border-radius: 50%;
+            animation: rotate linear infinite;
+        }
+
+        .orbit-1 { width: 220px; height: 220px; animation-duration: 25s; }
+        .orbit-2 { width: 340px; height: 340px; animation-duration: 40s; animation-direction: reverse; }
+        .orbit-3 { width: 460px; height: 460px; animation-duration: 60s; border: 1px solid rgba(59, 130, 246, 0.15); }
+
+        .orbit-node {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            background: #ffffff;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15);
+            animation: reverse-rotate linear infinite;
+        }
+
+        .orbit-1 .orbit-node { animation-duration: 25s; }
+        .orbit-2 .orbit-node { animation-duration: 40s; animation-direction: reverse; }
+        .orbit-3 .orbit-node { animation-duration: 60s; }
+        .orbit-4 .orbit-node { animation-duration: 80s; }
+        
+
+        /* Icon Colors */
+        .node-1 { top: -22px; left: calc(50% - 22px); color: #3b82f6; }
+        .node-2 { bottom: 15px; right: 15px; color: #8b5cf6; }
+        .node-3 { top: 30px; left: 30px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+        .node-4 { bottom: -22px; left: calc(50% - 22px); color: #10b981; }
+        .node-5 { top: 50%; right: -22px; transform: translateY(-50%); color: #ef4444; }
+        .node-6 { bottom: 60px; left: -10px; color: #f59e0b; }
+        .node-7 { top: 40px; right: 40px; color: #06b6d4; }
+/* --- New Device Nodes (Cross-Platform) --- */
+        .node-8 { top: 10px; left: 85px; color: #3b82f6; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2); } /* Laptop */
+        .node-9 { top: 50%; left: -22px; transform: translateY(-50%); color: #10b981; } /* Mobile Phone */
+        .node-10 { bottom: 20px; left: 20px; color: #8b5cf6; border-color: rgba(139, 92, 246, 0.4); } /* Smartwatch */
+
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+        @keyframes reverse-rotate { 100% { transform: rotate(-360deg); } }
+
+        /* --- Fixed Download Button CSS --- */
+        .cssbuttons-io-button {
+            background: #3b82f6;
+            color: white;
+            font-family: inherit;
+            padding: 0.8em 2em;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 2rem;
+            border: none;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cssbuttons-io-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+            background: #1d4ed8;
+        }
+
+        .cssbuttons-io-button span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        /* --- RESPONSIVE FIXES FOR MOBILE --- */
+        html, body {
+            overflow-x: hidden; 
+            max-width: 100vw;
+        }
+
+        @media (max-width: 800px) {
+            .hero {
+                padding-top: 120px; /* Adds space for the fixed navbar */
+            }
+            
+            .hero .container {
+                flex-direction: column !important; 
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .hero-text {
+                min-width: 100% !important; /* Fixes the squished text bug */
+                margin-bottom: 1rem;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.2rem !important; /* Shrinks the giant title */
+                line-height: 1.2;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-text p {
+                font-size: 1rem !important;
+                padding: 0 10px;
+                margin-bottom: 1.5rem;
+            }
+            
+            .cta-buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                padding: 0 20px;
+            }
+            
+            .cta-buttons .btn {
+                width: 100%; /* Makes buttons full width for easy tapping */
+                margin: 0;
+            }
+
+            .hero-image {
+                min-width: 100% !important;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .hero-visuals {
+                height: 350px !important; 
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden; /* Hides the invisible edges of the circles */
+            }
+            
+            .orbit-container {
+                transform: scale(0.65); /* Scales the circles to fit */
+                transform-origin: center center;
+            }
+        }
+
+
+
+
+/* --- STAi FLOATING BUBBLE SHOWCASE --- */
+        .stai-floating-section {
+            padding: 80px 0;
+            background: #ffffff; /* Fits into your light background */
+        }
+
+        .stai-showcase-card {
+            background: #0a0e17; /* Very deep, sleek dark background */
+            border-radius: 2.5rem;
+            padding: 5rem 2rem;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Subtle background glow behind the robot */
+        .stai-showcase-card::before {
+            content: ''; position: absolute; top: 20%; left: 50%; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            transform: translate(-50%, -50%); z-index: 0; pointer-events: none;
+        }
+
+        .stai-interactive-area {
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end; /* Pushes avatar down so bubble has room */
+            padding-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* The Avatar */
+        .stai-floating-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 42px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+            position: relative;
+            animation: floatAvatar 4s ease-in-out infinite;
+        }
+
+        .stai-floating-avatar .stai-eye {
+            width: 18px; height: 28px;
+            background: #fff; border-radius: 50px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+            animation: blink 3s infinite;
+        }
+        .stai-floating-avatar .stai-eye:last-child { animation-delay: 0.1s; }
+
+/* --- RESPONSIVE STAi SPEECH BUBBLE --- */
+.stai-speech-bubble {
+    position: absolute;
+    /* Position relative to the center of the avatar */
+    bottom: 105%; 
+    left: 50%;
+    transform: translateX(-10%) scale(0.9); /* Slight offset to the right */
+    
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.2rem;
+    border-radius: 1.2rem 1.2rem 1.2rem 0.2rem;
+    
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    
+    /* Responsive Widths */
+    width: 260px;
+    max-width: 85vw; /* Never wider than the screen */
+    
+    text-align: left;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10;
+}
+
+.stai-speech-bubble.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-10%) scale(1);
+}
+
+/* Responsive Pointer (Triangle) */
+.stai-speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 10px;
+    width: 12px;
+    height: 12px;
+    background: rgba(30, 41, 59, 0.95);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+}
+
+/* Mobile Specific Adjustments */
+@media (max-width: 480px) {
+    .stai-speech-bubble {
+        width: 220px;
+        font-size: 0.85rem;
+        padding: 0.8rem 1rem;
+        bottom: 110%; /* Lift it a bit higher on small screens */
+        left: 50%;
+        transform: translateX(-50%) scale(0.9); /* Center it on very small screens */
+    }
+    
+    .stai-speech-bubble.show {
+        transform: translateX(-50%) scale(1);
+    }
+    
+    .stai-speech-bubble::after {
+        left: 50%;
+        margin-left: -6px; /* Center the arrow on mobile */
+    }
+}
+        /* Typography */
+        .stai-text-content { position: relative; z-index: 1; }
+        .stai-text-content h2 { font-size: 2.8rem; margin-bottom: 0.5rem; color: white; }
+        .stai-text-content p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 0; }
+
+        /* Typing Dots */
+        .bubble-typing-dots { display: flex; gap: 4px; padding: 5px 0; justify-content: center; }
+        .bubble-typing-dots span { width: 6px; height: 6px; background: #60a5fa; border-radius: 50%; animation: bubbleBounce 1.4s infinite ease-in-out both; }
+        .bubble-typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .bubble-typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+        /* Animations */
+        @keyframes floatAvatar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        @keyframes bubbleBounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .stai-showcase-card { padding: 3rem 1.5rem; }
+            .stai-text-content h2 { font-size: 2rem; }
+            .stai-speech-bubble { left: 20px; max-width: 250px; } /* Adjusts bubble on mobile */
+        }
+
+
+
+        /* ==========================================
+           SCROLL REVEAL ANIMATIONS
+           ========================================== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+            will-change: opacity, transform;
+        }
+        .zoom-in {
+            opacity: 0;
+            transform: scale(0.85);
+            transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+            will-change: opacity, transform;
+        }
+        .fade-right {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        /* Active State when scrolled into view */
+        .fade-up.visible, .zoom-in.visible, .fade-right.visible {
+            opacity: 1;
+            transform: translate(0) scale(1);
+        }
+
+        /* Staggered Timings for Grids */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+
+        /* Smooth hover added to feature cards */
+        .feature-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15); }
+    </style>
+</head>
+<body>
+
+<nav>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo2">ST</div>SugarTrack
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#versions">Versions</a>
+                <a href="about.html">About</a>
+                <!-- <a href="blog.html">Blog</a> --> 
+                <!-- <a href="docs/index.html">Docs</a>
+                <a href="download.html">Download</a>
+                <a href="contact-us.html">Contact Us</a> -->
+                <a href="loading4.html" class="btn primary" style="border-radius: 2rem;"><i class="fas fa-user"></i> Login/SignUp</a>
+            </div>
+            <button class="menu-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="sidebar sidebar-left" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-logo">
+                <div class="logo2">ST</div>SugarTrack
+            </a>
+            <button class="sidebar-close" id="sidebarClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="sidebar-nav">
+            <a href="#features"><i class="fas fa-star"></i> Features</a>
+            <a href="#versions"><i class="fas fa-layer-group"></i> Versions</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <!-- <a href="blog.html"><i class="fas fa-blog"></i> Blog</a>
+            <a href="docs/index.html"><i class="fas fa-file-alt"></i> Docs</a>
+            <a href="download.html"><i class="fa-solid fa-download"></i> Download</a>
+            <a href="contact-us.html"><i class="fas fa-envelope"></i> Contact Us</a> -->
+            <a href="loading4.html" class="btn primary" style="border-radius: 2rem;"><i class="fas fa-user"></i> Login/SignUp</a>
+        </div>
+    </div>
+
+
+    <header class="hero">
+        <div class="container" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+            <div class="hero-text" style="flex: 1; min-width: 300px;">
+                <h1>Take Control of Your Diabetes</h1>
+                <p>Track, analyze, and understand your glucose levels with our simple yet powerful tools.</p>
+                <div class="cta-buttons">
+                    <a href="load.html" class="btn primary">Get Started</a>
+                    <a href="docs/index.html" class="btn secondary">How to use</a>
+                </div>
+            </div>
+            
+            <div class="hero-image" style="flex: 1; min-width: 300px;">
+                <div class="hero-visuals">
+                    <div class="orbit-container">
+                        <div class="center-hub">
+                            <h2>ST</h2>
+                            <p>Omega System</p>
+                            <!-- <p>Core System</p> -->
+                        </div>
+                        
+                        <!-- <div class="orbit orbit-1">
+                            <div class="orbit-node node-1"><i class="fas fa-chart-line"></i></div>
+                            <div class="orbit-node node-2"><i class="fas fa-lock"></i></div>
+                        </div>
+
+                        <div class="orbit orbit-2">
+                            <div class="orbit-node node-3"><i class="fas fa-plus"></i></div>
+                            <div class="orbit-node node-4"><i class="fas fa-file-medical-alt"></i></div>
+                            <div class="orbit-node node-5"><i class="fas fa-sync"></i></div>
+                        </div>
+
+                        <div class="orbit orbit-3">
+                            <div class="orbit-node node-6"><i class="fas fa-heartbeat"></i></div>
+                             <div class="orbit-node node-7" style="border: none; background: transparent;">
+    <div class="robot-avatar">
+        <div class="eye"></div>
+        <div class="eye"></div>
+    </div>
+</div> -->
+<div class="orbit orbit-1">
+                            <div class="orbit-node node-1"><i class="fas fa-chart-line"></i></div>
+                            <div class="orbit-node node-2"><i class="fas fa-lock"></i></div>
+                            <div class="orbit-node node-10"><i class="fa-solid fa-clock"></i></div>
+                        </div>
+
+                        <div class="orbit orbit-2">
+                            <div class="orbit-node node-3"><i class="fas fa-plus"></i></div>
+                            <div class="orbit-node node-4"><i class="fas fa-file-medical-alt"></i></div>
+                            <div class="orbit-node node-5"><i class="fas fa-sync"></i></div>
+                            <div class="orbit-node node-9"><i class="fa-solid fa-mobile-screen"></i></div>
+                        </div>
+
+                        <div class="orbit orbit-3">
+                            <div class="orbit-node node-6"><i class="fas fa-heartbeat"></i></div>
+                            <div class="orbit-node node-7" style="border: none; background: transparent;">
+                                <div class="robot-avatar">
+                                    <div class="eye"></div>
+                                    <div class="eye"></div>
+                                </div>
+                            </div>
+                            <div class="orbit-node node-8"><i class="fa-solid fa-laptop"></i></div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <h3>Real-time Tracking</h3>
+                    <p>Log glucose readings instantly with date/time stamps and notes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Trend Analysis</h3>
+                    <p>Visualize patterns to understand your glucose fluctuations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-file-export"></i></div>
+                    <h3>Export Reports</h3>
+                    <p>Generate PDF/image reports for your healthcare provider.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-lock"></i></div>
+                    <h3>Privacy First</h3>
+                    <p>Your data stays on your device - no cloud storage required.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="versions" class="versions">
+        <div class="container">
+            <h2>Choose Your Version</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="featureslogo">STV1.0</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Glucose tracking</li>
+                        <li><i class="fas fa-check"></i> Basic trends</li>
+                        <li><i class="fas fa-check"></i> Image exports</li>
+                        <li><i class="fas fa-check"></i> PDF reports</li>
+                        <li><i class="fas fa-check"></i> Data backups</li>
+                        <li><i class="fas fa-times"></i> Database online</li>
+                        <li><i class="fas fa-times"></i> Advanced analytics</li>
+                         <li></li>
+                    </ul>
+                     <a href="loading.html" class="btn primary">choose</a>
+                </div>
+<!--                 
+                <div class="pricing-card">
+                     <h3 class="featureslogo">STV2.0</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Everything in V1.0</li>
+                        <li><i class="fas fa-check"></i> Basic trends</li>
+                        <li><i class="fas fa-check"></i> Data backups</li>
+                        <li><i class="fas fa-times"></i> weather app</li>
+                        <li><i class="fas fa-times"></i> Database online</li>
+                        <li><i class="fas fa-times"></i> Advanced analytics</li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <a href="loading2.html" class="btn primary">choose</a>
+                </div> -->
+                
+                <!-- <div class="pricing-card">
+                    <h3 class="featureslogo">STV3.0</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Everything in V1.0 & 2.0</li>
+                        <li><i class="fas fa-check"></i> Data backups</li>
+                        <li><i class="fas fa-check"></i><img src="images/shines0.png" style="width: 20px;" alt=""> Ai suggesion</li>
+                        <li><i class="fas fa-check"></i> weather app</li>
+                        <li><i class="fas fa-check"></i> Database online</li>
+                        <li><i class="fas fa-check"></i> Advanced analytics</li>
+                        <li><i class="fas fa-check"></i> Doctor finder</li>
+                    </ul>
+                    <a href="loading3.html" class="btn primary">choose</a>
+                </div> -->
+            </div>
+        </div>
+    </section>
+    
+  <!-- <section class="download-hero" style="background-image: url(/images/background4.jpg);">
+    <div class="container" style="background: rgba(243, 243, 243, 0.678); border-radius: 2rem; padding: 50px; justify-items: center; backdrop-filter: blur(40px);">
+      <h1>Download SugarTrack</h1>
+      <p style="color: rgb(0, 0, 0);">Get the right version for your device and start managing your diabetes with ease</p>
+      
+        <div class="version-info" id="versionInfo">
+          <h3>STV 1.0 - Basic Version</h3>
+          <p>Offline tracking with basic features. Perfect for getting started with glucose monitoring.</p>
+        </div>
+        <br>
+        
+        <div style="display: flex; justify-content: center; width: 100%;">
+            <a href="download.html" style="text-decoration: none;">
+                <button class="cssbuttons-io-button">
+                    <span><i class="fa-solid fa-cloud-arrow-down"></i> Download</span>
+                </button>
+            </a>
+        </div>
+      
+    </div>
+  </section> -->
+  
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>About SugarTrack</h2>
+                <p>SugarTrack was created to simplify diabetes management for everyone. Our mission is to provide accessible tools that help users understand their glucose patterns without complexity or high costs.</p>
+                <p>With over 10,000 active users, we're committed to privacy-first design and continuous improvement based on real user feedback.</p>
+                                <div class="cta-buttons" style="justify-content: center;">
+                    <a href="about.html" class="btn primary">Read More</a>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="number" data-target="10" data-speed="2000" data-prefix="" data-suffix="+" data-decimals="0">0</div>
+                        <div class="label">Active Users</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number" data-target="100" data-speed="1500" data-prefix="" data-suffix="%" data-decimals="0">0</div>
+                        <div class="label">Offline Access in Version 1.0 & 2.0</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number" data-target="100" data-speed="1500" data-prefix="" data-suffix="%" data-decimals="0">0</div>
+                        <div class="label">Secure</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+<!-- <div class="logo-slider" id="logoSlider">
+  <div class="logo-track" id="logoTrack">
+      <img class="imageslide" src="images/Firebase.png" alt="Firebase" class="firebase" title="Firebase" /><h1 class="firebase"></h1>
+      <img class="imageslide" src="images/github.png" alt="Github" title="Github" />
+      <img class="imageslide" src="images/google.png" alt="Google" title="Google" />
+      <img class="imageslide" src="images/must.png" alt="Must" title="Must" />
+      <img class="imageslide" src="https://mmssb.github.io/assets/images/mmslogo.PNG" alt="MMS" title="MMS" />
+      <img class="imageslide" src="images/must-dsk-96x96.png" alt="Must Desktop" title="Must Desktop" />
+      <img class="imageslide" src="images/open-meteo.png" alt="Open-Meteo" title="Open-Meteo" />
+      <div class="typewriter">
+          <h1 style="font-size: x-large;">Code</h1><h1 style="font-size: x-large;">craft</h1>
+      </div>
+  </div>
+</div> -->
+<section class="stai-floating-section">
+    <br>
+        <div class="container">
+            <div class="stai-showcase-card">
+                
+                <div class="stai-interactive-area">
+                    <div class="stai-floating-avatar">
+                        
+                        <div class="stai-eye"></div>
+                        <div class="stai-eye"></div>
+                        
+                        <div class="stai-speech-bubble" id="stai-bubble">
+                            <div id="bubble-content">
+                                </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="stai-text-content">
+                    <h2>Hey! I'm STAi</h2>
+                    <p>Tell me everything you need to know about your health.</p>
+                    
+                    <button id="stai-new-insight-btn" class="btn primary" style="margin-top: 1.5rem; border-radius: 2rem;">
+                        <i class="fas fa-sync-alt"></i> Ask STAi
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+   <div class="enhanced-logo-slider" id="logoSlider">
+    <div class="logo-track" id="logoTrack">
+        <img class="imageslide" src="images/Firebase.png" alt="Firebase" title="Firebase" />
+        <img class="imageslide" src="images/github.png" alt="Github" title="Github" />
+        <img class="imageslide" src="images/google.png" alt="Google" title="Google" />
+        <img class="imageslide" src="images/must.png" alt="Must" title="Must" />
+        <img class="imageslide" src="https://mmssb.github.io/assets/images/mmslogo.PNG" alt="MMS" title="MMS" />
+        <img class="imageslide" src="images/open-meteo.png" alt="Open-Meteo" title="Open-Meteo" />
+        <div class="imageslide typewriter-logo"><h1>Code<span style="color: #3b82f6;">craft</span></h1></div>
+        
+        <img class="imageslide" src="images/Firebase.png" alt="Firebase" title="Firebase" />
+        <img class="imageslide" src="images/github.png" alt="Github" title="Github" />
+        <img class="imageslide" src="images/google.png" alt="Google" title="Google" />
+        <img class="imageslide" src="images/must.png" alt="Must" title="Must" />
+        <img class="imageslide" src="https://mmssb.github.io/assets/images/mmslogo.PNG" alt="MMS" title="MMS" />
+        <img class="imageslide" src="images/open-meteo.png" alt="Open-Meteo" title="Open-Meteo" />
+        <div class="imageslide typewriter-logo"><h1>Code<span style="color: #3b82f6;">craft</span></h1></div>
+    </div>
+</div>
+
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo">
+                        <div class="logo2">ST</div> SugarTrack
+                    </a>
+                    <p>Empowering diabetes management through simple, effective technology.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="index.html#features">Features</a>
+                    <a href="index.html#versions">Versions</a>
+                    <a href="#">Updates</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfkX90s1BrOsiEEH8Go9vOB5MCD1_ypeWL4RjqoP9nZm3ZHhQ/viewform?usp=dialog">Contact Us</a>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="index.html#about">About</a>
+                    <!-- <a href="blog.html">Blog</a> -->
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; Developed By <a href="http://mmssb.github.io"><span style="color: #3b82f6; font-weight: bold;" >MMS</span></a> 2024 - 2025. <a href="http://mmssb.github.io" target="_blank"><img style="width: 20px;" src="https://mmssb.github.io/assets/images/mmslogo.PNG" title="MMS" alt="MMS Logo"></a>
+            </div>
+        </div>
+    </footer>
+    
+  <div class="cookie-message" id="cookieMessage">
+    <p>
+      We use cookies to personalize content and ads, and to analyze traffic. 
+      By continuing, you accept our 
+      <a href="privacy-policy.html" target="_blank">Privacy Policy</a>.
+    </p>
+    <div class="actions">
+      <button class="accept" id="acceptCookies">Accept</button>
+    </div>
+  </div>
+
+    <script src="cookie.js"></script>
+    <script src="script.js"></script>
+    <script src="logo-slider.js"></script>
+    <script>
+        document.querySelectorAll('.number').forEach(element => {
+            const target = parseFloat(element.getAttribute('data-target')) || 10000;
+            const speed = parseInt(element.getAttribute('data-speed')) || 2000;
+            const prefix = element.getAttribute('data-prefix') || '';
+            const suffix = element.getAttribute('data-suffix') || '';
+            const decimals = parseInt(element.getAttribute('data-decimals')) || 0;
+
+            let current = 0;
+            const increment = target / (speed / 16);
+            const update = () => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    element.textContent = prefix + current.toFixed(decimals) + suffix;
+                } else {
+                    element.textContent = prefix + current.toFixed(decimals) + suffix;
+                    requestAnimationFrame(update);
+                }
+            };
+            requestAnimationFrame(update);
+        });
+    </script>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            /* ==========================================
+               ⚙️ STAi CONFIGURATION SETTINGS
+               Change these values to easily control STAi!
+               ========================================== */
+            const staiConfig = {
+                
+                // 1. STAi's Knowledge Base (Add or remove messages here)
+                // messages: [
+                //     "Your glucose levels have been 95% in target range this week. Excellent work! 🚀",
+                //     "I noticed a slight spike after breakfast today. Let's review your morning carb intake.",
+                //     "Hydration check! 💧 Drinking water can help stabilize your glucose.",
+                //     "Your average reading is 105 mg/dL today. You are staying perfectly in range!",
+                //     "Sleep patterns affect glucose. You logged 8 hours last night—this is optimal. 😴",
+                //     "Warning: Potential low detected around 3 PM based on your history. Keep a snack handy! 🍎",
+                //     "You have logged data for 14 consecutive days. Consistency is key. Great job!"
+                // ],
+                messages: [
+    // 🌟 Motivation & Praise
+    "Your glucose levels have been 95% in target range this week. Excellent work! 🚀",
+    "I see a lot of green in your recent logs! You are absolutely crushing it today. 🎯🍏",
+    "You've been logging consistently all week! I love this energy. Let's keep the streak alive! 🔥😎",
+    "Wow, your time-in-range is looking fantastic this month. I'm so proud to be your assistant! 🤖💙",
+    "Your data is looking sharp today! Almost as sharp as you. 😉 Keep up the great work!",
+    "Your morning routines are paying off! The data shows a really solid start to your day. 🌅📈",
+
+    // 💧 Health & Lifestyle Reminders
+    "Hydration check! 🚰 Grab a glass of water right now. Your metabolism will thank you later!",
+    "Don't forget to take a quick screen break and stretch! A 5-minute walk does wonders for your glucose. 🚶‍♂️✨",
+    "Sleep patterns affect glucose. You logged 8 hours last night—this is optimal. 😴",
+    "Did you know a post-meal walk can reduce glucose spikes by up to 30%? Let's get moving! 👟💨",
+    "Late-night studying or coding? Don't forget to rest your eyes and check your levels before bed! 💻🦉",
+    "Going out later? Have fun! Just remember to pack a quick emergency snack just in case. 🥨🎒",
+    "Remember to rotate your sensor or injection sites! Let's keep your skin happy and healthy. 🩹✨",
+
+    // 💙 Caring & Empathetic
+    "Hey there! Just a reminder that you're doing an amazing job managing your health today. Keep smiling! 🌟",
+    "Remember, a single high reading doesn't define your progress. You've got this, and I'm right here with you! 💙💪",
+    "Feeling a little stressed? Take a deep breath. Stress can sneakily raise those levels. You're doing great. 🧘‍♀️🌿",
+    "Tracking isn't always easy, but you're handling it like a pro. Treat yourself to some downtime today! 🛋️☕",
+    "Hey, just popping in to say I've got your back! Whatever the numbers say, we'll figure it out together. 🤝✨",
+    "A gentle reminder: You are so much more than your glucose numbers. Have a wonderful day! 🌈🌻",
+    "Every log is a step towards better health. Thanks for letting me help you on this journey! 🚀🌟",
+
+    // 🔍 Smart Insights (Like a real AI)
+    "I noticed a slight spike after breakfast today. Let's review your morning carb intake together. 🥞🔍",
+    "Looks like your afternoon levels are trending beautifully. Great lunch choice! 🥗😋",
+    "Warning: Potential low detected around 3 PM based on your history. Keep a snack handy! 🍎",
+    "Your overnight levels were super stable! Looks like your body got some really great rest. 🌙💤",
+    "Pattern Detected: Your recent workouts are keeping your levels incredibly smooth. Keep moving! 🏋️‍♂️📈"
+],
+                
+                // 2. Timing Controls (in milliseconds: 1000ms = 1 second)
+                typingDelay: 1500,       // How long STAi shows the "..." before answering
+                messageDuration: 6000,   // How long the message stays on screen before changing
+                initialDelay: 1000,      // Delay before the very first message appears on page load
+                
+                // 3. Behavior Controls
+                autoChange: true         // Set to 'false' if you want STAi to ONLY change when the button is clicked
+            };
+            /* ========================================== */
+
+            
+            // Internal Logic (You don't need to edit below this line)
+            const bubble = document.getElementById("stai-bubble");
+            const bubbleContent = document.getElementById("bubble-content");
+            const refreshBtn = document.getElementById("stai-new-insight-btn");
+            
+            let isProcessing = false;
+            let autoPlayTimer;
+
+            const typingIndicatorHTML = `
+                <div class="bubble-typing-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+
+            // function triggerNewInsight() {
+            //     if (isProcessing) return;
+            //     isProcessing = true;
+
+            //     // Hide bubble briefly to reset
+            //     bubble.classList.remove("show");
+
+            //     setTimeout(() => {
+            //         // Show typing indicator
+            //         bubbleContent.innerHTML = typingIndicatorHTML;
+            //         bubble.classList.add("show");
+
+            //         // Wait for 'typingDelay', then show random text
+            //         setTimeout(() => {
+            //             const randomText = staiConfig.messages[Math.floor(Math.random() * staiConfig.messages.length)];
+            //             bubble.classList.remove("show"); // Brief fade out
+                        
+            //             setTimeout(() => {
+            //                 bubbleContent.innerHTML = `<strong>STAi:</strong> <br>${randomText}`;
+            //                 bubble.classList.add("show"); // Fade back in with text
+            //                 isProcessing = false;
+                            
+            //                 // Restart the auto-change timer if enabled
+            //                 if (staiConfig.autoChange) {
+            //                     resetAutoPlay();
+            //                 }
+            //             }, 200); // Small transition buffer to smooth the animation
+
+            //         }, staiConfig.typingDelay);
+
+            //     }, 300); // Wait for fade out before showing dots
+            // }
+function triggerNewInsight() {
+    if (isProcessing) return;
+    isProcessing = true;
+
+    // 1. Hide bubble
+    bubble.classList.remove("show");
+
+    setTimeout(() => {
+        // 2. Show typing dots
+        bubbleContent.innerHTML = typingIndicatorHTML;
+        bubble.classList.add("show");
+
+        setTimeout(() => {
+            // 3. Pick random message
+            const randomText = staiConfig.messages[Math.floor(Math.random() * staiConfig.messages.length)];
+            
+            // 4. Smoothly swap dots for text
+            bubble.classList.remove("show"); 
+            
+            setTimeout(() => {
+                // bubbleContent.innerHTML = `<strong>STAi:</strong><br>${randomText}`;
+                bubbleContent.innerHTML = `${randomText}`;
+                bubble.classList.add("show");
+                isProcessing = false;
+            }, 300);
+            
+        }, staiConfig.typingDelay);
+    }, 400);
+}
+            // Function to handle the automatic loop
+            function resetAutoPlay() {
+                clearInterval(autoPlayTimer);
+                // Total time = time message is shown + time spent typing + transition buffers
+                const totalCycleTime = staiConfig.messageDuration + staiConfig.typingDelay + 500;
+                autoPlayTimer = setInterval(triggerNewInsight, totalCycleTime);
+            }
+
+            // Initialize STAi on page load
+            setTimeout(() => {
+                triggerNewInsight();
+            }, staiConfig.initialDelay);
+
+            // Button click logic
+            refreshBtn.addEventListener('click', function() {
+                // Spin the button icon for visual feedback
+                const icon = this.querySelector('.fa-sync-alt');
+                icon.style.transform = "rotate(180deg)";
+                icon.style.transition = "transform 0.5s ease";
+                setTimeout(() => { 
+                    icon.style.transform = "rotate(0deg)"; 
+                    icon.style.transition = "none"; 
+                }, 500);
+                
+                // Clear the timer so STAi doesn't interrupt you right after you click
+                clearInterval(autoPlayTimer);
+                triggerNewInsight();
+            });
+        });
+    </script>
+</body>
+</html>
